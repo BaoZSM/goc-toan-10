@@ -1,0 +1,6 @@
+{
+  "name": "goc-toan-10-ly-thuong-kiet",
+  "private": true,
+  "description": "Góc Toán 10 – sản phẩm của học sinh trường THPT Lý Thường Kiệt",
+  "engines": { "node": ">=20" }
+}
