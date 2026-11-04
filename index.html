@@ -446,6 +446,90 @@ dialog::backdrop{background:rgba(10,20,15,.6)}
 /* trợ lý */
 .fab{background:var(--pen)!important;color:var(--on-pen)!important;position:fixed;right:calc(18px + env(safe-area-inset-right,0px));bottom:calc(18px + env(safe-area-inset-bottom,0px));z-index:40;display:flex;align-items:center;gap:8px;padding:12px 18px;border-radius:999px;border:none;background:var(--ink);color:var(--sheet);font:600 15px var(--f-body);cursor:pointer;box-shadow:0 8px 24px rgba(0,0,0,.2)}
 .fab i{width:9px;height:9px;border-radius:50%;background:var(--mark)}
+
+/* ===== Menu tiện ích nổi (kiểu AssistiveTouch) ===== */
+.assist{position:fixed;left:0;top:0;z-index:85;width:66px;height:66px;border-radius:22px;padding:0;cursor:grab;touch-action:none;user-select:none;-webkit-user-select:none;
+  border:3px solid rgba(255,255,255,.95);background:linear-gradient(140deg,#22C26E 0%,#139A7E 55%,#1478A8 100%);color:#fff;
+  box-shadow:0 10px 26px rgba(19,120,90,.45),0 2px 6px rgba(0,0,0,.18);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px;
+  transition:transform .18s, box-shadow .18s, left .28s cubic-bezier(.3,1.4,.5,1), top .28s ease}
+.assist svg{width:26px;height:26px;display:block}
+.assist small{font:800 10px/1 var(--f-body);letter-spacing:.02em}
+.assist:hover{transform:translateY(-2px) scale(1.04);box-shadow:0 14px 32px rgba(19,120,90,.55),0 2px 6px rgba(0,0,0,.18)}
+.assist:focus-visible{outline:3px solid var(--sun);outline-offset:3px}
+.assist.open{transform:scale(.94)}
+.assist.drag{transition:none;cursor:grabbing;transform:scale(1.1);box-shadow:0 18px 40px rgba(19,120,90,.55)}
+.assist::before{content:"";position:absolute;inset:-3px;border-radius:22px;border:3px solid #22C26E;opacity:0;pointer-events:none}
+.assist.hint::before{animation:assistPulse 2.2s ease-out infinite}
+@keyframes assistPulse{0%{opacity:.75;transform:scale(1)}80%,100%{opacity:0;transform:scale(1.45)}}
+.assist .dot{position:absolute;top:-6px;right:-6px;min-width:20px;height:20px;padding:0 5px;border-radius:999px;background:var(--red,#E0453A);color:#fff;font:800 11px/20px var(--f-body);border:2px solid #fff}
+@media (prefers-reduced-motion:reduce){.assist,.assist.hint::before{transition:none;animation:none}}
+
+.amenu{position:fixed;z-index:86;width:min(320px,calc(100vw - 24px));padding:16px;border-radius:22px;background:var(--sheet);color:var(--ink);border:1px solid var(--line);
+  box-shadow:0 24px 60px rgba(10,40,25,.28);transform-origin:var(--ox,right) center;animation:amenuIn .18s ease-out}
+@keyframes amenuIn{from{opacity:0;transform:scale(.9)}to{opacity:1;transform:none}}
+.amenu-h{display:flex;align-items:center;gap:10px;margin:0 2px 12px}
+.amenu-h b{font:800 17px var(--f-disp);display:block;line-height:1.15}
+.amenu-h small{font:500 12px var(--f-body);color:var(--muted)}
+.amenu-h .x{margin-left:auto}
+.agrid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
+.aitem{display:flex;flex-direction:column;align-items:center;gap:7px;padding:12px 4px 10px;border-radius:16px;border:1.5px solid var(--line);background:var(--paper);color:var(--ink);font:700 12.5px/1.25 var(--f-body);text-align:center;cursor:pointer;transition:transform .15s, border-color .15s, box-shadow .15s}
+.aitem:hover,.aitem:focus-visible{transform:translateY(-2px);border-color:var(--ic,#178A43);box-shadow:0 8px 18px rgba(0,0,0,.08);outline:none}
+.aitem b{width:46px;height:46px;border-radius:14px;display:grid;place-items:center;background:var(--ic,#178A43);color:#fff;box-shadow:0 6px 14px color-mix(in srgb,var(--ic,#178A43) 40%,transparent);font:800 20px var(--f-disp)}
+.aitem b svg{width:24px;height:24px}
+.aitem.soon{opacity:.6;cursor:default}
+.aitem.soon:hover{transform:none;border-color:var(--line);box-shadow:none}
+.aitem.soon b{background:transparent;border:2px dashed var(--muted);color:var(--muted);box-shadow:none}
+.amenu-f{margin:12px 2px 0;font:500 11.5px var(--f-body);color:var(--muted);text-align:center}
+
+/* ===== Tiện ích: Sách giáo khoa (trình đọc ngay trong khung) ===== */
+.sgk{position:fixed;z-index:84;width:460px;height:min(640px,calc(100vh - 32px));min-width:300px;min-height:260px;max-width:calc(100vw - 16px);max-height:calc(100vh - 16px);resize:both;overflow:hidden;display:flex;flex-direction:column;
+  background:var(--sheet);color:var(--ink);border:1px solid var(--line);border-radius:18px;box-shadow:0 24px 60px rgba(0,0,0,.28)}
+.sgk.max{left:8px!important;top:8px!important;width:calc(100vw - 16px)!important;height:calc(100vh - 16px)!important;resize:none}
+.sgk.min{height:auto!important;min-height:0;resize:none}
+.sgk.min .sgk-tool,.sgk.min .sgk-main{display:none}
+.sgk-h{display:flex;align-items:center;gap:6px;padding:9px 9px 9px 12px;background:linear-gradient(120deg,#139A7E,#178A43);color:#fff;cursor:grab;touch-action:none;user-select:none;-webkit-user-select:none}
+.sgk-h.drag{cursor:grabbing}
+.sgk-h .t{flex:1;min-width:0}
+.sgk-h select{max-width:100%;border:none;border-radius:8px;background:rgba(255,255,255,.18);color:#fff;font:800 14.5px var(--f-disp);padding:3px 6px;cursor:pointer}
+.sgk-h select option{color:#17291F;background:#fff}
+.sgk-h small{display:block;font:500 11.5px var(--f-body);opacity:.92;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;margin:2px 0 0 4px}
+.hb{width:32px;height:32px;border-radius:10px;border:none;background:rgba(255,255,255,.18);color:#fff;cursor:pointer;flex:none;display:grid;place-items:center}
+.hb:hover{background:rgba(255,255,255,.32)}
+.hb svg{width:17px;height:17px}
+.sgk-tool{display:flex;align-items:center;gap:6px;padding:7px 8px;border-bottom:1px solid var(--line);background:var(--sheet);flex-wrap:wrap}
+.stb{flex:none;height:32px;min-width:32px;padding:0 8px;white-space:nowrap;border-radius:9px;border:1.5px solid var(--line);background:var(--paper);color:var(--ink);font:700 13px var(--f-body);cursor:pointer;display:inline-flex;align-items:center;justify-content:center;gap:5px}
+.stb:hover{border-color:var(--pen)}
+.stb[aria-pressed=true]{background:var(--pen-soft);border-color:var(--pen);color:var(--pen-d)}
+.stb svg{width:16px;height:16px}
+.pgbox{flex:none;display:flex;align-items:center;border:1.5px solid var(--line);border-radius:9px;overflow:hidden;background:var(--paper);height:32px}
+.pgbox button{width:28px;height:100%;border:none;background:transparent;color:var(--ink);font:800 16px var(--f-body);cursor:pointer}
+.pgbox input{width:40px;height:100%;border:none!important;outline:none;box-shadow:none!important;border-radius:0;padding:0;background:transparent;color:var(--ink);text-align:center;font:800 14px var(--f-body);-moz-appearance:textfield}
+.pgbox input::-webkit-outer-spin-button,.pgbox input::-webkit-inner-spin-button{-webkit-appearance:none;margin:0}
+.pgbox em{font:600 12.5px var(--f-body);color:var(--muted);padding-right:6px;font-style:normal;white-space:nowrap}
+.zbox{display:flex;align-items:center;gap:2px;margin-left:auto}
+.zbox span{min-width:44px;text-align:center;font:700 12.5px var(--f-body);color:var(--muted)}
+.sgk-main{flex:1;min-height:0;display:flex;position:relative}
+.sgk-side{width:220px;flex:none;overflow:auto;border-right:1px solid var(--line);background:var(--sheet);padding:6px 8px 12px}
+.sgk-side[hidden]{display:none}
+.sgk.narrow .sgk-side{position:absolute;inset:0 auto 0 0;width:min(260px,85%);z-index:2;box-shadow:12px 0 30px rgba(0,0,0,.18)}
+.sgk-side h5{margin:10px 4px 4px;font:800 11.5px var(--f-body);color:var(--cc,var(--pen-d));text-transform:uppercase;letter-spacing:.02em}
+.tocrow{display:flex;align-items:center;border-radius:9px}
+.tocrow:hover,.tocrow.here{background:var(--cs,var(--pen-soft))}
+.tocrow.cur>button{font-weight:800}
+.tocrow>button{flex:1;display:flex;align-items:baseline;gap:6px;padding:6px 6px;border:none;background:transparent;color:var(--ink);text-align:left;font:500 13px/1.3 var(--f-body);cursor:pointer;min-width:0}
+.tocrow>button span{flex:1}
+.tocrow>button i{font:800 12px var(--f-body);font-style:normal;color:var(--cc,var(--pen))}
+.tocrow a{flex:none;font:700 10.5px var(--f-body);color:var(--pen-d);text-decoration:none;border:1px solid var(--line);border-radius:7px;padding:1px 5px;margin-right:4px;background:var(--sheet)}
+.sgk-view{flex:1;min-width:0;overflow:auto;background:color-mix(in srgb,var(--paper) 70%,#8a9a90 30%);padding:10px;display:flex;flex-direction:column;align-items:flex-start;gap:10px;overscroll-behavior:contain}
+.sgk-view .pg{margin-inline:auto;background:#fff;box-shadow:0 2px 10px rgba(0,0,0,.18);position:relative;flex:none;border-radius:3px;overflow:hidden}
+.sgk-view .pg canvas{display:block;width:100%;height:auto}
+.sgk-view .pg::after{content:attr(data-label);position:absolute;right:6px;bottom:6px;font:700 11px var(--f-body);background:rgba(23,41,31,.7);color:#fff;border-radius:6px;padding:1px 6px}
+.sgk-msg{margin:auto;max-width:330px;text-align:center;display:flex;flex-direction:column;align-items:center;gap:10px;padding:18px;background:var(--sheet);border-radius:14px;border:1px solid var(--line);font:500 13.5px/1.5 var(--f-body);color:var(--ink)}
+.sgk-msg b{font:800 16px var(--f-disp)}
+.sgk-msg code{font:600 12px ui-monospace,monospace;background:var(--paper);padding:1px 5px;border-radius:5px;word-break:break-all}
+.sgk-msg .row{display:flex;gap:8px;flex-wrap:wrap;justify-content:center}
+.sgk-msg button,.sgk-msg a.b{border:none;border-radius:10px;background:var(--pen);color:var(--on-pen);font:700 13px var(--f-body);padding:8px 12px;cursor:pointer;text-decoration:none}
+.sgk-msg a.l{color:var(--pen-d);font:600 12.5px var(--f-body)}
 .chat{position:fixed;right:calc(18px + env(safe-area-inset-right,0px));bottom:calc(80px + env(safe-area-inset-bottom,0px));z-index:41;width:min(380px,calc(100vw - 36px));height:min(560px,calc(100vh - 150px));background:var(--sheet);border:1px solid var(--line);border-radius:14px;display:flex;flex-direction:column;box-shadow:0 18px 50px rgba(0,0,0,.22);overflow:hidden}
 .chat.inline{position:static;width:100%;max-width:760px;height:min(640px,72vh);box-shadow:none}
 .chat.inline .x{display:none}
@@ -596,6 +680,36 @@ dialog::backdrop{background:rgba(10,20,15,.6)}
     </div>
     <div class="pdf-body" id="rBody"></div>
   </dialog>
+
+  <!-- Menu tiện ích nổi: kéo thả tự do, bấm để mở -->
+  <button class="assist" id="assist" aria-label="Mở menu tiện ích" aria-expanded="false" aria-controls="amenu">
+    <svg viewBox="0 0 24 24" fill="#fff" aria-hidden="true"><rect x="3" y="3" width="7.5" height="7.5" rx="2.2"/><rect x="13.5" y="3" width="7.5" height="7.5" rx="2.2" opacity=".75"/><rect x="3" y="13.5" width="7.5" height="7.5" rx="2.2" opacity=".75"/><rect x="13.5" y="13.5" width="7.5" height="7.5" rx="2.2"/></svg>
+    <small>Tiện ích</small>
+  </button>
+  <div class="amenu" id="amenu" hidden role="menu" aria-labelledby="amenuT">
+    <div class="amenu-h"><div><b id="amenuT">Tiện ích học tập</b><small>Mở nhanh khi đang học hoặc làm bài</small></div><button type="button" class="x" id="amenuX" aria-label="Đóng">×</button></div>
+    <div class="agrid" id="agrid"></div>
+    <p class="amenu-f">Giữ và kéo nút <b>Tiện ích</b> để đặt ở vị trí bạn thích</p>
+  </div>
+
+  <!-- Tiện ích: Sách giáo khoa – đọc ngay trong khung -->
+  <div class="sgk" id="sgk" hidden role="dialog" aria-label="Đọc sách và tài liệu">
+    <div class="sgk-h" id="sgkHead">
+      <div class="t"><select id="sgkSrc" aria-label="Chọn sách hoặc tài liệu"></select><small id="sgkSub"></small></div>
+      <button type="button" class="hb" id="sgkMax" aria-label="Phóng to khung"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M4 9V4h5M20 9V4h-5M4 15v5h5M20 15v5h-5"/></svg></button>
+      <button type="button" class="hb" id="sgkMin" aria-label="Thu gọn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round"><path d="M5 12h14"/></svg></button>
+      <button type="button" class="hb" id="sgkClose" aria-label="Đóng"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round"><path d="M6 6l12 12M18 6L6 18"/></svg></button>
+    </div>
+    <div class="sgk-tool">
+      <button type="button" class="stb" id="sgkTocBtn" aria-pressed="true" aria-controls="sgkSide" title="Mục lục"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M8 6h12M8 12h12M8 18h12M4 6h.01M4 12h.01M4 18h.01"/></svg>Mục lục</button>
+      <div class="pgbox"><button type="button" id="pgPrev" aria-label="Trang trước">‹</button><input id="pgIn" type="number" inputmode="numeric" aria-label="Số trang"><em id="pgTot">/–</em><button type="button" id="pgNext" aria-label="Trang sau">›</button></div>
+      <div class="zbox"><button type="button" class="stb" id="szOut" aria-label="Thu nhỏ">−</button><span id="szVal">100%</span><button type="button" class="stb" id="szIn" aria-label="Phóng to">+</button><button type="button" class="stb" id="szFit" title="Vừa khung">Vừa</button></div>
+    </div>
+    <div class="sgk-main">
+      <nav class="sgk-side" id="sgkSide" aria-label="Mục lục"></nav>
+      <div class="sgk-view" id="sgkView" tabindex="0"></div>
+    </div>
+  </div>
 
   <button class="fab" id="fab" aria-expanded="false" aria-controls="chat"><i></i>Hỏi trợ lý</button>
   <div class="chat" id="chat" hidden role="region" aria-label="Trợ lý học tập">
@@ -916,7 +1030,7 @@ function renderDocs(){
     <div class="acts"><button class="btn" data-open="${esc(d.id)}">Xem tài liệu</button>${delBtn(d)}</div></article>`).join("") + `</div>` +
   (edit ? `<form class="box editor stack" id="upForm"><h3 class="big">Thêm tài liệu PDF</h3>
      <div class="field"><label for="up-title">Tên tài liệu</label><input id="up-title" maxlength="150" required placeholder="Ví dụ: Đề kiểm tra 15 phút Chương IV"></div>
-     <div class="field"><label for="up-tag">Loại</label><select id="up-tag"><option>Chuyên đề</option><option>Đề ôn</option><option>Sổ tay</option><option>Bài tập</option><option>Khác</option></select></div>
+     <div class="field"><label for="up-tag">Loại</label><select id="up-tag"><option>Chuyên đề</option><option>Sách giáo khoa</option><option>Đề ôn</option><option>Sổ tay</option><option>Bài tập</option><option>Khác</option></select></div>
      <div class="field"><label for="up-ch">Thuộc chương</label><input id="up-ch" maxlength="40" placeholder="Ví dụ: Chương IV"></div>
      <div class="field"><label for="up-file">File PDF (tối đa 15 MB)</label><input id="up-file" type="file" accept="application/pdf,.pdf" required></div>
      <div class="acts"><button class="btn" id="upBtn">Tải lên</button></div></form>` : "");
@@ -930,7 +1044,7 @@ function renderDocs(){
   if(edit) $("#upForm").onsubmit = e => { e.preventDefault();
     const f = $("#up-file").files[0], btn = $("#upBtn");
     if(!f) return toast("Chọn một file PDF", true);
-    if(f.size > 15*1024*1024) return toast("File lớn hơn 15 MB", true);
+    if(f.size > 80*1024*1024) return toast("File lớn hơn 80 MB", true);
     const rd = new FileReader(); btn.disabled = true; btn.textContent = "Đang tải lên…";
     rd.onload = async () => {
       try{ const d = await api("POST","/api/docs",{ title:$("#up-title").value.trim(), tag:$("#up-tag").value, chapter:$("#up-ch").value.trim(), filename:f.name, data:String(rd.result).split(",")[1] });
@@ -1667,6 +1781,7 @@ function route(){
   const navKey = m ? "bai-giang" : mv ? "video" : view;
   document.querySelectorAll("#sideNav a").forEach(a => a.dataset.v===navKey ? a.setAttribute("aria-current","page") : a.removeAttribute("aria-current"));
   placeChat(view==="hoi-dap");
+  try{ SGK.sync(+(location.hash.match(/^#(?:bai|luyen-bai)-([1-9])$/)||[])[1] || (mv ? +mv[2] : 0)); ASSIST.close(); }catch(e){}
   if(view==="bang-nhap"){ fab.hidden = true; chat.hidden = true; }
   if(view==="hoi-dap" && pendingAsk){ const q = pendingAsk; pendingAsk = null; ask(AI.mode ? q.ai : q.kw); }
   const name = root.dataset.name || root.dataset.user;
@@ -1867,6 +1982,270 @@ function placeChat(inline){
 }
 fab.onclick = () => { chat.hidden = !chat.hidden; fab.setAttribute("aria-expanded", String(!chat.hidden)); if(!chat.hidden) $("#chatIn").focus(); };
 $("#chatClose").onclick = () => { chat.hidden = true; fab.setAttribute("aria-expanded","false"); };
+
+/* ================= Menu tiện ích nổi =================
+   Muốn thêm tiện ích mới: thêm một dòng vào UTILS.
+   ten = chữ hiện dưới biểu tượng, icon = tên biểu tượng trong UICONS (hoặc kyhieu = chữ/emoji),
+   mau = màu nền biểu tượng, mo = việc cần làm khi bấm. */
+const UICONS = {
+  sach:'<path d="M4 5.5A2.5 2.5 0 0 1 6.5 3H11v16H6.5A2.5 2.5 0 0 0 4 21.5z"/><path d="M20 5.5A2.5 2.5 0 0 0 17.5 3H13v16h4.5a2.5 2.5 0 0 1 2.5 2.5z"/>',
+  nhap:'<path d="M4 20h4L19 9l-4-4L4 16z"/><path d="M14 6l4 4"/>',
+  congthuc:'<path d="M17 5H7l6 7-6 7h10"/>',
+  troly:'<path d="M4 5h16v11H10l-5 4v-4H4z"/><path d="M8.5 10.5h.01M12 10.5h.01M15.5 10.5h.01"/>',
+  them:'<path d="M12 5v14M5 12h14"/>'
+};
+const UTILS = [
+  { id:"sgk",      ten:"Sách giáo khoa", icon:"sach",     mau:"#139A7E", mo:()=>SGK.open() },
+  { id:"nhap",     ten:"Bảng nháp",      icon:"nhap",     mau:"#2F6FD0", mo:()=>{ location.hash="#bang-nhap"; } },
+  { id:"congthuc", ten:"Công thức",      icon:"congthuc", mau:"#D9822B", mo:()=>{ location.hash="#cong-thuc"; } },
+  { id:"troly",    ten:"Trợ lý AI",      icon:"troly",    mau:"#8A4FD6", mo:()=>{ if(location.hash==="#bang-nhap") location.hash="#hoi-dap"; else if(!chat.classList.contains("inline")){ chat.hidden=false; fab.setAttribute("aria-expanded","true"); $("#chatIn").focus(); } } },
+  { id:"sap-co",   ten:"Sắp có",         icon:"them",     sapCo:true }
+];
+const svgIcon = (name, sw) => `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="${sw||2.2}" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${UICONS[name]||""}</svg>`;
+
+const ASSIST = (() => {
+  const btn = $("#assist"), menu = $("#amenu"), grid = $("#agrid"), SIZE = 66, GAP = 12, KEY = "toan10-assist";
+  let pos = { side:"right", y:.42 }, seen = false;
+  try{ const s = JSON.parse(localStorage.getItem(KEY)||"null"); if(s && (s.side==="left"||s.side==="right") && s.y>=0 && s.y<=1) pos = s; seen = localStorage.getItem(KEY+"-seen")==="1"; }catch(e){}
+  if(!seen) btn.classList.add("hint");
+  grid.innerHTML = UTILS.map(u => `<button type="button" role="menuitem" class="aitem${u.sapCo?" soon":""}" data-u="${u.id}" style="--ic:${u.mau||"#178A43"}"${u.sapCo?' aria-disabled="true"':""}><b>${u.icon ? svgIcon(u.icon) : (u.kyhieu||"•")}</b>${u.ten}</button>`).join("");
+  grid.onclick = e => { const b = e.target.closest("[data-u]"); if(!b) return; const u = UTILS.find(x => x.id===b.dataset.u); if(!u || u.sapCo){ if(u) toast("Tiện ích mới sẽ sớm được thêm vào đây"); return; } close(); u.mo(); };
+  $("#amenuX").onclick = () => { close(); btn.focus(); };
+  function place(){
+    const w = innerWidth, h = innerHeight, top = Math.min(Math.max(GAP, pos.y*(h-SIZE)), h-SIZE-GAP);
+    btn.style.left = (pos.side==="left" ? GAP : w-SIZE-GAP) + "px"; btn.style.top = top + "px";
+  }
+  function open(){
+    menu.hidden = false; btn.classList.add("open"); btn.setAttribute("aria-expanded","true");
+    if(!seen){ seen = true; btn.classList.remove("hint"); try{ localStorage.setItem(KEY+"-seen","1"); }catch(e){} }
+    const r = btn.getBoundingClientRect(), mw = menu.offsetWidth, mh = menu.offsetHeight, w = innerWidth, h = innerHeight;
+    let left = pos.side==="left" ? r.right + 12 : r.left - mw - 12;
+    if(w < mw + SIZE + 48) left = (w - mw)/2;
+    menu.style.setProperty("--ox", pos.side==="left" ? "left" : "right");
+    menu.style.left = Math.max(12, Math.min(left, w-mw-12)) + "px";
+    menu.style.top = Math.max(12, Math.min(r.top + SIZE/2 - mh/2, h-mh-12)) + "px";
+    const first = grid.querySelector(".aitem:not(.soon)"); if(first) first.focus({preventScroll:true});
+  }
+  function close(){ menu.hidden = true; btn.classList.remove("open"); btn.setAttribute("aria-expanded","false"); }
+  let st = null;
+  btn.addEventListener("pointerdown", e => { if(e.button) return; const r = btn.getBoundingClientRect(); st = { x:e.clientX, y:e.clientY, dx:e.clientX-r.left, dy:e.clientY-r.top, moved:false, id:e.pointerId }; btn.setPointerCapture(e.pointerId); });
+  btn.addEventListener("pointermove", e => {
+    if(!st || e.pointerId!==st.id) return;
+    if(!st.moved && Math.hypot(e.clientX-st.x, e.clientY-st.y) < 6) return;
+    if(!st.moved){ st.moved = true; btn.classList.add("drag"); close(); }
+    btn.style.left = Math.max(0, Math.min(e.clientX-st.dx, innerWidth-SIZE)) + "px";
+    btn.style.top  = Math.max(0, Math.min(e.clientY-st.dy, innerHeight-SIZE)) + "px";
+  });
+  const end = e => {
+    if(!st || e.pointerId!==st.id) return;
+    const moved = st.moved; st = null; btn.classList.remove("drag");
+    if(!moved){ menu.hidden ? open() : close(); return; }
+    const r = btn.getBoundingClientRect();
+    pos = { side: r.left + SIZE/2 < innerWidth/2 ? "left" : "right", y: Math.max(0, Math.min(1, r.top/(innerHeight-SIZE))) };
+    try{ localStorage.setItem(KEY, JSON.stringify(pos)); }catch(err){}
+    place();
+  };
+  btn.addEventListener("pointerup", end); btn.addEventListener("pointercancel", end);
+  btn.addEventListener("click", e => { if(e.detail===0){ menu.hidden ? open() : close(); } }); // bàn phím (Enter/Space)
+  document.addEventListener("pointerdown", e => { if(!menu.hidden && !menu.contains(e.target) && !btn.contains(e.target)) close(); });
+  document.addEventListener("keydown", e => { if(e.key==="Escape" && !menu.hidden){ close(); btn.focus(); } });
+  addEventListener("resize", () => { place(); if(!menu.hidden) close(); });
+  place();
+  return { close, place };
+})();
+
+/* ================= Tiện ích: Sách giáo khoa – đọc ngay trong khung =================
+   SGK Toán 10 tập một (Kết nối tri thức) thuộc bản quyền NXB Giáo dục Việt Nam.
+   Khung đọc sẽ hiện sách khi nhà trường đặt file PDF được phép sử dụng vào đường dẫn SGK_FILE.file
+   (hoặc tải lên ở mục Tài liệu với loại “Sách giáo khoa”).
+   lech = số trang PDF đứng trước trang 1 của sách (thường là 1 trang bìa). */
+const SGK_FILE = { file:"pdf/SGK-Toan-10-tap-mot.pdf", lech:1 };
+const SGK_OFFICIAL = "https://taphuan.nxbgd.vn/tap-huan/doc-sach/sgk-toan-10-tap-mot.4714886467";
+const SGK = (() => {
+  const TOC = [
+    { h:"Chương I. Mệnh đề và tập hợp", c:1, items:[["Bài 1. Mệnh đề",5,1],["Bài 2. Tập hợp và các phép toán trên tập hợp",12,2],["Bài tập cuối chương I",20]] },
+    { h:"Chương II. Bất phương trình và hệ bất phương trình bậc nhất hai ẩn", c:2, items:[["Bài 3. Bất phương trình bậc nhất hai ẩn",22,3],["Bài 4. Hệ bất phương trình bậc nhất hai ẩn",26,4],["Bài tập cuối chương II",31]] },
+    { h:"Chương III. Hệ thức lượng trong tam giác", c:3, items:[["Bài 5. Giá trị lượng giác của một góc từ 0° đến 180°",33,5],["Bài 6. Hệ thức lượng trong tam giác",38,6],["Bài tập cuối chương III",44]] },
+    { h:"Chương IV. Vectơ", c:4, items:[["Bài 7. Các khái niệm mở đầu",46,7],["Bài 8. Tổng và hiệu của hai vectơ",51,8],["Bài 9. Tích của một vectơ với một số",55,9],["Bài 10. Vectơ trong mặt phẳng toạ độ",60],["Bài 11. Tích vô hướng của hai vectơ",66],["Bài tập cuối chương IV",71]] },
+    { h:"Chương V. Các số đặc trưng của mẫu số liệu không ghép nhóm", items:[["Bài 12. Số gần đúng và sai số",73],["Bài 13. Các số đặc trưng đo xu thế trung tâm",78],["Bài 14. Các số đặc trưng đo độ phân tán",84],["Bài tập cuối chương V",89]] },
+    { h:"Hoạt động thực hành trải nghiệm", items:[["Tìm hiểu một số kiến thức về tài chính",91],["Mạng xã hội: Lợi và hại",96]] },
+    { h:"Tra cứu", items:[["Mục lục",4],["Bảng tra cứu thuật ngữ",102],["Bảng giải thích thuật ngữ",103]] }
+  ];
+  const LESSON_PAGE = {}; TOC.forEach(g => g.items.forEach(it => { if(it[2]) LESSON_PAGE[it[2]] = it[1]; }));
+  const win = $("#sgk"), head = $("#sgkHead"), view = $("#sgkView"), side = $("#sgkSide"), sel = $("#sgkSrc"), pgIn = $("#pgIn"), K = "toan10-sgk2";
+  let st = { src:"sgk", pages:{}, zoom:1, x:null, y:null, side:true, max:false };
+  try{ Object.assign(st, JSON.parse(localStorage.getItem(K)||"{}")); }catch(e){}
+  const save = () => { try{ localStorage.setItem(K, JSON.stringify(st)); }catch(e){} };
+  let R = { task:null, doc:null, token:0, obs:null, w:0, src:null, cur:1 }, sgkOK = null, loaded = false;
+
+  /* ---- nguồn đọc: SGK + các tài liệu PDF của trang ---- */
+  function sgkDoc(){ const up = DOCS.find(d => d.tag==="Sách giáo khoa"); return up ? { file:up.file, lech:+up.lech||SGK_FILE.lech } : SGK_FILE; }
+  function sources(){
+    const list = [{ id:"sgk", ten:"SGK Toán 10 – Tập một", file:sgkDoc().file, lech:sgkDoc().lech, sgk:true }];
+    DOCS.filter(d => d.tag!=="Sách giáo khoa").forEach(d => list.push({ id:d.id, ten:d.title.replace(/ – Bài 1 đến Bài 9|Toán 10 – /g,"").replace(/^Infographic/,"Infographic Toán 10"), file:d.file, lech:0 }));
+    return list;
+  }
+  const srcOf = id => sources().find(s => s.id===id) || sources()[0];
+  function fillSel(){ sel.innerHTML = sources().map(s => `<option value="${esc(s.id)}">${esc(s.ten)}</option>`).join(""); sel.value = srcOf(st.src).id; }
+  const label = (src, p) => src.lech && p <= src.lech ? "Bìa" : String(p - (src.lech||0));
+
+  /* ---- mục lục ---- */
+  function paintSide(){
+    const src = srcOf(st.src);
+    if(src.sgk){
+      side.innerHTML = TOC.map(g => `<div${g.c?` class="ch-${g.c}"`:""}><h5>${g.h}</h5>${g.items.map(([t,p,n]) =>
+        `<div class="tocrow" data-go="${p + src.lech}"${n?` data-n="${n}"`:""}><button type="button" data-go="${p + src.lech}"><span>${t}</span><i>${p}</i></button>${n?`<a href="#bai-${n}" title="Mở bài giảng trên web">Bài giảng</a>`:""}</div>`).join("")}</div>`).join("");
+    } else {
+      const n = R.doc && R.src===src.id ? R.doc.numPages : 0;
+      side.innerHTML = `<h5>${esc(src.ten)}</h5>` + (n ? Array.from({length:n}, (_,i) => `<div class="tocrow" data-go="${i+1}"><button type="button" data-go="${i+1}"><span>Trang ${i+1}</span></button></div>`).join("") : `<p class="sgk-note" style="padding:6px">Đang tải…</p>`);
+    }
+    markCur(); syncLesson();
+  }
+  function markCur(){
+    const rows = [...side.querySelectorAll(".tocrow")]; let best = null;
+    rows.forEach(r => { r.classList.remove("cur"); if(+r.dataset.go <= R.cur && (!best || +r.dataset.go >= +best.dataset.go) && !(srcOf(st.src).sgk && +r.dataset.go < 5)) best = r; });
+    if(best) best.classList.add("cur");
+    const src = srcOf(st.src), t = best && src.sgk ? best.querySelector("span").textContent : "";
+    $("#sgkSub").textContent = R.doc ? `Trang ${label(src, R.cur)}${t ? " · " + t : ""}` : "";
+  }
+  let lessonN = 0;
+  function syncLesson(){ side.querySelectorAll(".tocrow").forEach(r => r.classList.toggle("here", !!lessonN && r.dataset.n===String(lessonN))); }
+
+  /* ---- trình đọc PDF trong khung ---- */
+  function msg(html){ if(R.obs) R.obs.disconnect(); view.innerHTML = `<div class="sgk-msg">${html}</div>`; }
+  function dropDoc(){ const t = R.task; R.task = null; R.doc = null; R.src = null; try{ if(t) Promise.resolve(t.destroy()).catch(()=>{}); }catch(e){} }
+  async function sgkAvailable(file){
+    if(sgkOK !== null && sgkOK.file === file) return sgkOK.ok;
+    let ok = false; try{ const r = await fetch(file, { method:"HEAD", cache:"no-store" }); ok = r.ok && !/text\/html/.test(r.headers.get("content-type")||""); }catch(e){}
+    sgkOK = { file, ok }; return ok;
+  }
+  function noBook(){
+    const admin = !SERVER || can("sua_tai_lieu");
+    msg(`<b>Sách giáo khoa chưa có trên trang web</b>
+      <span>Sách Toán 10 thuộc bản quyền của NXB Giáo dục Việt Nam. Khung đọc sẽ hiện sách ngay khi nhà trường đưa bản PDF được phép sử dụng lên trang.</span>
+      <div class="row"><button type="button" data-src="infographic">Đọc Infographic Toán 10</button>${lessonN ? `<button type="button" data-src="b${lessonN}">Tài liệu Bài ${lessonN}</button>` : ""}</div>
+      <a class="l" href="${SGK_OFFICIAL}${lessonN ? `?trang=${LESSON_PAGE[lessonN]}#page=${LESSON_PAGE[lessonN]}` : ""}" target="_blank" rel="noopener">Xem bản chính thức của NXB Giáo dục (thẻ mới)</a>
+      ${admin ? `<details style="font-size:12px;text-align:left;color:var(--muted)"><summary style="cursor:pointer">Dành cho người quản lý web</summary>Đặt file PDF của sách vào <code>${esc(SGK_FILE.file)}</code> (Vercel: thư mục <code>pdf</code> trong repo; máy chủ trường: <code>public/${esc(SGK_FILE.file)}</code>), hoặc tải lên ở mục Tài liệu PDF với loại “Sách giáo khoa”.</details>` : ""}`);
+    $("#pgTot").textContent = "/–"; pgIn.value = ""; $("#sgkSub").textContent = "Chưa có file sách";
+  }
+  async function load(srcId, goPage){
+    const src = srcOf(srcId), token = ++R.token;
+    st.src = src.id; sel.value = src.id; save();
+    if(R.src === src.id && R.doc){ if(goPage) go(goPage); return; }
+    dropDoc(); paintSide();
+    msg(`<span class="spin"></span><span>Đang mở ${esc(src.ten)}…</span>`);
+    try{
+      if(src.sgk && !(await sgkAvailable(src.file))){ if(token===R.token) noBook(); return; }
+      const lib = await loadPdfLib(); if(token !== R.token) return;
+      let task;
+      if(src.sgk) task = lib.getDocument({ url: src.file, isEvalSupported:false, disableAutoFetch:true, rangeChunkSize:262144 });
+      else { const buf = await fetch(src.file).then(r => { if(!r.ok) throw new Error("Không tải được file (mã " + r.status + ")."); return r.arrayBuffer(); }); if(token !== R.token) return; task = lib.getDocument({ data:new Uint8Array(buf), isEvalSupported:false }); }
+      R.task = task; const doc = await task.promise;
+      if(token !== R.token){ try{ task.destroy(); }catch(e){} return; }
+      R.doc = doc; R.src = src.id; $("#pgTot").textContent = "/" + (src.sgk ? doc.numPages - src.lech : doc.numPages);
+      paintSide();
+      await layout(goPage || st.pages[src.id] || (src.sgk ? 5 + src.lech : 1));
+    }catch(err){ if(token===R.token) msg(`<b>Chưa mở được</b><span>${esc(err.message||err)}</span><div class="row"><button type="button" data-retry>Thử lại</button></div>`); }
+  }
+  async function layout(goPage){
+    if(!R.doc) return;
+    const token = R.token, doc = R.doc, src = srcOf(R.src), first = await doc.getPage(Math.min(doc.numPages, 1 + (src.lech||0))), base = first.getViewport({ scale:1 });
+    if(token !== R.token) return;
+    const fit = Math.max(200, Math.min(view.clientWidth - 20, 900)), w = Math.round(fit * st.zoom), ratio = base.height / base.width;
+    R.w = w; $("#szVal").textContent = Math.round(st.zoom*100) + "%";
+    if(R.obs) R.obs.disconnect();
+    view.innerHTML = Array.from({length:doc.numPages}, (_,i) => `<div class="pg" data-p="${i+1}" data-label="${label(src, i+1)}" style="width:${w}px;height:${Math.round(w*ratio)}px"></div>`).join("");
+    R.obs = new IntersectionObserver(es => es.forEach(e => { if(e.isIntersecting && !e.target.dataset.done){ e.target.dataset.done = 1; draw(+e.target.dataset.p, e.target, w, token); } }), { root:view, rootMargin:"500px 0px" });
+    view.querySelectorAll(".pg").forEach(el => R.obs.observe(el));
+    go(goPage || 1, true);
+  }
+  async function draw(i, holder, w, token){
+    try{
+      const page = await R.doc.getPage(i); if(token !== R.token || R.w !== w) return;
+      const v1 = page.getViewport({ scale:1 }), scale = w / v1.width, dpr = Math.min(window.devicePixelRatio || 1, 2);
+      const vp = page.getViewport({ scale: scale * dpr }), c = document.createElement("canvas");
+      c.width = Math.floor(vp.width); c.height = Math.floor(vp.height);
+      holder.style.height = Math.round(v1.height * scale) + "px"; holder.appendChild(c);
+      await page.render({ canvasContext:c.getContext("2d"), canvas:c, viewport:vp }).promise;
+    }catch(e){ holder.dataset.done = ""; }
+  }
+  function go(p, instant){
+    if(!R.doc) return; p = Math.max(1, Math.min(R.doc.numPages, p|0));
+    const el = view.querySelector(`.pg[data-p="${p}"]`); if(!el) return;
+    view.scrollTo({ top: el.offsetTop - 10, behavior: instant ? "auto" : "smooth" });
+    setCur(p);
+  }
+  function setCur(p){ R.cur = p; const src = srcOf(R.src); pgIn.value = src.lech && p <= src.lech ? 0 : p - (src.lech||0); st.pages[R.src] = p; save(); markCur(); }
+  let scT = 0;
+  view.addEventListener("scroll", () => { if(!R.doc) return; cancelAnimationFrame(scT); scT = requestAnimationFrame(() => {
+    const top = view.scrollTop + view.clientHeight/3; let cur = 1;
+    view.querySelectorAll(".pg").forEach(p => { if(p.offsetTop <= top) cur = +p.dataset.p; });
+    if(cur !== R.cur) setCur(cur); }); }, { passive:true });
+  function zoom(z){ if(!R.doc) return; const keep = R.cur; st.zoom = Math.min(3, Math.max(.5, Math.round(z*100)/100)); save(); R.token++; layout(keep); }
+
+  /* ---- điều khiển ---- */
+  sel.onchange = () => load(sel.value);
+  side.onclick = e => { const b = e.target.closest("[data-go]"); if(!b || e.target.closest("a")) return; if(R.doc) go(+b.dataset.go); if(win.classList.contains("narrow")) toggleSide(false); };
+  view.addEventListener("click", e => { const s = e.target.closest("[data-src]"); if(s) return load(s.dataset.src); if(e.target.closest("[data-retry]")){ sgkOK = null; load(st.src); } });
+  $("#pgPrev").onclick = () => go(R.cur - 1);
+  $("#pgNext").onclick = () => go(R.cur + 1);
+  const goInput = () => { const src = srcOf(R.src || st.src); go((+pgIn.value||1) + (src.lech||0)); };
+  pgIn.onchange = goInput; pgIn.onkeydown = e => { if(e.key==="Enter") goInput(); };
+  $("#szIn").onclick = () => zoom(st.zoom + .25);
+  $("#szOut").onclick = () => zoom(st.zoom - .25);
+  $("#szFit").onclick = () => zoom(1);
+  view.addEventListener("wheel", e => { if(!e.ctrlKey || !R.doc) return; e.preventDefault(); zoom(st.zoom * (e.deltaY < 0 ? 1.15 : 1/1.15)); }, { passive:false });
+  view.addEventListener("keydown", e => { if(e.key==="ArrowRight"||e.key==="PageDown"){ e.preventDefault(); go(R.cur+1); } if(e.key==="ArrowLeft"||e.key==="PageUp"){ e.preventDefault(); go(R.cur-1); } });
+  // chụm hai ngón để phóng to / thu nhỏ trên điện thoại
+  let pinch = null;
+  view.addEventListener("touchstart", e => { if(e.touches.length===2){ const [a,b] = e.touches; pinch = { d:Math.hypot(a.clientX-b.clientX, a.clientY-b.clientY), r:1 }; } }, { passive:true });
+  view.addEventListener("touchmove", e => { if(pinch && e.touches.length===2){ const [a,b] = e.touches; pinch.r = Math.hypot(a.clientX-b.clientX, a.clientY-b.clientY) / pinch.d; view.style.transform = `scale(${Math.min(2,Math.max(.5,pinch.r))})`; view.style.transformOrigin = "center top"; } }, { passive:true });
+  view.addEventListener("touchend", () => { if(!pinch) return; const r = pinch.r; pinch = null; view.style.transform = ""; if(Math.abs(r-1) > .08) zoom(st.zoom * r); });
+
+  function toggleSide(v){ st.side = v===undefined ? side.hidden : v; side.hidden = !st.side; $("#sgkTocBtn").setAttribute("aria-pressed", String(st.side)); save(); }
+  $("#sgkTocBtn").onclick = () => toggleSide();
+  $("#sgkClose").onclick = () => { win.hidden = true; };
+  $("#sgkMin").onclick = () => { const m = win.classList.toggle("min"); $("#sgkMin").setAttribute("aria-label", m ? "Mở rộng" : "Thu gọn"); if(m && win.classList.contains("max")) setMax(false); };
+  function setMax(v){ st.max = v; win.classList.toggle("max", v); $("#sgkMax").setAttribute("aria-label", v ? "Thu khung về cỡ nhỏ" : "Phóng to khung"); save(); }
+  $("#sgkMax").onclick = () => { win.classList.remove("min"); setMax(!win.classList.contains("max")); };
+  head.addEventListener("dblclick", e => { if(!e.target.closest("button,select")) $("#sgkMax").click(); });
+
+  /* ---- kéo khung ---- */
+  function place(){
+    const r = win.getBoundingClientRect(), w = r.width || 420;
+    if(st.x==null || st.y==null){ const ar = ($("#assist").getBoundingClientRect().left > innerWidth/2) ? 92 : 20; st.x = Math.max(8, innerWidth - w - ar); st.y = 72; }
+    st.x = Math.max(120 - w, Math.min(st.x, innerWidth - 120)); st.y = Math.max(8, Math.min(st.y, innerHeight - 52));
+    win.style.left = st.x + "px"; win.style.top = st.y + "px";
+  }
+  let d = null;
+  head.addEventListener("pointerdown", e => { if(e.button || e.target.closest("button,select") || win.classList.contains("max")) return; d = { dx:e.clientX-st.x, dy:e.clientY-st.y, id:e.pointerId }; head.setPointerCapture(e.pointerId); head.classList.add("drag"); });
+  head.addEventListener("pointermove", e => { if(!d || e.pointerId!==d.id) return; st.x = e.clientX-d.dx; st.y = e.clientY-d.dy; place(); });
+  const stop = e => { if(!d || e.pointerId!==d.id) return; d = null; head.classList.remove("drag"); save(); };
+  head.addEventListener("pointerup", stop); head.addEventListener("pointercancel", stop);
+  addEventListener("resize", () => { if(!win.hidden) place(); });
+
+  /* đổi cỡ khung → vẽ lại trang cho vừa; khung hẹp thì mục lục nổi lên trên */
+  let lastW = 0, rsT = 0;
+  new ResizeObserver(() => {
+    if(win.hidden) return;
+    const narrow = win.clientWidth < 600; if(narrow !== win.classList.contains("narrow")){ win.classList.toggle("narrow", narrow); toggleSide(!narrow); }
+    const w = view.clientWidth; if(!R.doc || Math.abs(w - lastW) < 30) return; lastW = w;
+    clearTimeout(rsT); rsT = setTimeout(() => { const keep = R.cur; R.token++; layout(keep); }, 180);
+  }).observe(win);
+
+  function open(){
+    const first = win.hidden; win.hidden = false; win.classList.remove("min");
+    if(first){ if(innerWidth < 600){ st.x = (innerWidth - win.offsetWidth)/2; st.y = 60; } setMax(!!st.max); place(); }
+    fillSel(); side.hidden = !st.side; $("#sgkTocBtn").setAttribute("aria-pressed", String(st.side));
+    const src = srcOf(st.src);
+    if(lessonN && src.sgk){ load("sgk", LESSON_PAGE[lessonN] + src.lech); }
+    else if(!loaded || !R.doc){ load(st.src); }
+    loaded = true; lastW = view.clientWidth;
+    const here = side.querySelector(".here"); if(here) here.scrollIntoView({ block:"center" });
+  }
+  function sync(n){ lessonN = n || 0; syncLesson(); }
+  return { open, sync };
+})();
 
 route();
 if(SERVER && root.dataset.user) loadContent().then(route);
