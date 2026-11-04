@@ -834,6 +834,16 @@ const esc = s => String(s).replace(/[&<>"]/g, c => ({"&":"&amp;","<":"&lt;",">":
 const norm = s => s.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g,"").replace(/đ/g,"d");
 const root = document.documentElement;
 const SERVER = !!root.dataset.server;
+/* Bản trên Vercel: nếu có cơ sở dữ liệu tài khoản (/api/me trả lời) thì đăng nhập bằng tài khoản thật */
+let HOSTED = false;
+const ACC_READY = (SERVER || !/^https?:$/.test(location.protocol) || /claude|anthropic/i.test(location.hostname)) ? Promise.resolve() :
+  fetch("/api/me", { cache:"no-store" }).then(async r => {
+    if(r.status !== 200 && r.status !== 401) return;
+    HOSTED = true;
+    try{ sessionStorage.removeItem("toan10-user"); }catch(e){}
+    if(r.status === 200){ const d = await r.json(); root.dataset.user = d.user; root.dataset.name = d.name || d.user; root.dataset.quyen = (d.quyen||[]).join(","); }
+    else { delete root.dataset.user; delete root.dataset.name; delete root.dataset.quyen; }
+  }).catch(() => {});
 const store = {
   get(k,d){ try{ const v=localStorage.getItem(k); return v?JSON.parse(v):d; }catch(e){ return d; } },
   set(k,v){ try{ localStorage.setItem(k,JSON.stringify(v)); }catch(e){} }
@@ -855,6 +865,7 @@ paintThemeBtns();
 /* ================= Quyền và máy chủ ================= */
 const PERM_LABEL = { sua_bai:"Sửa bài giảng", sua_tai_lieu:"Quản lý tài liệu PDF", quan_tri:"Quản lý tài khoản" };
 const PERM_HELP = { sua_bai:"Sửa lý thuyết, công thức, ví dụ của từng bài", sua_tai_lieu:"Tải lên và xóa file PDF", quan_tri:"Tạo, sửa, xóa tài khoản và cấp quyền" };
+const PERM_KEYS = () => HOSTED ? ["quan_tri"] : Object.keys(PERM_LABEL);   // trên Vercel chỉ có quyền quản lý tài khoản
 const can = p => (root.dataset.quyen || "").split(",").includes(p);
 function roleLabel(){ if(root.dataset.user===DEMO.user) return "Tài khoản khách"; if(can("quan_tri")) return "Quản trị"; if(can("sua_bai")||can("sua_tai_lieu")) return "Biên tập"; return "Học sinh"; }
 async function api(method, url, body){
@@ -895,7 +906,8 @@ $("#loginForm").addEventListener("submit", async e => {
   if(!u || !p){ showMsg("err","Nhập đủ tên đăng nhập và mật khẩu."); return; }
   const btn = $("#loginBtn"); btn.disabled = true; btn.textContent = "Đang kiểm tra…";
   try{
-    if(SERVER){
+    await ACC_READY;
+    if(SERVER || HOSTED){
       const r = await fetch("/api/login",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({username:u,password:p})});
       if(r.ok){ const d = await r.json(); root.dataset.quyen = (d.quyen||[]).join(","); signIn(d.user, d.name); await loadContent(); route(); detectAI(); }
       else if(r.status===429) showMsg("err","Bạn đã nhập sai quá 5 lần. Đợi 10 phút rồi thử lại.");
@@ -917,6 +929,7 @@ function signIn(user, name){
 $("#logout").onclick = () => {
   stopSong();
   if(SERVER){ location.href = "/logout"; return; }
+  if(HOSTED) fetch("/api/logout", { method:"POST" }).catch(()=>{});
   try{ sessionStorage.removeItem("toan10-user"); }catch(e){}
   delete root.dataset.user; delete root.dataset.name; delete root.dataset.quyen;
   showMsg("ok","Bạn đã đăng xuất.");
@@ -1709,25 +1722,25 @@ const BOARD = (() => {
 /* ================= Quản lý tài khoản ================= */
 const permBoxes = (pre, on) => `<fieldset class="perms"><legend>Quyền</legend>
   <label><input type="checkbox" checked disabled> <span>Xem học liệu<small>Mọi tài khoản đều có</small></span></label>
-  ${Object.keys(PERM_LABEL).map(p => `<label><input type="checkbox" id="${pre}-${p}" value="${p}"${on.includes(p)?" checked":""}> <span>${PERM_LABEL[p]}<small>${PERM_HELP[p]}</small></span></label>`).join("")}</fieldset>`;
-const readPerms = pre => Object.keys(PERM_LABEL).filter(p => document.getElementById(pre+"-"+p).checked);
-const chipsOf = (q, user) => user===DEMO.user ? `<span class="pchip view">Khách · chỉ xem</span>` : (q.length ? q.map(p=>`<span class="pchip${p==="quan_tri"?" admin":""}">${PERM_LABEL[p]}</span>`).join("") : `<span class="pchip view">Chỉ xem</span>`);
+  ${PERM_KEYS().map(p => `<label><input type="checkbox" id="${pre}-${p}" value="${p}"${on.includes(p)?" checked":""}> <span>${PERM_LABEL[p]}<small>${PERM_HELP[p]}</small></span></label>`).join("")}</fieldset>`;
+const readPerms = pre => PERM_KEYS().filter(p => document.getElementById(pre+"-"+p).checked);
+const chipsOf = (q, user) => user===DEMO.user ? `<span class="pchip view">Khách · chỉ xem</span>` : ((q = q.filter(p => PERM_KEYS().includes(p))).length ? q.map(p=>`<span class="pchip${p==="quan_tri"?" admin":""}">${PERM_LABEL[p]}</span>`).join("") : `<span class="pchip view">Chỉ xem</span>`);
 let USERS = [];
 async function renderAdmin(){
   const v = $("#v-quan-tri");
   if(!can("quan_tri")){ v.innerHTML = head("Quản lý tài khoản","Bạn không có quyền vào mục này."); return; }
-  if(!SERVER){ v.innerHTML = head("Quản lý tài khoản","Mục này chỉ hoạt động khi chạy bằng máy chủ của trường."); return; }
+  if(!SERVER && !HOSTED){ v.innerHTML = head("Quản lý tài khoản","Mục này chỉ hoạt động khi trang đã kết nối cơ sở dữ liệu tài khoản (xem hướng dẫn) hoặc chạy bằng máy chủ của trường."); return; }
   v.innerHTML = head("Quản lý tài khoản","Tạo tài khoản và chọn quyền cho từng người. Mọi tài khoản đều xem được học liệu.") + `<div class="admin-grid">
     <form class="box stack" id="newUser"><h3 class="big">Tạo tài khoản mới</h3>
       <div class="field"><label for="nu-user">Tên đăng nhập</label><input id="nu-user" required maxlength="30" autocomplete="off" placeholder="vd: hs10a1.nam"><small>3–30 ký tự: chữ không dấu, số, dấu . _ -</small></div>
       <div class="field"><label for="nu-pass">Mật khẩu</label><input id="nu-pass" required minlength="6" autocomplete="new-password"><small>Ít nhất 6 ký tự</small></div>
       <div class="field"><label for="nu-name">Tên hiển thị</label><input id="nu-name" maxlength="60" placeholder="vd: Nguyễn Văn Nam"></div>
-      <div class="field"><label>Chọn nhanh</label><div class="presets"><button type="button" data-pre="">Học sinh (chỉ xem)</button><button type="button" data-pre="sua_bai,sua_tai_lieu">Biên tập viên</button><button type="button" data-pre="sua_bai,sua_tai_lieu,quan_tri">Quản trị</button></div></div>
+      <div class="field"><label>Chọn nhanh</label><div class="presets"><button type="button" data-pre="">Học sinh (chỉ xem)</button>${HOSTED ? "" : `<button type="button" data-pre="sua_bai,sua_tai_lieu">Biên tập viên</button>`}<button type="button" data-pre="sua_bai,sua_tai_lieu,quan_tri">Quản trị</button></div></div>
       ${permBoxes("nu", [])}
       <button class="btn">Tạo tài khoản</button></form>
     <div class="box"><h3 class="big" id="uCount">Danh sách tài khoản</h3><div id="userList"><p class="role-note">Đang tải…</p></div></div></div>`;
   $("#newUser").addEventListener("click", e => { const b=e.target.closest("[data-pre]"); if(!b) return; const on=b.dataset.pre.split(",");
-    Object.keys(PERM_LABEL).forEach(p => document.getElementById("nu-"+p).checked = on.includes(p)); });
+    PERM_KEYS().forEach(p => document.getElementById("nu-"+p).checked = on.includes(p)); });
   $("#newUser").onsubmit = async e => { e.preventDefault();
     try{ await api("POST","/api/users",{ username:$("#nu-user").value.trim().toLowerCase(), password:$("#nu-pass").value, ten:$("#nu-name").value.trim(), quyen:readPerms("nu") });
       toast("Đã tạo tài khoản "+$("#nu-user").value.trim().toLowerCase()); e.target.reset(); loadUsers(); }catch(err){ toast(err.message, true); } };
@@ -1738,7 +1751,7 @@ async function loadUsers(){
   $("#uCount").textContent = `Danh sách tài khoản (${USERS.length})`;
   const me = root.dataset.user;
   $("#userList").innerHTML = USERS.map(u => `<div class="urow" data-u="${esc(u.user)}">
-    <div class="u-main"><b>${esc(u.ten)}</b><small>${esc(u.user)}${u.user===me?" · bạn":""} · tạo ${esc(u.tao||"")}</small><div class="pchips">${chipsOf(u.quyen, u.user)}</div></div>
+    <div class="u-main"><b>${esc(u.ten)}</b><small>${esc(u.user)}${u.user===me?" · bạn":""}${u.tao?" · tạo "+esc(u.tao):""}</small><div class="pchips">${chipsOf(u.quyen, u.user)}</div></div>
     <div class="u-acts">${u.user===DEMO.user ? "" : `<button class="sbtn" data-act="edit">Sửa</button>`}${u.user===me||u.user===DEMO.user ? "" : `<button class="sbtn danger" data-act="del">Xóa</button>`}</div>
     <form class="u-edit stack" hidden>
       <div class="field"><label for="ue-${esc(u.user)}-name">Tên hiển thị</label><input id="ue-${esc(u.user)}-name" value="${esc(u.ten)}" maxlength="60"></div>
@@ -2261,6 +2274,7 @@ const SGK = (() => {
 })();
 
 route();
+ACC_READY.then(() => { if(HOSTED){ if(root.dataset.user) route(); } });
 if(SERVER && root.dataset.user) loadContent().then(route);
 if(!SERVER || root.dataset.user) detectAI();
 </script>

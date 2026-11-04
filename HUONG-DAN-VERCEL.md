@@ -81,6 +81,39 @@ Thêm trong **Settings → Environment Variables**, sau đó **Redeploy**:
 
 ## Lưu ý
 
-- Trên bản Vercel, **chỉ có tài khoản khách** (`khach` / `ltk2026`). Phần **tạo tài khoản, phân quyền, sửa bài, tải PDF trên web** cần nơi lưu dữ liệu, nên hiện chỉ có ở bản máy chủ chạy trên máy tính (file zip máy chủ).
+- Trên bản Vercel có **tài khoản thật và phân quyền** khi đã làm phần "Tài khoản" bên dưới. Riêng **sửa bài giảng và tải PDF trên web** vẫn chỉ có ở bản máy chủ chạy trên máy tính.
 - Với gói miễn phí, Google có thể dùng nội dung câu hỏi để cải thiện sản phẩm. Hãy nhắc học sinh **không gõ thông tin cá nhân** vào chatbox.
 - Gói Hobby của Vercel dành cho dự án cá nhân, phi thương mại, phù hợp với dự án học sinh.
+
+## Tài khoản và quyền quản trị
+
+### A. Tạo cơ sở dữ liệu (làm 1 lần)
+1. Vào vercel.com, mở dự án **goc-toan-10**, chọn thẻ **Storage**.
+2. Bấm **Create Database** (hoặc **Browse Marketplace**), chọn **Upstash**, rồi chọn **Upstash for Redis**.
+3. Chọn gói **Free**, vùng **Singapore**. Đặt tên tùy ý (ví dụ `toan10-tai-khoan`), bấm **Create**.
+4. Khi được hỏi kết nối với dự án nào, chọn **goc-toan-10**, giữ tích cả 3 môi trường, bấm **Connect**.
+   Vercel tự thêm các biến `KV_REST_API_URL`, `KV_REST_API_TOKEN`.
+
+### B. Đặt mật khẩu cho tài khoản admin đầu tiên
+1. Dự án **goc-toan-10**, mở **Settings**, chọn **Environment Variables**.
+2. Thêm Key `ADMIN_MAT_KHAU`, Value là mật khẩu bạn muốn (ít nhất 6 ký tự), bấm **Save**.
+3. (Nên làm) Thêm Key `SESSION_SECRET`, Value là một chuỗi dài bất kỳ, ví dụ 40 ký tự gõ lung tung.
+
+### C. Đưa code mới lên
+Chép `index.html`, `vercel.json`, thư mục `api` vào thư mục repo, rồi **Commit** và **Push origin** trong GitHub Desktop.
+Nếu bạn đã push code trước khi làm A và B: vào **Deployments**, bấm **⋯** ở bản mới nhất, chọn **Redeploy**.
+
+### D. Đăng nhập admin và tạo tài khoản
+1. Mở trang, đăng nhập tên `admin` với mật khẩu đã đặt ở `ADMIN_MAT_KHAU`. Lần đầu đăng nhập, tài khoản admin được tạo tự động.
+2. Ở menu trái có mục **Quản lý tài khoản**.
+3. Tạo tài khoản: điền tên đăng nhập (vd `hs10a1.nam`), mật khẩu, tên hiển thị. Bấm **Học sinh (chỉ xem)** hoặc **Quản trị**, rồi bấm **Tạo tài khoản**.
+4. Sửa tài khoản: bấm **Sửa** để đổi tên hiển thị, đặt lại mật khẩu, bật/tắt quyền **Quản lý tài khoản**. Bấm **Xóa** hai lần để xóa.
+5. Đổi mật khẩu admin: bấm **Sửa** ở dòng của chính bạn. Từ đó mật khẩu trong `ADMIN_MAT_KHAU` không còn tác dụng, có thể xóa biến này.
+
+| Nếu thấy | Cách sửa |
+|---|---|
+| Không có mục Quản lý tài khoản, admin đăng nhập báo sai | Chưa có cơ sở dữ liệu hoặc chưa Redeploy sau khi làm A, B |
+| Nhập sai 5 lần bị khóa | Đợi 10 phút |
+| Quên mật khẩu admin | Nhờ một tài khoản quản trị khác đặt lại. Nếu không còn ai: vào Upstash, xóa khóa `toan10:tai-khoan` (mất toàn bộ tài khoản), rồi làm lại bước B, D |
+
+Lưu ý: tài khoản `khach` / `ltk2026` luôn dùng được. Học sinh đăng nhập được giữ phiên 7 ngày trên máy đó.

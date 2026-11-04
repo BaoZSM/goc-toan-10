@@ -1,4 +1,5 @@
 {
-  "functions": { "api/*.js": { "maxDuration": 60 } },
+  "functions": { "api/**/*.js": { "maxDuration": 60 } },
+  "rewrites": [ { "source": "/logout", "destination": "/api/logout" } ],
   "headers": [ { "source": "/(.*)", "headers": [ { "key": "X-Content-Type-Options", "value": "nosniff" } ] } ]
 }
