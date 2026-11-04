@@ -179,6 +179,96 @@ body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset
 .u-edit{grid-column:1/-1;background:var(--paper);border-radius:12px;padding:14px}
 .editor{border:2px solid var(--pen);background:var(--sheet)}
 .role-note{font-size:13.5px;color:var(--muted);margin:0}
+/* bảng nháp */
+#v-bang-nhap{max-width:none}
+.board{position:relative;display:flex;flex-direction:column;background:var(--sheet);border:1px solid var(--line);border-radius:16px;overflow:hidden;height:max(460px,calc(100vh - var(--top) - 230px))}
+.board.full{position:fixed;inset:0;z-index:80;border-radius:0;border:none;height:auto;padding:env(safe-area-inset-top,0px) env(safe-area-inset-right,0px) env(safe-area-inset-bottom,0px) env(safe-area-inset-left,0px)}
+.btools{display:flex;flex-wrap:wrap;gap:6px 10px;align-items:center;padding:8px 10px;border-bottom:1px solid var(--line);background:var(--paper)}
+.bgroup{display:flex;gap:3px;align-items:center;padding-right:10px;border-right:1px solid var(--line)}
+.bgroup:last-child{border-right:none;padding-right:0}
+.bright{margin-left:auto}
+.tb{width:36px;height:36px;border-radius:10px;border:1px solid transparent;background:transparent;color:var(--ink);display:grid;place-items:center;cursor:pointer;flex:none}
+.tb svg{width:20px;height:20px;fill:none;stroke:currentColor;stroke-width:1.9;stroke-linecap:round;stroke-linejoin:round}
+.tb:hover{background:var(--pen-soft)}
+.tb[aria-pressed="true"]{background:var(--pen);color:var(--on-pen)}
+.tb:disabled{opacity:.35;cursor:default;background:transparent}
+.tb.danger{color:var(--bad)}
+.tb.wd i{display:block;width:18px;border-radius:4px;background:currentColor}
+.sw{width:24px;height:24px;border-radius:50%;border:2px solid var(--sheet);background:var(--swc);box-shadow:0 0 0 1px var(--line);cursor:pointer;margin:0 2px;flex:none}
+.sw[aria-pressed="true"]{box-shadow:0 0 0 2px var(--pen)}
+.bsel,.bchk{display:flex;align-items:center;gap:6px;font:600 13px var(--f-body);color:var(--ink);white-space:nowrap;cursor:pointer}
+.bsel select{padding:6px 8px;border-radius:8px;border:1px solid var(--line);background:var(--sheet);color:var(--ink);font:600 13px var(--f-body)}
+.bchk input{width:16px;height:16px;accent-color:var(--pen)}
+.zval{min-width:52px;height:32px;border:1px solid var(--line);border-radius:999px;background:var(--sheet);color:var(--ink);font:700 12.5px var(--f-body);cursor:pointer;font-variant-numeric:tabular-nums}
+.bcanvas{position:relative;flex:1;min-height:0;touch-action:none;overflow:hidden}
+.bcanvas canvas{position:absolute;inset:0;width:100%;height:100%;display:block;touch-action:none}
+.bhint{display:flex;justify-content:space-between;gap:12px;padding:6px 12px;border-top:1px solid var(--line);background:var(--paper);font-size:13px;color:var(--muted)}
+.bhint .mono{font-variant-numeric:tabular-nums;white-space:nowrap}
+.board-text{position:absolute;z-index:3;min-width:140px;max-width:70%;padding:4px 8px;border:2px solid var(--pen);border-radius:8px;background:var(--sheet);color:var(--ink);font:600 18px var(--f-body);resize:both;outline:none}
+@media (max-width:760px){.btools{flex-wrap:nowrap;overflow-x:auto;scrollbar-width:thin}.bright{margin-left:0}.board{height:max(420px,calc(100dvh - var(--top) - 210px))}.bhint #bCoord{display:none}}
+/* màu theo chương */
+:root{--c1:#178A43;--c1s:#E6F4EA;--c2:#1F55B5;--c2s:#E7EEFB;--c3:#C96A00;--c3s:#FFF1DE;--c4:#8A3FD1;--c4s:#F2E9FB}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--c1:#5DCB8F;--c1s:#173326;--c2:#8FB5FF;--c2s:#18264A;--c3:#FFB25C;--c3s:#3A2A14;--c4:#C9A0FF;--c4s:#2C1E44}}
+:root[data-theme="dark"]{--c1:#5DCB8F;--c1s:#173326;--c2:#8FB5FF;--c2s:#18264A;--c3:#FFB25C;--c3s:#3A2A14;--c4:#C9A0FF;--c4s:#2C1E44}
+.ch-0{--cc:var(--pen);--cs:var(--pen-soft)} .ch-1{--cc:var(--c1);--cs:var(--c1s)} .ch-2{--cc:var(--c2);--cs:var(--c2s)} .ch-3{--cc:var(--c3);--cs:var(--c3s)} .ch-4{--cc:var(--c4);--cs:var(--c4s)}
+/* luyện tập */
+.ptabs{display:flex;gap:6px;flex-wrap:wrap;background:var(--sheet);border:1px solid var(--line);border-radius:999px;padding:5px;align-self:flex-start}
+.ptabs button{border:none;background:none;color:var(--muted);font:700 14.5px var(--f-body);padding:8px 18px;border-radius:999px;cursor:pointer}
+.ptabs button[aria-selected="true"]{background:var(--pen);color:var(--on-pen)}
+.pgrid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px}
+.pgrid.two{grid-template-columns:repeat(2,minmax(0,1fr))}
+.pcard{display:flex;flex-direction:column;gap:8px;padding:18px 18px 16px;border-radius:14px;background:linear-gradient(180deg,var(--cs) 0,var(--sheet) 90px);border:1px solid var(--line);border-top:4px solid var(--cc)}
+.pcard h3{font:800 20px/1.25 var(--f-display);color:var(--ink)}
+.pcard.big h3{font-size:24px}
+.pcard p{margin:0;color:var(--muted);font-size:14.5px}
+.ptag{font:800 12px var(--f-body);letter-spacing:.06em;text-transform:uppercase;color:var(--cc)}
+.pmeta{display:flex;justify-content:space-between;gap:8px;flex-wrap:wrap;font-size:13.5px;color:var(--muted);margin-top:auto}
+.pbest{font-weight:700;color:var(--cc)} .pbest.none{color:var(--muted);font-weight:500} .pbest.full::after{content:" ★";color:var(--mark)}
+.pcard .btn{align-self:flex-start;background:var(--cc);border-color:var(--cc);color:var(--on-pen)}
+.mixc{--cc:var(--red);--cs:var(--red-soft)}
+.quiz.ch-1,.quiz.ch-2,.quiz.ch-3,.quiz.ch-4{border-top-color:var(--cc)}
+.quiz .progress i{background:var(--cc,var(--pen))}
+.q-foot.left{justify-content:flex-start}
+.opt:disabled{cursor:default}
+.qres{display:flex;gap:20px;align-items:center;flex-wrap:wrap}
+.ring{--p:0;width:110px;height:110px;border-radius:50%;display:grid;place-items:center;background:conic-gradient(var(--cc,var(--pen)) calc(var(--p)*1%),var(--line) 0);flex:none}
+.ring b{width:84px;height:84px;border-radius:50%;background:var(--sheet);display:grid;place-items:center;font:800 24px var(--f-display);color:var(--ink)}
+.wtitle{font:800 20px var(--f-display);margin:22px 0 10px}
+.wrong{border:1px solid var(--line);border-radius:12px;padding:12px 14px;margin-bottom:10px;background:var(--paper)}
+.wq{font-weight:700;margin-bottom:6px}
+.wa{font-size:14.5px}.wa.bad{color:var(--bad)}.wa.ok{color:var(--ok);font-weight:700}
+.we{font-size:14px;color:var(--muted);margin-top:4px}
+/* tổng hợp công thức */
+#v-cong-thuc{max-width:980px}
+.kt-tools{display:flex;gap:10px;flex-wrap:wrap;align-items:center}
+.kt-tools input{flex:1 1 220px;min-width:0;padding:10px 14px;border-radius:999px;border:1.5px solid var(--line);background:var(--sheet);color:var(--ink);font:inherit}
+.kt-jump{display:flex;gap:6px;flex-wrap:wrap}
+.kt-jump a{padding:5px 12px;border-radius:999px;background:var(--cs);color:var(--cc);font:800 13px var(--f-body);text-decoration:none;border:1px solid transparent}
+.kt-jump a:hover{border-color:var(--cc)}
+.kt-list{display:flex;flex-direction:column;gap:18px}
+.kt{background:var(--sheet);border:1px solid var(--line);border-radius:16px;overflow:hidden;scroll-margin-top:calc(var(--top) + 16px)}
+.kt header{display:flex;align-items:center;gap:14px;padding:14px 18px;background:var(--cc);color:var(--sheet);flex-wrap:wrap}
+.kt header h3{font:800 22px/1.2 var(--f-display);color:var(--sheet)}
+.kt header small{font-weight:700;opacity:.85}
+.kno{background:var(--sheet);color:var(--cc);font:800 14px var(--f-body);padding:6px 12px;border-radius:10px;flex:none}
+.kt-acts{margin-left:auto;display:flex;gap:6px}
+.kt-acts a{color:var(--sheet);border:1.5px solid currentColor;border-radius:999px;padding:4px 12px;font:700 13px var(--f-body);text-decoration:none;opacity:.95}
+.kt-body{padding:16px 18px;display:flex;flex-direction:column;gap:12px}
+.kb ul{margin:0;padding-left:20px;display:flex;flex-direction:column;gap:4px}
+.kb h4{margin:0 0 6px;font:800 16px var(--f-body);color:var(--cc)}
+.kb.ct,.kb.cy,.kb.loi,.kb.meo{border-radius:12px;padding:12px 14px;border-left:4px solid var(--cc);background:var(--cs)}
+.kb.cy{--cc:var(--blue);--cs:var(--blue-soft)} .kb.loi{--cc:var(--bad);--cs:var(--red-soft)} .kb.meo{--cc:var(--gold);--cs:var(--gold-soft)}
+.kchip{display:inline-block;font:800 11.5px var(--f-body);letter-spacing:.06em;text-transform:uppercase;background:var(--cc);color:var(--sheet);border-radius:999px;padding:3px 10px;margin-bottom:8px}
+.fl{font:700 16px/1.9 var(--f-body);white-space:pre-wrap;overflow-wrap:anywhere}
+.tscroll{overflow-x:auto}
+.gtable{border-collapse:collapse;font:700 14px var(--f-body);font-variant-numeric:tabular-nums;min-width:560px}
+.gtable th,.gtable td{border:1px solid var(--line);padding:6px 8px;text-align:center;background:var(--sheet)}
+.gtable th{background:var(--cc);color:var(--sheet)}
+.fig{margin:0;background:#fff;border:1px solid var(--line);border-radius:12px;padding:10px;display:flex;flex-direction:column;align-items:center;gap:6px}
+.fig img{max-width:100%;height:auto;max-height:360px}
+.fig figcaption{font-size:13px;color:#5B6B60;font-style:italic;text-align:center}
+@media (max-width:980px){.pgrid{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media (max-width:600px){.pgrid,.pgrid.two{grid-template-columns:1fr}.kt-acts{margin-left:0}}
 /* trang chủ */
 .hello{display:grid;grid-template-columns:minmax(0,1fr) 280px;gap:24px;align-items:center;background:linear-gradient(120deg,var(--pen-soft),var(--sun));border-radius:16px;padding:28px 30px}
 .eyebrow{font:800 12.5px var(--f-body);letter-spacing:.1em;text-transform:uppercase;color:var(--blue);margin-bottom:8px}
@@ -191,7 +281,8 @@ body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset
 .bar{height:8px;border-radius:8px;background:var(--line);overflow:hidden}
 .bar i{display:block;height:100%;background:var(--ok);width:0;transition:width .4s}
 .cont{align-self:flex-start;border:none;background:none;color:var(--pen);font:600 14px var(--f-body);padding:0;cursor:pointer;text-decoration:underline;text-underline-offset:3px}
-.tiles{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px}
+.tiles{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:14px}
+@media (max-width:1300px){.tiles{grid-template-columns:repeat(3,minmax(0,1fr))}}
 @media (max-width:1100px){.tiles{grid-template-columns:repeat(2,minmax(0,1fr))}}
 @media (max-width:520px){.tiles{grid-template-columns:1fr}}
 .tile{background:linear-gradient(180deg,var(--c-soft,var(--pen-soft)) 0,var(--sheet) 110px);border:1px solid var(--line);border-radius:var(--r);padding:20px;display:flex;flex-direction:column;gap:10px;text-decoration:none;color:var(--ink);transition:border-color .15s,transform .15s}
@@ -422,7 +513,7 @@ dialog::backdrop{background:rgba(10,20,15,.6)}
   <main class="lcard">
     <div class="lschool">
       <img src="data:image/webp;base64,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" alt="Logo trường THPT Lý Thường Kiệt">
-      <div><div class="school-name">Trường THPT Lý Thường Kiệt</div><h1>Góc Toán 10</h1></div>
+      <div><div class="school-name">Trường THPT Lý Thường Kiệt</div><h1>Học Liệu Toán 10</h1></div>
       <p>Trang học liệu Toán 10 do học sinh trường THPT Lý Thường Kiệt thực hiện, dành cho các bạn học sinh lớp 10.</p>
       <div class="feat"><span>Bài giảng</span><span>Tài liệu PDF</span><span>Video</span><span>Bài hát</span><span>Luyện tập</span></div>
     </div>
@@ -440,7 +531,7 @@ dialog::backdrop{background:rgba(10,20,15,.6)}
       <p class="guest-cred">Tài khoản <button type="button" class="cp" data-copy="khach">khach</button> · Mật khẩu <button type="button" class="cp" data-copy="ltk2026">ltk2026</button><br><span id="cpHint" aria-live="polite">Bấm vào để sao chép</span></p>
     </div>
   </main>
-  <p class="credit">© 2026 Góc Toán 10 · Sản phẩm của <b>học sinh trường THPT Lý Thường Kiệt</b></p>
+  <p class="credit">© 2026 Học Liệu Toán 10 · Sản phẩm của <b>học sinh trường THPT Lý Thường Kiệt</b></p>
 </div>
 
 <!-- ================= CỔNG HỌC TẬP ================= -->
@@ -456,9 +547,11 @@ dialog::backdrop{background:rgba(10,20,15,.6)}
         <span class="nav-l">Học tập</span>
         <a href="#trang-chu" data-v="trang-chu"><svg class="ico" viewBox="0 0 24 24"><path d="M3 11l9-7 9 7v9a1 1 0 0 1-1 1h-5v-6H9v6H4a1 1 0 0 1-1-1z"/></svg>Trang chủ</a>
         <a href="#bai-giang" data-v="bai-giang"><svg class="ico" viewBox="0 0 24 24"><path d="M4 5a2 2 0 0 1 2-2h13v16H6a2 2 0 0 0-2 2z"/><path d="M4 21V5M8 7h7M8 11h5"/></svg>Bài giảng</a>
+        <a href="#cong-thuc" data-v="cong-thuc"><svg class="ico" viewBox="0 0 24 24"><path d="M5 4h14v16H5z"/><path d="M8 8h3M9.5 6.5v3M13 8h3M8 14.5l3 3M11 14.5l-3 3M13 15h3M13 17h3"/></svg>Tổng hợp công thức</a>
         <a href="#tai-lieu" data-v="tai-lieu"><svg class="ico" viewBox="0 0 24 24"><path d="M14 3H6a1 1 0 0 0-1 1v16a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V8z"/><path d="M14 3v5h5M9 13h6M9 17h6"/></svg>Tài liệu PDF</a>
         <a href="#video" data-v="video"><svg class="ico" viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M10 9l5 3-5 3z"/></svg>Video bài giảng</a>
         <a href="#bai-hat" data-v="bai-hat"><svg class="ico" viewBox="0 0 24 24"><path d="M9 18V5l11-2v13"/><circle cx="6" cy="18" r="3"/><circle cx="17" cy="16" r="3"/></svg>Bài hát</a>
+        <a href="#bang-nhap" data-v="bang-nhap"><svg class="ico" viewBox="0 0 24 24"><path d="M4 20l3.5-1L18 8.5 15.5 6 5 16.5z"/><path d="M14 20h6M3 4h7M6.5 4v4"/></svg>Bảng nháp</a>
         <a href="#luyen-tap" data-v="luyen-tap"><svg class="ico" viewBox="0 0 24 24"><path d="M9 11l3 3 8-8"/><path d="M20 12v7a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h9"/></svg>Luyện tập</a>
         <a href="#quan-tri" data-v="quan-tri" id="navAdmin" hidden><svg class="ico" viewBox="0 0 24 24"><circle cx="9" cy="8" r="3.5"/><path d="M2.5 20a6.5 6.5 0 0 1 13 0"/><path d="M17 11h5M19.5 8.5v5"/></svg>Quản lý tài khoản</a>
         <a href="#hoi-dap" data-v="hoi-dap"><svg class="ico" viewBox="0 0 24 24"><path d="M21 12a8 8 0 0 1-11.6 7.1L4 20l1-4.6A8 8 0 1 1 21 12z"/></svg>Hỏi đáp</a>
@@ -479,10 +572,12 @@ dialog::backdrop{background:rgba(10,20,15,.6)}
 
       <section id="v-bai-giang" data-view hidden></section>
       <section id="v-bai" data-view hidden></section>
+      <section id="v-cong-thuc" data-view hidden></section>
       <section id="v-tai-lieu" data-view hidden></section>
       <section id="v-video" data-view hidden></section>
       <section id="v-xem-video" data-view hidden></section>
       <section id="v-bai-hat" data-view hidden></section>
+      <section id="v-bang-nhap" data-view hidden></section>
       <section id="v-luyen-tap" data-view hidden></section>
       <section id="v-hoi-dap" data-view hidden></section>
       <section id="v-quan-tri" data-view hidden></section>
@@ -503,8 +598,8 @@ dialog::backdrop{background:rgba(10,20,15,.6)}
   </dialog>
 
   <button class="fab" id="fab" aria-expanded="false" aria-controls="chat"><i></i>Hỏi trợ lý</button>
-  <div class="chat" id="chat" hidden role="region" aria-label="Trợ lý Toán 10">
-    <div class="chat-h"><div><b>Trợ lý Toán 10</b><small id="aiStatus"><i></i><span>Đang kết nối…</span></small></div><div class="chat-tools"><button type="button" class="newchat" id="newChat">Trò chuyện mới</button><button class="x" id="chatClose" aria-label="Đóng trợ lý">×</button></div></div>
+  <div class="chat" id="chat" hidden role="region" aria-label="Trợ lý học tập">
+    <div class="chat-h"><div><b>Trợ lý học tập</b><small id="aiStatus"><i></i><span>Đang kết nối…</span></small></div><div class="chat-tools"><button type="button" class="newchat" id="newChat">Trò chuyện mới</button><button class="x" id="chatClose" aria-label="Đóng trợ lý">×</button></div></div>
     <div class="msgs" id="msgs"></div>
     <div class="sugg" id="sugg"></div>
     <form id="chatForm"><input id="chatIn" autocomplete="off" placeholder="Hỏi bất cứ điều gì về Toán 10…" aria-label="Câu hỏi" maxlength="1500"><button id="chatSend">Gửi</button></form>
@@ -514,7 +609,7 @@ dialog::backdrop{background:rgba(10,20,15,.6)}
 
 <script>
 const DEMO = { user:"khach", pass:"ltk2026", name:"Khách tham quan" };
-let DOCS = [{"id": "infographic", "file": "pdf/Infographic-Toan-10-Bai-1-9.pdf", "title": "Infographic Toán 10 – Bài 1 đến Bài 9", "tag": "Tài liệu chính", "chapter": "Chương I – IV", "desc": "Tóm tắt kiến thức bằng hình ảnh, mỗi bài một trang: sơ đồ, công thức và ví dụ minh họa từ Bài 1 Mệnh đề đến Bài 9 Tích của một vectơ với một số.", "pages": 10, "featured": true, "source": "Nguồn: Infographic Toán 10 – NXB Giáo dục Việt Nam", "sections": []}, {"id": "tomtat", "file": "pdf/Tom-tat-cong-thuc-Bai-1-9.pdf", "title": "Tóm tắt công thức Toán 10 – Bài 1 đến Bài 9", "tag": "Sổ tay", "chapter": "Chương I – IV", "sections": [{"h": "Chương I. Mệnh đề và tập hợp", "items": ["Mệnh đề P ⇒ Q chỉ sai khi P đúng và Q sai.", "Phủ định của '∀x, P(x)' là '∃x, P̄(x)'; phủ định của '∃x, P(x)' là '∀x, P̄(x)'.", "A ∩ B = {x | x ∈ A và x ∈ B};  A ∪ B = {x | x ∈ A hoặc x ∈ B}.", "A \\ B = {x | x ∈ A và x ∉ B};  nếu A ⊂ E thì C_E A = E \\ A.", "Tập hợp có n phần tử có 2ⁿ tập con."]}, {"h": "Chương II. Bất phương trình bậc nhất hai ẩn", "items": ["Dạng ax + by < c (hoặc >, ≤, ≥), a và b không đồng thời bằng 0.", "Miền nghiệm: vẽ đường thẳng ax + by = c, thử một điểm không nằm trên đường thẳng (thường là O).", "Miền nghiệm của hệ là phần giao các miền nghiệm.", "F = ax + by đạt giá trị lớn nhất, nhỏ nhất tại một đỉnh của miền nghiệm đa giác."]}, {"h": "Chương III. Hệ thức lượng trong tam giác", "items": ["sin²α + cos²α = 1;  tanα = sinα / cosα;  cotα = cosα / sinα.", "sin(180° − α) = sinα;  cos(180° − α) = −cosα;  tan(180° − α) = −tanα.", "Định lý côsin: a² = b² + c² − 2bc·cosA.", "Định lý sin: a/sinA = b/sinB = c/sinC = 2R.", "Diện tích: S = ½·bc·sinA = abc/(4R) = p·r = √[p(p−a)(p−b)(p−c)]."]}, {"h": "Chương IV. Vectơ (Bài 7 – Bài 9)", "items": ["Hai vectơ bằng nhau khi cùng hướng và cùng độ dài. ABCD là hình bình hành ⇔ AB→ = DC→.", "Quy tắc ba điểm: AB→ + BC→ = AC→.  Quy tắc hình bình hành: AB→ + AD→ = AC→.", "Quy tắc hiệu: OB→ − OA→ = AB→.", "I là trung điểm AB ⇔ IA→ + IB→ = 0→ ⇔ MA→ + MB→ = 2MI→ (với mọi M).", "G là trọng tâm ΔABC ⇔ GA→ + GB→ + GC→ = 0→ ⇔ MA→ + MB→ + MC→ = 3MG→.", "k·a→ cùng hướng a→ khi k > 0, ngược hướng khi k < 0; |k·a→| = |k|·|a→|.", "A, B, C thẳng hàng ⇔ có số k sao cho AB→ = k·AC→."]}], "desc": "Toàn bộ công thức trọng tâm Bài 1 → Bài 9 gom trong một tài liệu ngắn.", "pages": 2}, {"id": "c12", "file": "pdf/Chuong1-2-Menh-de-Tap-hop-BPT.pdf", "title": "Mệnh đề, tập hợp và bất phương trình bậc nhất hai ẩn", "tag": "Chuyên đề", "chapter": "Chương I – II", "sections": [{"h": "1. Mệnh đề", "items": ["Mệnh đề là câu khẳng định có tính đúng hoặc sai, không thể vừa đúng vừa sai.", "P ⇒ Q: P là điều kiện đủ để có Q, Q là điều kiện cần để có P.", "P ⇔ Q đúng khi P ⇒ Q và Q ⇒ P cùng đúng."]}, {"h": "2. Tập hợp", "items": ["A ⊂ B khi mọi phần tử của A đều thuộc B.", "Khoảng (a; b), đoạn [a; b], nửa khoảng [a; b), (a; b].", "Mẹo: vẽ các tập lên trục số để tìm giao, hợp, hiệu."]}, {"h": "3. Bất phương trình và hệ bất phương trình bậc nhất hai ẩn", "items": ["Dấu < hoặc >: bờ không thuộc miền nghiệm. Dấu ≤ hoặc ≥: bờ thuộc miền nghiệm.", "Tìm đỉnh miền nghiệm bằng cách giải hệ hai phương trình đường thẳng.", "Tính F tại từng đỉnh rồi so sánh để tìm giá trị lớn nhất, nhỏ nhất."]}, {"h": "Bài tập tự luyện", "items": ["Bài 1. Lập mệnh đề phủ định của '∀n ∈ ℕ, n² + 1 > 0' và xét tính đúng sai của nó.", "Bài 2. Cho A = {x ∈ ℝ | −2 < x ≤ 3}, B = [1; 5). Tìm A ∩ B, A ∪ B, A \\ B.", "Bài 3. Biểu diễn miền nghiệm của hệ x ≥ 0, y ≥ 0, 2x + y ≤ 6, x + y ≤ 4. Tìm giá trị lớn nhất của F = 3x + 2y.", "Đáp số: Bài 1: '∃n ∈ ℕ, n² + 1 ≤ 0', mệnh đề phủ định sai.  Bài 2: A ∩ B = [1; 3], A ∪ B = (−2; 5), A \\ B = (−2; 1).  Bài 3: các đỉnh O(0;0), (3;0), (2;2), (0;4); F lớn nhất bằng 10 tại (2; 2)."]}], "desc": "Lý thuyết, công thức, ví dụ có lời giải của Bài 1 → Bài 4, kèm bài tập tự luyện và đáp số.", "pages": 3}, {"id": "c3", "file": "pdf/Chuong3-He-thuc-luong-trong-tam-giac.pdf", "title": "Hệ thức lượng trong tam giác – lý thuyết và bài tập", "tag": "Chuyên đề", "chapter": "Chương III", "sections": [{"h": "1. Giá trị lượng giác của góc từ 0° đến 180°", "items": ["Với M(x₀;y₀) trên nửa đường tròn đơn vị, góc xOM = α: sinα = y₀, cosα = x₀.", "Giá trị đặc biệt: sin30° = 1/2, sin45° = √2/2, sin60° = √3/2, cos120° = −1/2, cos150° = −√3/2."]}, {"h": "2. Định lý côsin và định lý sin", "items": ["a² = b² + c² − 2bc·cosA  ⇒  cosA = (b² + c² − a²)/(2bc).", "a/sinA = b/sinB = c/sinC = 2R (R là bán kính đường tròn ngoại tiếp)."]}, {"h": "3. Giải tam giác và ứng dụng thực tế", "items": ["Biết 2 cạnh và góc xen giữa: dùng định lý côsin tìm cạnh còn lại.", "Biết 1 cạnh và 2 góc: dùng định lý sin.", "Đo chiều cao tòa nhà, khoảng cách giữa hai điểm không đến được."]}, {"h": "Bài tập tự luyện", "items": ["Bài 1. Cho ΔABC có b = 6, c = 8, A = 60°. Tính a và diện tích S.", "Bài 2. Cho ΔABC có a = 7, b = 8, c = 5. Tính góc B.", "Bài 3. Cho tam giác có ba cạnh 13, 14, 15. Tính S, R và r.", "Đáp số: Bài 1: a = 2√13, S = 12√3.  Bài 2: cosB = 1/7, B ≈ 81,8°.  Bài 3: S = 84, R = 65/8, r = 4."]}], "desc": "Giá trị lượng giác, định lý côsin, định lý sin, diện tích tam giác (Bài 5, 6), kèm bài tập.", "pages": 2}, {"id": "c4", "file": "pdf/Chuong4-Vecto-Bai-7-9.pdf", "title": "Vectơ – Bài 7, Bài 8, Bài 9", "tag": "Chuyên đề", "chapter": "Chương IV", "sections": [{"h": "1. Các khái niệm mở đầu (Bài 7)", "items": ["Vectơ là đoạn thẳng có hướng. Đường thẳng qua điểm đầu và điểm cuối là giá của vectơ.", "Hai vectơ cùng phương khi giá song song hoặc trùng nhau; khi đó chúng cùng hướng hoặc ngược hướng.", "Hai vectơ bằng nhau khi cùng hướng và cùng độ dài. Vectơ-không cùng hướng với mọi vectơ."]}, {"h": "2. Tổng và hiệu của hai vectơ (Bài 8)", "items": ["AB→ + BC→ = AC→;  AB→ + AD→ = AC→ (ABCD là hình bình hành).", "Vectơ đối của a→ là −a→;  a→ − b→ = a→ + (−b→);  OB→ − OA→ = AB→.", "IA→ + IB→ = 0→ (I trung điểm AB);  GA→ + GB→ + GC→ = 0→ (G trọng tâm ΔABC)."]}, {"h": "3. Tích của một vectơ với một số (Bài 9)", "items": ["k·a→ cùng hướng a→ nếu k > 0, ngược hướng nếu k < 0, độ dài |k|·|a→|.", "b→ cùng phương a→ (a→ ≠ 0→) ⇔ có số k để b→ = k·a→.", "MA→ + MB→ = 2MI→;  MA→ + MB→ + MC→ = 3MG→ với mọi điểm M."]}, {"h": "Bài tập tự luyện", "items": ["Bài 1. Cho hình bình hành ABCD tâm O. Chứng minh OA→ + OB→ + OC→ + OD→ = 0→.", "Bài 2. Cho ΔABC, M là trung điểm BC, G là trọng tâm. Biểu diễn AM→, AG→ theo AB→ và AC→.", "Bài 3. Cho ba điểm A, B, C thỏa AB→ = −2AC→. Ba điểm có thẳng hàng không? Điểm A nằm ở đâu?", "Đáp số: Bài 1: OA→ = −OC→, OB→ = −OD→.  Bài 2: AM→ = ½(AB→ + AC→), AG→ = ⅓(AB→ + AC→).  Bài 3: thẳng hàng; A nằm giữa B và C, AB = 2AC."]}], "desc": "Khái niệm vectơ, tổng – hiệu, tích của vectơ với một số (Bài 7 → 9), kèm bài tập.", "pages": 2}, {"id": "de1", "file": "pdf/De-on-tap-giua-hoc-ki-1.pdf", "title": "Đề ôn tập giữa học kì I (có đáp án)", "tag": "Đề ôn", "chapter": "Chương I – III", "sections": [{"h": "Phần I. Trắc nghiệm (mỗi câu 0,5 điểm)", "items": ["Câu 1. Phủ định của mệnh đề '∀x ∈ ℝ, x² ≥ 0' là: A. ∃x ∈ ℝ, x² < 0  B. ∀x ∈ ℝ, x² < 0  C. ∃x ∈ ℝ, x² ≤ 0  D. ∀x ∈ ℝ, x² ≤ 0.", "Câu 2. Cho A = [1; 5), B = (3; 7]. A ∩ B là: A. (3; 5)  B. [1; 7]  C. [1; 3]  D. [5; 7].", "Câu 3. Điểm nào thuộc miền nghiệm của 2x − y > 3? A. (0;0)  B. (1;1)  C. (3;1)  D. (1;−0,5).", "Câu 4. Giá trị cos135° bằng: A. √2/2  B. −√2/2  C. −1/2  D. √3/2."]}, {"h": "Phần II. Tự luận", "items": ["Bài 1 (2 điểm). Cho E = {x ∈ ℤ | −2 ≤ x < 4}, A = {0; 1; 2}. Liệt kê E và tìm C_E A.", "Bài 2 (2 điểm). Biểu diễn miền nghiệm của hệ x ≥ 0, y ≥ 0, x + y ≤ 4. Tìm giá trị lớn nhất của F = 2x + 3y.", "Bài 3 (2 điểm). Cho ΔABC có AB = 5, AC = 8, A = 60°. Tính BC và bán kính R."]}, {"h": "Đáp án", "items": ["Trắc nghiệm: 1A  2A  3C  4B.", "Bài 1: E = {−2; −1; 0; 1; 2; 3}, C_E A = {−2; −1; 3}.", "Bài 2: Miền nghiệm là tam giác O(0;0), (4;0), (0;4). F lớn nhất bằng 12 tại (0;4).", "Bài 3: BC = 7, R = 7/√3 = 7√3/3."]}], "desc": "Đề trắc nghiệm và tự luận Chương I – III, có đáp án.", "pages": 1}];
+let DOCS = [{"id": "infographic", "file": "pdf/Infographic-Toan-10-Bai-1-9.pdf", "title": "Infographic Toán 10 – Bài 1 đến Bài 9", "tag": "Tài liệu chính", "chapter": "Chương I – IV", "desc": "Tóm tắt kiến thức bằng hình ảnh, mỗi bài một trang: sơ đồ, công thức và ví dụ minh họa từ Bài 1 Mệnh đề đến Bài 9 Tích của một vectơ với một số.", "pages": 10, "featured": true, "source": "Nguồn: Infographic Toán 10 – NXB Giáo dục Việt Nam", "sections": []}, {"id": "tomtat", "file": "pdf/Tom-tat-cong-thuc-Bai-1-9.pdf", "title": "Tóm tắt công thức Toán 10 – Bài 1 đến Bài 9", "tag": "Sổ tay", "chapter": "Chương I – IV", "sections": [{"h": "Chương I. Mệnh đề và tập hợp", "items": ["Mệnh đề P ⇒ Q chỉ sai khi P đúng và Q sai.", "Phủ định của '∀x, P(x)' là '∃x, P̄(x)'; phủ định của '∃x, P(x)' là '∀x, P̄(x)'.", "A ∩ B = {x | x ∈ A và x ∈ B};  A ∪ B = {x | x ∈ A hoặc x ∈ B}.", "A \\ B = {x | x ∈ A và x ∉ B};  nếu A ⊂ E thì C_E A = E \\ A.", "Tập hợp có n phần tử có 2ⁿ tập con."]}, {"h": "Chương II. Bất phương trình bậc nhất hai ẩn", "items": ["Dạng ax + by < c (hoặc >, ≤, ≥), a và b không đồng thời bằng 0.", "Miền nghiệm: vẽ đường thẳng ax + by = c, thử một điểm không nằm trên đường thẳng (thường là O).", "Miền nghiệm của hệ là phần giao các miền nghiệm.", "F = ax + by đạt giá trị lớn nhất, nhỏ nhất tại một đỉnh của miền nghiệm đa giác."]}, {"h": "Chương III. Hệ thức lượng trong tam giác", "items": ["sin²α + cos²α = 1;  tanα = sinα / cosα;  cotα = cosα / sinα.", "sin(180° − α) = sinα;  cos(180° − α) = −cosα;  tan(180° − α) = −tanα.", "Định lý côsin: a² = b² + c² − 2bc·cosA.", "Định lý sin: a/sinA = b/sinB = c/sinC = 2R.", "Diện tích: S = ½·bc·sinA = abc/(4R) = p·r = √[p(p−a)(p−b)(p−c)]."]}, {"h": "Chương IV. Vectơ (Bài 7 – Bài 9)", "items": ["Hai vectơ bằng nhau khi cùng hướng và cùng độ dài. ABCD là hình bình hành ⇔ AB→ = DC→.", "Quy tắc ba điểm: AB→ + BC→ = AC→.  Quy tắc hình bình hành: AB→ + AD→ = AC→.", "Quy tắc hiệu: OB→ − OA→ = AB→.", "I là trung điểm AB ⇔ IA→ + IB→ = 0→ ⇔ MA→ + MB→ = 2MI→ (với mọi M).", "G là trọng tâm ΔABC ⇔ GA→ + GB→ + GC→ = 0→ ⇔ MA→ + MB→ + MC→ = 3MG→.", "k·a→ cùng hướng a→ khi k > 0, ngược hướng khi k < 0; |k·a→| = |k|·|a→|.", "A, B, C thẳng hàng ⇔ có số k sao cho AB→ = k·AC→."]}], "desc": "Sổ tay công thức Bài 1 → Bài 9, mỗi chương một màu, kèm mẹo nhớ.", "pages": 6}, {"id": "b1", "file": "pdf/Bai-1-Menh-de.pdf", "title": "Bài 1. Mệnh đề", "tag": "Bài học", "chapter": "Chương I", "desc": "Kiến thức, công thức, bảng chân trị, 4 ví dụ có lời giải, 6 câu trắc nghiệm và 2 bài tự luận có đáp án.", "pages": 4, "sections": []}, {"id": "b2", "file": "pdf/Bai-2-Tap-hop-va-cac-phep-toan.pdf", "title": "Bài 2. Tập hợp và các phép toán trên tập hợp", "tag": "Bài học", "chapter": "Chương I", "desc": "Kiến thức, công thức, 2 hình minh họa, 5 ví dụ có lời giải, 6 câu trắc nghiệm và 2 bài tự luận có đáp án.", "pages": 4, "sections": []}, {"id": "b3", "file": "pdf/Bai-3-Bat-phuong-trinh-bac-nhat-hai-an.pdf", "title": "Bài 3. Bất phương trình bậc nhất hai ẩn", "tag": "Bài học", "chapter": "Chương II", "desc": "Kiến thức, công thức, 1 hình minh họa, 4 ví dụ có lời giải, 5 câu trắc nghiệm và 2 bài tự luận có đáp án.", "pages": 4, "sections": []}, {"id": "b4", "file": "pdf/Bai-4-He-bat-phuong-trinh-bac-nhat-hai-an.pdf", "title": "Bài 4. Hệ bất phương trình bậc nhất hai ẩn", "tag": "Bài học", "chapter": "Chương II", "desc": "Kiến thức, công thức, 1 hình minh họa, 3 ví dụ có lời giải, 5 câu trắc nghiệm và 2 bài tự luận có đáp án.", "pages": 4, "sections": []}, {"id": "b5", "file": "pdf/Bai-5-Gia-tri-luong-giac-goc-0-180.pdf", "title": "Bài 5. Giá trị lượng giác của một góc từ 0° đến 180°", "tag": "Bài học", "chapter": "Chương III", "desc": "Kiến thức, công thức, 1 hình minh họa, 4 ví dụ có lời giải, 6 câu trắc nghiệm và 2 bài tự luận có đáp án.", "pages": 4, "sections": []}, {"id": "b6", "file": "pdf/Bai-6-He-thuc-luong-trong-tam-giac.pdf", "title": "Bài 6. Hệ thức lượng trong tam giác", "tag": "Bài học", "chapter": "Chương III", "desc": "Kiến thức, công thức, 1 hình minh họa, 5 ví dụ có lời giải, 6 câu trắc nghiệm và 3 bài tự luận có đáp án.", "pages": 4, "sections": []}, {"id": "b7", "file": "pdf/Bai-7-Cac-khai-niem-mo-dau-vecto.pdf", "title": "Bài 7. Các khái niệm mở đầu", "tag": "Bài học", "chapter": "Chương IV", "desc": "Kiến thức, công thức, 1 hình minh họa, 4 ví dụ có lời giải, 5 câu trắc nghiệm và 2 bài tự luận có đáp án.", "pages": 4, "sections": []}, {"id": "b8", "file": "pdf/Bai-8-Tong-va-hieu-hai-vecto.pdf", "title": "Bài 8. Tổng và hiệu của hai vectơ", "tag": "Bài học", "chapter": "Chương IV", "desc": "Kiến thức, công thức, 1 hình minh họa, 4 ví dụ có lời giải, 6 câu trắc nghiệm và 2 bài tự luận có đáp án.", "pages": 4, "sections": []}, {"id": "b9", "file": "pdf/Bai-9-Tich-vecto-voi-mot-so.pdf", "title": "Bài 9. Tích của một vectơ với một số", "tag": "Bài học", "chapter": "Chương IV", "desc": "Kiến thức, công thức, 1 hình minh họa, 5 ví dụ có lời giải, 6 câu trắc nghiệm và 2 bài tự luận có đáp án.", "pages": 4, "sections": []}, {"id": "de1", "file": "pdf/De-on-tap-giua-hoc-ki-1.pdf", "title": "Đề ôn tập giữa học kì I (có đáp án)", "tag": "Đề ôn", "chapter": "Chương I – III", "sections": [{"h": "Phần I. Trắc nghiệm (mỗi câu 0,5 điểm)", "items": ["Câu 1. Phủ định của mệnh đề '∀x ∈ ℝ, x² ≥ 0' là: A. ∃x ∈ ℝ, x² < 0  B. ∀x ∈ ℝ, x² < 0  C. ∃x ∈ ℝ, x² ≤ 0  D. ∀x ∈ ℝ, x² ≤ 0.", "Câu 2. Cho A = [1; 5), B = (3; 7]. A ∩ B là: A. (3; 5)  B. [1; 7]  C. [1; 3]  D. [5; 7].", "Câu 3. Điểm nào thuộc miền nghiệm của 2x − y > 3? A. (0;0)  B. (1;1)  C. (3;1)  D. (1;−0,5).", "Câu 4. Giá trị cos135° bằng: A. √2/2  B. −√2/2  C. −1/2  D. √3/2."]}, {"h": "Phần II. Tự luận", "items": ["Bài 1 (2 điểm). Cho E = {x ∈ ℤ | −2 ≤ x < 4}, A = {0; 1; 2}. Liệt kê E và tìm C_E A.", "Bài 2 (2 điểm). Biểu diễn miền nghiệm của hệ x ≥ 0, y ≥ 0, x + y ≤ 4. Tìm giá trị lớn nhất của F = 2x + 3y.", "Bài 3 (2 điểm). Cho ΔABC có AB = 5, AC = 8, A = 60°. Tính BC và bán kính R."]}, {"h": "Đáp án", "items": ["Trắc nghiệm: 1A  2A  3C  4B.", "Bài 1: E = {−2; −1; 0; 1; 2; 3}, C_E A = {−2; −1; 3}.", "Bài 2: Miền nghiệm là tam giác O(0;0), (4;0), (0;4). F lớn nhất bằng 12 tại (0;4).", "Bài 3: BC = 7, R = 7/√3 = 7√3/3."]}], "desc": "Đề trắc nghiệm và tự luận Chương I – III, có ô ghi họ tên và đáp án ở trang cuối.", "pages": 3}];
 
 const CHAPTERS = [
  {n:"I", t:"Mệnh đề và tập hợp", lessons:[1,2]},
@@ -570,6 +665,7 @@ const LESSONS = [
   exq:"Cho tam giác ABC, M là trung điểm BC, G là trọng tâm. Biểu diễn AM→ và AG→ theo AB→ và AC→.",
   exa:"Vì M là trung điểm BC nên AB→ + AC→ = 2AM→, suy ra AM→ = ½(AB→ + AC→). G nằm trên AM với AG = ⅔AM, nên AG→ = ⅔AM→ = ⅓(AB→ + AC→)."}
 ];
+LESSONS.forEach(l => l.doc = "b" + l.n);
 LESSONS.forEach(l => l.q = "Toán 10 Kết nối tri thức Bài " + l.n + " " + l.t);
 
 const SONGS = [
@@ -590,20 +686,10 @@ const SONGS = [
   lines:["A sang B rồi B sang C","Gộp lại thành A tới C thôi","Hình bình hành chung một gốc","Đường chéo là tổng hai cạnh kề","","Nhân với k dương thì cùng hướng","k âm quay ngược, dài gấp trị tuyệt đối k"]}
 ];
 
-const QUIZ = [
- {q:"Câu nào sau đây là mệnh đề?",o:["Hôm nay trời đẹp quá!","Số 15 chia hết cho 4.","x + 2 = 5","Bạn đã học bài chưa?"],a:1,e:"“Số 15 chia hết cho 4” là câu khẳng định (sai), nên là mệnh đề. Câu cảm thán, câu hỏi và câu chứa biến không phải mệnh đề."},
- {q:"Mệnh đề nào là phủ định của “∃x ∈ ℝ, x² + 1 = 0”?",o:["∀x ∈ ℝ, x² + 1 ≠ 0","∃x ∈ ℝ, x² + 1 ≠ 0","∀x ∈ ℝ, x² + 1 = 0","∃x ∈ ℝ, x² + 1 > 0"],a:0,e:"Phủ định đổi ∃ thành ∀ và đổi “=” thành “≠”."},
- {q:"Cho A = (−1; 4], B = [2; 6). Tập A ∪ B là:",o:["[2; 4]","(−1; 6)","(−1; 2)","(4; 6)"],a:1,e:"Hợp lấy tất cả phần tử thuộc A hoặc B: từ −1 (không lấy) đến 6 (không lấy)."},
- {q:"Tập hợp A = {1; 2; 3} có bao nhiêu tập con?",o:["3","6","7","8"],a:3,e:"Tập có n phần tử có 2ⁿ tập con: 2³ = 8 (kể cả ∅ và chính A)."},
- {q:"Cặp số nào là nghiệm của bất phương trình x − 2y + 1 > 0?",o:["(0; 1)","(1; 1)","(2; 1)","(−1; 0)"],a:2,e:"Thay (2; 1): 2 − 2 + 1 = 1 > 0. Các cặp còn lại cho giá trị nhỏ hơn hoặc bằng 0."},
- {q:"Giá trị lớn nhất của F = x + 2y trên miền x ≥ 0, y ≥ 0, x + y ≤ 3 là:",o:["3","6","9","0"],a:1,e:"Các đỉnh: (0; 0), (3; 0), (0; 3). F lần lượt bằng 0, 3, 6. Giá trị lớn nhất là 6."},
- {q:"Giá trị của sin150° là:",o:["−1/2","1/2","√3/2","−√3/2"],a:1,e:"sin(180° − α) = sinα nên sin150° = sin30° = 1/2."},
- {q:"Tam giác ABC có b = 3, c = 5, A = 120°. Độ dài cạnh a là:",o:["7","√19","8","√34"],a:0,e:"a² = 9 + 25 − 2·3·5·cos120° = 34 + 15 = 49, nên a = 7."},
- {q:"Cho hình bình hành ABCD. Khẳng định nào đúng?",o:["AB→ + AD→ = AC→","AB→ = CD→","AB→ + BC→ = CA→","AD→ = CB→"],a:0,e:"Quy tắc hình bình hành: AB→ + AD→ = AC→. Lưu ý AB→ = DC→ (không phải CD→)."},
- {q:"Cho I là trung điểm đoạn AB. Khẳng định nào đúng?",o:["IA→ = IB→","IA→ + IB→ = 0→","AI→ + BI→ = AB→","|IA→| = 2|AB→|"],a:1,e:"IA→ và IB→ ngược hướng, cùng độ dài nên tổng bằng 0→."},
- {q:"Cho |a→| = 3. Vectơ −2a→ có tính chất:",o:["Cùng hướng a→, độ dài 6","Ngược hướng a→, độ dài 6","Ngược hướng a→, độ dài −6","Cùng hướng a→, độ dài 1,5"],a:1,e:"k = −2 < 0 nên ngược hướng; độ dài |−2|·3 = 6. Độ dài không bao giờ âm."},
- {q:"Cho tam giác ABC có trọng tâm G, M là trung điểm BC. Khẳng định nào đúng?",o:["AG→ = ⅔AM→","AG→ = ½AM→","AG→ = 3/2·AM→","AG→ = ⅓AM→"],a:0,e:"Trọng tâm nằm trên trung tuyến và cách đỉnh ⅔ độ dài trung tuyến: AG→ = ⅔AM→."}
-];
+const KT = {"lessons": [{"n": 1, "ch": "I", "t": "Mệnh đề", "blocks": [{"k": "kn", "h": "Mệnh đề và mệnh đề chứa biến", "lines": ["Mệnh đề là câu khẳng định có tính đúng hoặc sai. Một mệnh đề không thể vừa đúng vừa sai.", "Câu hỏi, câu cảm thán, câu cầu khiến không phải là mệnh đề.", "Mệnh đề chứa biến P(x) chưa xác định đúng sai; thay x bằng một giá trị cụ thể thì được mệnh đề."]}, {"k": "kn", "h": "Phủ định, kéo theo, tương đương", "lines": ["Phủ định của P kí hiệu P̄: P đúng thì P̄ sai và ngược lại.", "P ⇒ Q (“Nếu P thì Q”) chỉ sai khi P đúng và Q sai.", "P ⇒ Q đúng: P là điều kiện đủ để có Q; Q là điều kiện cần để có P.", "Mệnh đề đảo của P ⇒ Q là Q ⇒ P.", "P ⇔ Q (“P khi và chỉ khi Q”) đúng khi cả P ⇒ Q và Q ⇒ P đều đúng: P là điều kiện cần và đủ để có Q."]}, {"k": "ct", "h": "Kí hiệu ∀, ∃ và phủ định", "lines": ["∀: với mọi     ∃: tồn tại (có ít nhất một)", "Phủ định của  ∀x ∈ X, P(x)  là  ∃x ∈ X, P̄(x)", "Phủ định của  ∃x ∈ X, P(x)  là  ∀x ∈ X, P̄(x)", "Phủ định của  <  là  ≥ ;  >  là  ≤ ;  =  là  ≠"]}, {"k": "loi", "h": "Lỗi hay gặp", "lines": ["Phủ định “x > 2” thành “x < 2” (đúng phải là “x ≤ 2”).", "Chỉ đổi ∀ thành ∃ mà quên phủ định phần mệnh đề phía sau.", "Nhầm điều kiện cần với điều kiện đủ: trong P ⇒ Q, P là điều kiện ĐỦ."]}, {"k": "meo", "h": "Mẹo nhớ", "lines": ["“Đủ đứng đầu, cần đứng cuối”: P ⇒ Q thì P đủ, Q cần.", "Phủ định: ∀ ↔ ∃, rồi “lật” dấu so sánh."]}], "quiz": [{"q": "Câu nào sau đây là mệnh đề?", "o": ["Số 15 chia hết cho 4.", "Hôm nay trời đẹp quá!", "x + 2 = 5", "Bạn đã học bài chưa?"], "a": 0, "e": "“Số 15 chia hết cho 4” là câu khẳng định (sai) nên là mệnh đề. Câu cảm thán, câu hỏi và câu chứa biến không phải mệnh đề."}, {"q": "Phủ định của “∃x ∈ ℝ, x² + 1 = 0” là:", "o": ["∀x ∈ ℝ, x² + 1 ≠ 0", "∃x ∈ ℝ, x² + 1 ≠ 0", "∀x ∈ ℝ, x² + 1 = 0", "∃x ∈ ℝ, x² + 1 > 0"], "a": 0, "e": "Đổi ∃ thành ∀ và đổi “=” thành “≠”."}, {"q": "Mệnh đề P ⇒ Q sai khi nào?", "o": ["P đúng và Q sai", "P sai và Q đúng", "P sai và Q sai", "P đúng và Q đúng"], "a": 0, "e": "P ⇒ Q chỉ sai trong đúng một trường hợp: P đúng, Q sai."}, {"q": "Cho P: “ABC là tam giác đều”, Q: “ABC có ba góc bằng nhau”. Khẳng định nào đúng?", "o": ["P ⇔ Q đúng", "P ⇒ Q sai", "Q ⇒ P sai", "P ⇔ Q sai"], "a": 0, "e": "Tam giác đều khi và chỉ khi ba góc bằng nhau (cùng bằng 60°), nên P ⇔ Q đúng."}, {"q": "Phủ định của “∀x ∈ ℝ, x² ≥ 0” là:", "o": ["∃x ∈ ℝ, x² < 0", "∀x ∈ ℝ, x² < 0", "∃x ∈ ℝ, x² ≤ 0", "∃x ∈ ℝ, x² > 0"], "a": 0, "e": "Đổi ∀ thành ∃, phủ định của “≥” là “<”."}, {"q": "Trong mệnh đề “Nếu n chia hết cho 4 thì n chia hết cho 2”, điều nào đúng?", "o": ["“n chia hết cho 4” là điều kiện đủ", "“n chia hết cho 4” là điều kiện cần", "“n chia hết cho 2” là điều kiện đủ", "Hai điều kiện tương đương"], "a": 0, "e": "Trong P ⇒ Q, P (đứng đầu) là điều kiện đủ."}], "essay": [{"q": "Lập mệnh đề phủ định của “∀n ∈ ℕ, n² + 1 > 0” và xét tính đúng sai của nó.", "a": "Phủ định: “∃n ∈ ℕ, n² + 1 ≤ 0”. Vì n² + 1 ≥ 1 > 0 với mọi n nên mệnh đề phủ định sai."}, {"q": "Xét tính đúng sai và lập mệnh đề phủ định: “Có một số tự nhiên n mà n² = n”.", "a": "Mệnh đề đúng (n = 0 hoặc n = 1). Phủ định: “∀n ∈ ℕ, n² ≠ n” – sai."}]}, {"n": 2, "ch": "I", "t": "Tập hợp và các phép toán trên tập hợp", "blocks": [{"k": "kn", "h": "Tập hợp và tập con", "lines": ["Cho tập hợp bằng cách liệt kê, ví dụ A = {1; 2; 3}, hoặc chỉ ra tính chất đặc trưng, ví dụ A = {x ∈ ℕ | x < 4}.", "Tập rỗng ∅ không có phần tử nào.", "A ⊂ B khi mọi phần tử của A đều thuộc B. Luôn có ∅ ⊂ A và A ⊂ A.", "A = B khi A ⊂ B và B ⊂ A.  Tập có n phần tử có 2ⁿ tập con.", "Các tập số: ℕ ⊂ ℤ ⊂ ℚ ⊂ ℝ."]}, {"k": "ct", "h": "Các tập con thường gặp của ℝ", "lines": ["(a; b) = {x | a < x < b}        [a; b] = {x | a ≤ x ≤ b}", "[a; b) = {x | a ≤ x < b}        (a; b] = {x | a < x ≤ b}", "(a; +∞) = {x | x > a}          (−∞; b] = {x | x ≤ b}"]}, {"k": "ct", "h": "Các phép toán", "lines": ["A ∩ B = {x | x ∈ A và x ∈ B}   (giao: phần chung)", "A ∪ B = {x | x ∈ A hoặc x ∈ B}   (hợp: gộp lại)", "A \\ B = {x | x ∈ A và x ∉ B}   (hiệu: của A, bỏ phần của B)", "Nếu A ⊂ E: C_E A = E \\ A   (phần bù);   C_ℝ A = ℝ \\ A"]}, {"k": "loi", "h": "Lỗi hay gặp", "lines": ["Quên xét đầu mút: [1; 5) ∩ (3; 7] = (3; 5), không phải [3; 5].", "Nhầm A \\ B với B \\ A: hai tập này thường khác nhau.", "Viết −∞ hoặc +∞ với dấu ngoặc vuông: luôn dùng ngoặc tròn."]}, {"k": "meo", "h": "Mẹo nhớ", "lines": ["Vẽ trục số: gạch bỏ phần KHÔNG lấy, phần còn lại là kết quả.", "Ngoặc vuông “ôm” đầu mút, ngoặc tròn “bỏ” đầu mút."]}], "quiz": [{"q": "Cho A = (−1; 4], B = [2; 6). Tập A ∪ B là:", "o": ["(−1; 6)", "[2; 4]", "(−1; 2)", "(4; 6)"], "a": 0, "e": "Hợp lấy tất cả phần tử thuộc A hoặc B: từ −1 (không lấy) đến 6 (không lấy)."}, {"q": "Tập hợp {1; 2; 3} có bao nhiêu tập con?", "o": ["8", "3", "6", "7"], "a": 0, "e": "Tập có n phần tử có 2ⁿ tập con: 2³ = 8, kể cả ∅ và chính nó."}, {"q": "Liệt kê A = {x ∈ ℕ | x < 3}:", "o": ["{0; 1; 2}", "{1; 2}", "{1; 2; 3}", "{0; 1; 2; 3}"], "a": 0, "e": "ℕ bắt đầu từ 0, nên A = {0; 1; 2}."}, {"q": "Cho A = [−3; 2), B = [0; 5]. Tập A ∩ B là:", "o": ["[0; 2)", "[−3; 5]", "[0; 2]", "(0; 2)"], "a": 0, "e": "Phần chung từ 0 (lấy) đến 2 (không lấy vì A không chứa 2)."}, {"q": "C_ℝ(−∞; 3] bằng:", "o": ["(3; +∞)", "[3; +∞)", "(−∞; 3)", "ℝ"], "a": 0, "e": "Phần bù gồm các số không thuộc (−∞; 3], tức là x > 3."}, {"q": "Cho A = {1; 2; 3; 5}, B = {2; 4; 5}. Tập A \\ B là:", "o": ["{1; 3}", "{4}", "{2; 5}", "{1; 3; 4}"], "a": 0, "e": "Lấy phần tử của A mà không thuộc B: 1 và 3."}], "essay": [{"q": "Cho A = {x ∈ ℝ | −2 < x ≤ 3}, B = [1; 5). Tìm A ∩ B, A ∪ B, A \\ B.", "a": "A = (−2; 3]. A ∩ B = [1; 3];  A ∪ B = (−2; 5);  A \\ B = (−2; 1)."}, {"q": "Cho A = (−∞; 2], B = (0; +∞). Tìm A ∩ B, A ∪ B và C_ℝ A.", "a": "A ∩ B = (0; 2];  A ∪ B = ℝ;  C_ℝ A = (2; +∞)."}]}, {"n": 3, "ch": "II", "t": "Bất phương trình bậc nhất hai ẩn", "blocks": [{"k": "kn", "h": "Khái niệm", "lines": ["Bất phương trình bậc nhất hai ẩn có dạng ax + by < c (hoặc >, ≤, ≥), trong đó a, b không đồng thời bằng 0.", "Cặp số (x₀; y₀) thỏa mãn bất phương trình gọi là một nghiệm.", "Tập hợp các điểm (x₀; y₀) là nghiệm gọi là miền nghiệm: một nửa mặt phẳng có bờ là đường thẳng d: ax + by = c."]}, {"k": "ct", "h": "Ba bước biểu diễn miền nghiệm", "lines": ["Bước 1: Vẽ đường thẳng d: ax + by = c", "Bước 2: Lấy điểm M(x₀; y₀) không thuộc d (thường lấy O(0; 0))", "Bước 3: Tính ax₀ + by₀ rồi so sánh với c", "  • Đúng → miền nghiệm là nửa mặt phẳng chứa M", "  • Sai  → miền nghiệm là nửa mặt phẳng không chứa M"]}, {"k": "cy", "h": "Chú ý", "lines": ["Dấu ≤ hoặc ≥: lấy cả bờ d (vẽ nét liền). Dấu < hoặc >: không lấy bờ (vẽ nét đứt).", "Nếu d đi qua gốc O thì chọn điểm thử khác, ví dụ (1; 0) hoặc (0; 1).", "Trong bài toán thực tế, thường có thêm điều kiện x ≥ 0, y ≥ 0."]}, {"k": "loi", "h": "Lỗi hay gặp", "lines": ["Thử điểm O khi đường thẳng đi qua O.", "Gạch nhầm phần là miền nghiệm (quy ước sách: gạch bỏ phần KHÔNG là miền nghiệm)."]}, {"k": "meo", "h": "Mẹo nhớ", "lines": ["“Vẽ – Thử – Gạch”: vẽ bờ, thử một điểm, gạch phần không thỏa."]}], "quiz": [{"q": "Bất phương trình nào là bất phương trình bậc nhất hai ẩn?", "o": ["2x − 3y > 1", "x² + y < 3", "xy ≥ 2", "x + 1/y ≤ 0"], "a": 0, "e": "Chỉ 2x − 3y > 1 có dạng ax + by > c."}, {"q": "Cặp số nào là nghiệm của x − 2y + 1 > 0?", "o": ["(2; 1)", "(0; 1)", "(1; 1)", "(−1; 0)"], "a": 0, "e": "Thay (2; 1): 2 − 2 + 1 = 1 > 0. Các cặp còn lại cho giá trị ≤ 0."}, {"q": "Điểm O(0; 0) thuộc miền nghiệm của bất phương trình nào?", "o": ["x + y < 2", "2x − y > 1", "x − 3y ≥ 3", "−x + y > 4"], "a": 0, "e": "Thay O: 0 < 2 đúng; các bất phương trình còn lại đều sai."}, {"q": "Khi biểu diễn miền nghiệm của x + y ≥ 3, đường thẳng x + y = 3:", "o": ["Thuộc miền nghiệm, vẽ nét liền", "Không thuộc miền nghiệm, vẽ nét đứt", "Không cần vẽ", "Chỉ lấy điểm O"], "a": 0, "e": "Dấu “≥” có dấu bằng nên lấy cả bờ."}, {"q": "Mua x kg táo (40 nghìn/kg) và y kg cam (30 nghìn/kg), tiêu không quá 200 nghìn. Bất phương trình là:", "o": ["40x + 30y ≤ 200", "40x + 30y ≥ 200", "30x + 40y ≤ 200", "40x + 30y < 200"], "a": 0, "e": "“Không quá” nghĩa là ≤; tiền táo 40x, tiền cam 30y."}], "essay": [{"q": "Biểu diễn miền nghiệm của bất phương trình 2x − y ≥ 2.", "a": "Vẽ d: 2x − y = 2 qua (1; 0) và (0; −2). Thử O: 0 ≥ 2 sai, nên miền nghiệm là nửa mặt phẳng bờ d không chứa O, kể cả bờ d."}, {"q": "Một người có 300 nghìn đồng, mua x kg thịt (150 nghìn/kg) và y kg rau (20 nghìn/kg). Viết bất phương trình. Người đó mua 1 kg thịt và 6 kg rau được không?", "a": "150x + 20y ≤ 300 (x, y ≥ 0). Với (1; 6): 150 + 120 = 270 ≤ 300 nên mua được."}]}, {"n": 4, "ch": "II", "t": "Hệ bất phương trình bậc nhất hai ẩn", "blocks": [{"k": "kn", "h": "Khái niệm", "lines": ["Hệ bất phương trình bậc nhất hai ẩn gồm hai hay nhiều bất phương trình bậc nhất hai ẩn.", "Nghiệm của hệ là cặp (x₀; y₀) thỏa mãn đồng thời tất cả các bất phương trình.", "Miền nghiệm của hệ là phần giao các miền nghiệm, thường là một đa giác."]}, {"k": "ct", "h": "Bài toán tìm giá trị lớn nhất, nhỏ nhất của F = ax + by", "lines": ["Bước 1: Biểu diễn miền nghiệm của hệ (đa giác)", "Bước 2: Tìm tọa độ các đỉnh (giải hệ hai phương trình đường thẳng)", "Bước 3: Tính F tại từng đỉnh", "Bước 4: Số lớn nhất là max F, số nhỏ nhất là min F"]}, {"k": "cy", "h": "Chú ý", "lines": ["Giá trị lớn nhất, nhỏ nhất của F luôn đạt tại một đỉnh của đa giác miền nghiệm.", "Bài toán thực tế: đặt ẩn, viết các ràng buộc (vật liệu, thời gian, tiền) thành hệ, viết biểu thức lãi F."]}, {"k": "loi", "h": "Lỗi hay gặp", "lines": ["Quên điều kiện x ≥ 0, y ≥ 0 trong bài toán thực tế.", "Tính thiếu một đỉnh của đa giác."]}, {"k": "meo", "h": "Mẹo nhớ", "lines": ["“Cực trị nằm ở góc”: chỉ cần thử các đỉnh."]}], "quiz": [{"q": "Giá trị lớn nhất của F = x + 2y trên miền x ≥ 0, y ≥ 0, x + y ≤ 3 là:", "o": ["6", "3", "9", "0"], "a": 0, "e": "Các đỉnh (0; 0), (3; 0), (0; 3) cho F = 0, 3, 6. Max = 6."}, {"q": "Cặp số nào thuộc miền nghiệm của hệ x + y < 4, x − y > 0?", "o": ["(2; 1)", "(1; 2)", "(3; 2)", "(0; 0)"], "a": 0, "e": "(2; 1): 3 < 4 và 1 > 0 đều đúng."}, {"q": "Miền nghiệm của hệ x ≥ 0, y ≥ 0, x + y ≤ 2 là:", "o": ["Tam giác có đỉnh (0; 0), (2; 0), (0; 2)", "Hình vuông cạnh 2", "Một nửa mặt phẳng", "Một đoạn thẳng"], "a": 0, "e": "Giao của ba nửa mặt phẳng là tam giác vuông tại O."}, {"q": "Giá trị nhỏ nhất của F = x − y trên tam giác O(0; 0), A(3; 0), B(0; 3) là:", "o": ["−3", "0", "3", "−6"], "a": 0, "e": "F(O) = 0, F(A) = 3, F(B) = −3. Min = −3."}, {"q": "Trên tứ giác O(0; 0), A(3; 0), B(2; 2), C(0; 3), F = 3x + y lớn nhất tại:", "o": ["A(3; 0)", "B(2; 2)", "C(0; 3)", "O(0; 0)"], "a": 0, "e": "F(O) = 0, F(A) = 9, F(B) = 8, F(C) = 3. Lớn nhất tại A."}], "essay": [{"q": "Biểu diễn miền nghiệm của hệ x ≥ 0, y ≥ 0, 2x + y ≤ 6, x + y ≤ 4. Tìm giá trị lớn nhất của F = 3x + 2y.", "a": "Các đỉnh O(0; 0), (3; 0), (2; 2), (0; 4). F lần lượt bằng 0, 9, 10, 8. Max F = 10 tại (2; 2)."}, {"q": "Tìm giá trị lớn nhất, nhỏ nhất của F = x − 2y trên tam giác O(0; 0), A(4; 0), B(0; 3).", "a": "F(O) = 0, F(A) = 4, F(B) = −6. Max F = 4 tại A, min F = −6 tại B."}]}, {"n": 5, "ch": "III", "t": "Giá trị lượng giác của một góc từ 0° đến 180°", "blocks": [{"k": "kn", "h": "Định nghĩa", "lines": ["Trên nửa đường tròn đơn vị, lấy M(x₀; y₀) sao cho góc xOM = α. Khi đó: sinα = y₀, cosα = x₀.", "tanα = sinα / cosα (α ≠ 90°);  cotα = cosα / sinα (α ≠ 0°, α ≠ 180°).", "Dấu: sinα ≥ 0 với mọi α; cosα > 0 khi α nhọn, cosα < 0 khi α tù; tanα, cotα cùng dấu với cosα."]}, {"k": "ct", "h": "Hệ thức cơ bản", "lines": ["sin²α + cos²α = 1          tanα · cotα = 1", "1 + tan²α = 1 / cos²α       1 + cot²α = 1 / sin²α"]}, {"k": "ct", "h": "Hai góc bù nhau, hai góc phụ nhau", "lines": ["sin(180° − α) = sinα       cos(180° − α) = −cosα", "tan(180° − α) = −tanα      cot(180° − α) = −cotα", "sin(90° − α) = cosα        cos(90° − α) = sinα"]}, {"k": "ct", "h": "Giá trị đặc biệt", "lines": ["α:     0°   30°    45°    60°    90°   120°    135°    150°   180°", "sinα:  0    1/2   √2/2   √3/2    1     √3/2   √2/2    1/2     0", "cosα:  1   √3/2   √2/2   1/2     0    −1/2   −√2/2  −√3/2   −1", "tanα:  0   √3/3    1      √3     –     −√3     −1    −√3/3    0"]}, {"k": "loi", "h": "Lỗi hay gặp", "lines": ["Quên dấu âm của cosα khi α tù.", "Dùng máy tính để chế độ Radian thay vì Degree (D)."]}, {"k": "meo", "h": "Mẹo nhớ", "lines": ["“Sin bù, cos đối”: góc bù giữ sin, đổi dấu cos.", "sin 0°, 30°, 45°, 60°, 90° = √0/2, √1/2, √2/2, √3/2, √4/2."]}], "quiz": [{"q": "Giá trị của sin150° là:", "o": ["1/2", "−1/2", "√3/2", "−√3/2"], "a": 0, "e": "sin150° = sin(180° − 30°) = sin30° = 1/2."}, {"q": "Giá trị của cos135° là:", "o": ["−√2/2", "√2/2", "−1/2", "√3/2"], "a": 0, "e": "cos135° = −cos45° = −√2/2."}, {"q": "Với α là góc tù, khẳng định nào đúng?", "o": ["sinα > 0, cosα < 0", "sinα < 0, cosα > 0", "sinα < 0, cosα < 0", "sinα > 0, cosα > 0"], "a": 0, "e": "Góc tù: điểm M nằm bên trái trục tung nên cosα < 0, còn sinα > 0."}, {"q": "Cho sinα = 4/5, α nhọn. Khi đó cosα bằng:", "o": ["3/5", "−3/5", "4/3", "1/5"], "a": 0, "e": "cos²α = 1 − 16/25 = 9/25, α nhọn nên cosα = 3/5."}, {"q": "cos20° + cos160° bằng:", "o": ["0", "2cos20°", "1", "−1"], "a": 0, "e": "cos160° = −cos20°, nên tổng bằng 0."}, {"q": "tan60° bằng:", "o": ["√3", "√3/3", "1", "√3/2"], "a": 0, "e": "tan60° = sin60° / cos60° = (√3/2) : (1/2) = √3."}], "essay": [{"q": "Cho cosα = −1/2 với 0° ≤ α ≤ 180°. Tìm α và tính sinα, tanα.", "a": "α = 120°;  sinα = √3/2;  tanα = −√3."}, {"q": "Tính A = sin30°·cos60° + sin60°·cos30°.", "a": "A = ½·½ + (√3/2)·(√3/2) = ¼ + ¾ = 1."}]}, {"n": 6, "ch": "III", "t": "Hệ thức lượng trong tam giác", "blocks": [{"k": "kn", "h": "Kí hiệu trong tam giác ABC", "lines": ["a = BC, b = CA, c = AB; A, B, C là các góc; p = (a + b + c)/2 là nửa chu vi.", "R: bán kính đường tròn ngoại tiếp; r: bán kính đường tròn nội tiếp; hₐ: đường cao từ A."]}, {"k": "ct", "h": "Định lý côsin", "lines": ["a² = b² + c² − 2bc·cosA", "b² = a² + c² − 2ac·cosB      c² = a² + b² − 2ab·cosC", "Hệ quả: cosA = (b² + c² − a²) / (2bc)"]}, {"k": "ct", "h": "Định lý sin", "lines": ["a / sinA = b / sinB = c / sinC = 2R", "Hệ quả: a = 2R·sinA,  sinA = a / (2R)"]}, {"k": "ct", "h": "Diện tích tam giác", "lines": ["S = ½·a·hₐ", "S = ½·bc·sinA = ½·ac·sinB = ½·ab·sinC", "S = abc / (4R)       S = p·r", "S = √[p(p − a)(p − b)(p − c)]   (Heron)"]}, {"k": "cy", "h": "Nhận biết góc và giải tam giác", "lines": ["b² + c² > a² ⇔ A nhọn;  b² + c² = a² ⇔ A vuông;  b² + c² < a² ⇔ A tù.", "Biết 2 cạnh và góc xen giữa, hoặc biết 3 cạnh → dùng định lý côsin.", "Biết 1 cạnh và 2 góc → tính góc còn lại (tổng 180°) rồi dùng định lý sin."]}, {"k": "loi", "h": "Lỗi hay gặp", "lines": ["Quên số 2 trong “2bc·cosA”.", "Dùng sai cặp cạnh – góc đối diện trong định lý sin."]}, {"k": "meo", "h": "Mẹo nhớ", "lines": ["Côsin: “bình phương cạnh này = tổng bình phương hai cạnh kia trừ hai lần tích nhân côsin góc xen giữa”."]}], "quiz": [{"q": "Tam giác ABC có b = 3, c = 5, A = 120°. Độ dài cạnh a là:", "o": ["7", "√19", "8", "√34"], "a": 0, "e": "a² = 9 + 25 − 2·3·5·cos120° = 34 + 15 = 49, nên a = 7."}, {"q": "Tam giác có ba cạnh 5, 12, 13. Diện tích bằng:", "o": ["30", "60", "32,5", "65"], "a": 0, "e": "5² + 12² = 13² nên tam giác vuông, S = ½·5·12 = 30."}, {"q": "Tam giác ABC có a = 8, sinA = 1/2. Bán kính đường tròn ngoại tiếp R bằng:", "o": ["8", "16", "4", "4√3"], "a": 0, "e": "a / sinA = 2R ⇒ 16 = 2R ⇒ R = 8."}, {"q": "Tam giác ABC có a² > b² + c². Khi đó góc A là:", "o": ["Góc tù", "Góc nhọn", "Góc vuông", "Không xác định"], "a": 0, "e": "cosA = (b² + c² − a²)/(2bc) < 0 nên A tù."}, {"q": "Tam giác có b = 4, c = 5, A = 30°. Diện tích bằng:", "o": ["5", "10", "5√3", "20"], "a": 0, "e": "S = ½·4·5·sin30° = ½·20·½ = 5."}, {"q": "Tam giác có ba cạnh 13, 14, 15. Bán kính đường tròn nội tiếp r bằng:", "o": ["4", "8", "6", "84"], "a": 0, "e": "p = 21, S = 84, r = S/p = 4."}], "essay": [{"q": "Cho tam giác ABC có b = 6, c = 8, A = 60°. Tính a và diện tích S.", "a": "a = 2√13, S = 12√3."}, {"q": "Cho tam giác ABC có a = 7, b = 8, c = 5. Tính góc B.", "a": "cosB = 1/7, B ≈ 81,8°."}, {"q": "Cho tam giác có ba cạnh 13, 14, 15. Tính S, R và r.", "a": "S = 84, R = 65/8, r = 4."}]}, {"n": 7, "ch": "IV", "t": "Các khái niệm mở đầu", "blocks": [{"k": "kn", "h": "Vectơ", "lines": ["Vectơ là đoạn thẳng có hướng. Vectơ AB→ có điểm đầu A, điểm cuối B. Vectơ còn được kí hiệu a→, b→…", "Đường thẳng qua A và B là giá của AB→. Độ dài |AB→| = AB.", "Vectơ-không 0→ có điểm đầu trùng điểm cuối (AA→); |0→| = 0, cùng phương, cùng hướng với mọi vectơ."]}, {"k": "kn", "h": "Cùng phương, cùng hướng, bằng nhau", "lines": ["Hai vectơ cùng phương nếu giá của chúng song song hoặc trùng nhau.", "Hai vectơ cùng phương thì hoặc cùng hướng, hoặc ngược hướng.", "Ba điểm phân biệt A, B, C thẳng hàng ⇔ AB→ và AC→ cùng phương.", "Hai vectơ bằng nhau khi cùng hướng và cùng độ dài. Cho a→ và điểm O, có duy nhất điểm A để OA→ = a→."]}, {"k": "ct", "h": "Ghi nhớ", "lines": ["a→ = b→  ⇔  a→, b→ cùng hướng và |a→| = |b→|", "ABCD là hình bình hành  ⇔  AB→ = DC→"]}, {"k": "loi", "h": "Lỗi hay gặp", "lines": ["Cho rằng cùng phương là cùng hướng.", "Viết AB→ = CD→ cho hình bình hành ABCD (đúng phải là AB→ = DC→)."]}, {"k": "meo", "h": "Mẹo nhớ", "lines": ["Hình bình hành ABCD: đi “cùng chiều kim đồng hồ” thì AB→ = DC→ (cạnh đối, cùng hướng)."]}], "quiz": [{"q": "Cho hình bình hành ABCD. Vectơ nào bằng AB→?", "o": ["DC→", "CD→", "BA→", "AD→"], "a": 0, "e": "Hình bình hành ABCD có AB→ = DC→."}, {"q": "Hai vectơ cùng phương thì:", "o": ["Cùng hướng hoặc ngược hướng", "Luôn cùng hướng", "Luôn bằng nhau", "Có cùng độ dài"], "a": 0, "e": "Cùng phương chỉ nói về giá; hướng có thể giống hoặc ngược."}, {"q": "Số vectơ khác 0→ có điểm đầu, điểm cuối là hai trong ba điểm phân biệt A, B, C:", "o": ["6", "3", "9", "4"], "a": 0, "e": "Mỗi cặp điểm cho 2 vectơ: 3 cặp × 2 = 6."}, {"q": "Vectơ-không là vectơ:", "o": ["Có điểm đầu trùng điểm cuối", "Có độ dài bằng 1", "Không cùng phương với vectơ nào", "Có điểm đầu là gốc O"], "a": 0, "e": "0→ = AA→, độ dài bằng 0."}, {"q": "Tam giác ABC có M, N, P là trung điểm BC, CA, AB. Vectơ bằng MN→ là:", "o": ["PA→", "AP→", "NM→", "CB→"], "a": 0, "e": "MN→ cùng hướng và cùng độ dài với PA→ (bằng nửa BA→)."}], "essay": [{"q": "Cho hình vuông ABCD tâm O. Tìm các vectơ có điểm đầu, điểm cuối là A, B, C, D, O và bằng OA→.", "a": "Chỉ có CO→ (C, O, A thẳng hàng, CO→ cùng hướng và cùng độ dài với OA→)."}, {"q": "Cho ba điểm A, B, C thẳng hàng, B nằm giữa A và C. Hai vectơ AB→ và AC→ cùng hướng hay ngược hướng? BA→ và BC→ thì sao?", "a": "AB→ và AC→ cùng hướng; BA→ và BC→ ngược hướng."}]}, {"n": 8, "ch": "IV", "t": "Tổng và hiệu của hai vectơ", "blocks": [{"k": "kn", "h": "Tổng hai vectơ", "lines": ["Lấy điểm A, vẽ AB→ = a→, rồi BC→ = b→. Khi đó a→ + b→ = AC→.", "Tính chất: a→ + b→ = b→ + a→;  (a→ + b→) + c→ = a→ + (b→ + c→);  a→ + 0→ = a→."]}, {"k": "ct", "h": "Hai quy tắc quan trọng", "lines": ["Quy tắc ba điểm:  AB→ + BC→ = AC→", "Quy tắc hình bình hành ABCD:  AB→ + AD→ = AC→"]}, {"k": "kn", "h": "Vectơ đối và hiệu", "lines": ["Vectơ đối của a→ là −a→: ngược hướng, cùng độ dài. Vectơ đối của AB→ là BA→.", "a→ + (−a→) = 0→.  Hiệu: a→ − b→ = a→ + (−b→)."]}, {"k": "ct", "h": "Quy tắc trừ, trung điểm, trọng tâm", "lines": ["Với ba điểm O, A, B:  OB→ − OA→ = AB→", "I là trung điểm AB  ⇔  IA→ + IB→ = 0→", "G là trọng tâm tam giác ABC  ⇔  GA→ + GB→ + GC→ = 0→"]}, {"k": "loi", "h": "Lỗi hay gặp", "lines": ["Viết OA→ − OB→ = AB→ (đúng phải là BA→).", "Cộng độ dài thay vì cộng vectơ: |a→ + b→| thường khác |a→| + |b→|."]}, {"k": "meo", "h": "Mẹo nhớ", "lines": ["Ba điểm: “điểm cuối vectơ trước là điểm đầu vectơ sau”.", "Trừ: “cùng gốc, trừ ngược”: OB→ − OA→ = AB→ (từ ngọn vectơ trừ tới ngọn vectơ bị trừ)."]}], "quiz": [{"q": "Cho hình bình hành ABCD. Khẳng định nào đúng?", "o": ["AB→ + AD→ = AC→", "AB→ + BC→ = CA→", "AB→ = CD→", "AD→ = CB→"], "a": 0, "e": "Quy tắc hình bình hành: AB→ + AD→ = AC→."}, {"q": "Cho I là trung điểm AB. Khẳng định nào đúng?", "o": ["IA→ + IB→ = 0→", "IA→ = IB→", "AI→ + BI→ = AB→", "|IA→| = 2|AB→|"], "a": 0, "e": "IA→, IB→ ngược hướng, cùng độ dài nên tổng bằng 0→."}, {"q": "AB→ + BC→ + CA→ bằng:", "o": ["0→", "2AC→", "AC→", "BA→"], "a": 0, "e": "AB→ + BC→ = AC→, AC→ + CA→ = 0→."}, {"q": "OB→ − OA→ bằng:", "o": ["AB→", "BA→", "OB→", "0→"], "a": 0, "e": "Quy tắc trừ: OB→ − OA→ = AB→."}, {"q": "Tam giác đều ABC cạnh 2. |AB→ − AC→| bằng:", "o": ["2", "4", "2√3", "0"], "a": 0, "e": "AB→ − AC→ = CB→, độ dài bằng 2."}, {"q": "G là trọng tâm tam giác ABC. Khẳng định nào đúng?", "o": ["GA→ + GB→ + GC→ = 0→", "GA→ + GB→ = GC→", "AG→ = AB→ + AC→", "GA→ = GB→ = GC→"], "a": 0, "e": "Tính chất trọng tâm: GA→ + GB→ + GC→ = 0→."}], "essay": [{"q": "Cho hình bình hành ABCD tâm O. Chứng minh OA→ + OB→ + OC→ + OD→ = 0→.", "a": "O là trung điểm AC và BD nên OA→ = −OC→, OB→ = −OD→. Cộng lại được 0→."}, {"q": "Cho tam giác ABC. Rút gọn AB→ − AC→ + BC→.", "a": "AB→ − AC→ = CB→ (quy tắc trừ), CB→ + BC→ = 0→."}]}, {"n": 9, "ch": "IV", "t": "Tích của một vectơ với một số", "blocks": [{"k": "kn", "h": "Định nghĩa", "lines": ["Tích của a→ ≠ 0→ với số k ≠ 0 là vectơ k·a→: cùng hướng a→ nếu k > 0, ngược hướng a→ nếu k < 0, độ dài |k|·|a→|.", "Quy ước 0·a→ = 0→ và k·0→ = 0→.  1·a→ = a→, (−1)·a→ = −a→."]}, {"k": "ct", "h": "Tính chất", "lines": ["k(a→ + b→) = k·a→ + k·b→", "(h + k)·a→ = h·a→ + k·a→", "h(k·a→) = (hk)·a→"]}, {"k": "ct", "h": "Điều kiện cùng phương, thẳng hàng", "lines": ["b→ cùng phương a→ (a→ ≠ 0→)  ⇔  có số k để b→ = k·a→", "A, B, C thẳng hàng  ⇔  có số k để AB→ = k·AC→"]}, {"k": "ct", "h": "Trung điểm và trọng tâm (M bất kì)", "lines": ["I là trung điểm AB:  MA→ + MB→ = 2MI→", "G là trọng tâm tam giác ABC:  MA→ + MB→ + MC→ = 3MG→", "M là trung điểm BC:  AB→ + AC→ = 2AM→;   AG→ = ⅔·AM→"]}, {"k": "cy", "h": "Phân tích một vectơ", "lines": ["Nếu a→, b→ không cùng phương thì mọi vectơ x→ đều viết được duy nhất dưới dạng x→ = m·a→ + n·b→."]}, {"k": "loi", "h": "Lỗi hay gặp", "lines": ["Viết độ dài âm: |−2a→| = 2|a→|, không phải −2|a→|.", "Quên hệ số 2 trong MA→ + MB→ = 2MI→."]}, {"k": "meo", "h": "Mẹo nhớ", "lines": ["k dương “đi tiếp”, k âm “quay đầu”; |k| cho biết dài gấp mấy lần."]}], "quiz": [{"q": "Cho |a→| = 3. Vectơ −2a→ có tính chất:", "o": ["Ngược hướng a→, độ dài 6", "Cùng hướng a→, độ dài 6", "Ngược hướng a→, độ dài −6", "Cùng hướng a→, độ dài 1,5"], "a": 0, "e": "k = −2 < 0 nên ngược hướng; độ dài |−2|·3 = 6."}, {"q": "Tam giác ABC có trọng tâm G, M là trung điểm BC. Khẳng định nào đúng?", "o": ["AG→ = ⅔AM→", "AG→ = ½AM→", "AG→ = 3/2·AM→", "AG→ = ⅓AM→"], "a": 0, "e": "Trọng tâm cách đỉnh ⅔ độ dài trung tuyến."}, {"q": "M là trung điểm BC. Khẳng định nào đúng?", "o": ["AB→ + AC→ = 2AM→", "AB→ + AC→ = AM→", "AB→ − AC→ = 2AM→", "AB→ + AC→ = 3AM→"], "a": 0, "e": "Tính chất trung điểm: AB→ + AC→ = 2AM→."}, {"q": "Điểm M thỏa MA→ + 2MB→ = 0→. Khi đó AM→ bằng:", "o": ["⅔AB→", "⅓AB→", "2AB→", "3/2·AB→"], "a": 0, "e": "MA→ + 2(MA→ + AB→) = 0→ ⇒ AM→ = ⅔AB→."}, {"q": "Ba điểm phân biệt A, B, C thẳng hàng khi và chỉ khi:", "o": ["Có số k để AB→ = k·AC→", "AB→ = AC→", "|AB→| = |AC→|", "AB→ + AC→ = 0→"], "a": 0, "e": "Điều kiện thẳng hàng: AB→ và AC→ cùng phương."}, {"q": "Với a→ ≠ 0→, hai vectơ 3a→ và −3a→:", "o": ["Ngược hướng, cùng độ dài", "Cùng hướng", "Bằng nhau", "Có tổng bằng 6a→"], "a": 0, "e": "Hệ số trái dấu nên ngược hướng; độ dài đều bằng 3|a→|."}], "essay": [{"q": "Cho tam giác ABC, M là trung điểm BC, G là trọng tâm. Biểu diễn AM→, AG→ theo AB→ và AC→.", "a": "AM→ = ½(AB→ + AC→);  AG→ = ⅓(AB→ + AC→)."}, {"q": "Cho ba điểm A, B, C thỏa AB→ = −2AC→. Ba điểm có thẳng hàng không? Điểm A nằm ở đâu?", "a": "Thẳng hàng; A nằm giữa B và C, AB = 2AC."}]}], "chapters": [{"n": "I", "t": "Mệnh đề và tập hợp", "lessons": [1, 2], "color": "#178A43", "extra": [{"q": "Mệnh đề “∀x ∈ ℝ, x² = 1 ⇒ x = 1” là:", "o": ["Sai, vì x = −1 cũng có x² = 1", "Đúng", "Đúng vì 1² = 1", "Không phải mệnh đề"], "a": 0, "e": "Với x = −1: x² = 1 nhưng x ≠ 1, nên mệnh đề sai."}, {"q": "Cho A = {0; 1; 2; 3}, B = {x ∈ ℕ | x ≤ 1}. Tập A \\ B là:", "o": ["{2; 3}", "{0; 1}", "{1; 2; 3}", "∅"], "a": 0, "e": "B = {0; 1}. Bỏ 0, 1 khỏi A được {2; 3}."}, {"q": "Cho A = {x ∈ ℝ | x ≥ 2}. Mệnh đề “∀x ∈ A, x² ≥ 4” là:", "o": ["Đúng", "Sai", "Không phải mệnh đề", "Vừa đúng vừa sai"], "a": 0, "e": "x ≥ 2 > 0 nên x² ≥ 4."}]}, {"n": "II", "t": "Bất phương trình và hệ bất phương trình bậc nhất hai ẩn", "lessons": [3, 4], "color": "#1F55B5", "extra": [{"q": "Miền nghiệm của 2x + y > 4 KHÔNG chứa điểm nào?", "o": ["(1; 1)", "(3; 0)", "(0; 5)", "(2; 1)"], "a": 0, "e": "(1; 1): 2 + 1 = 3 > 4 sai. Các điểm khác đều thỏa."}, {"q": "Miền nghiệm của hệ x ≥ 0, y ≥ 0, x + 2y ≤ 4 là tam giác có các đỉnh:", "o": ["(0; 0), (4; 0), (0; 2)", "(0; 0), (2; 0), (0; 4)", "(0; 0), (4; 0), (0; 4)", "(4; 0), (0; 2), (2; 2)"], "a": 0, "e": "x + 2y = 4 cắt Ox tại (4; 0), cắt Oy tại (0; 2)."}, {"q": "Cửa hàng bán x áo (lãi 50 nghìn/cái) và y quần (lãi 80 nghìn/cái). Biểu thức tiền lãi là:", "o": ["F = 50x + 80y", "F = 80x + 50y", "F = 130xy", "F = 50x − 80y"], "a": 0, "e": "Lãi = lãi mỗi áo × số áo + lãi mỗi quần × số quần."}]}, {"n": "III", "t": "Hệ thức lượng trong tam giác", "lessons": [5, 6], "color": "#E07B00", "extra": [{"q": "Tam giác ABC có A = 60°, b = c = 4. Độ dài a là:", "o": ["4", "4√3", "8", "2"], "a": 0, "e": "a² = 16 + 16 − 2·4·4·½ = 16 ⇒ a = 4 (tam giác đều)."}, {"q": "Tam giác ABC có a = 6, A = 30°. Bán kính đường tròn ngoại tiếp R là:", "o": ["6", "12", "3", "6√3"], "a": 0, "e": "2R = a / sinA = 6 / ½ = 12 ⇒ R = 6."}, {"q": "sin²35° + sin²55° bằng:", "o": ["1", "0", "2", "√2"], "a": 0, "e": "sin55° = cos35° nên tổng bằng sin²35° + cos²35° = 1."}]}, {"n": "IV", "t": "Vectơ (đến Bài 9)", "lessons": [7, 8, 9], "color": "#8A3FD1", "extra": [{"q": "Hình bình hành ABCD tâm O. OA→ + OB→ + OC→ + OD→ bằng:", "o": ["0→", "2AC→", "AC→ + BD→", "4OA→"], "a": 0, "e": "OA→ + OC→ = 0→ và OB→ + OD→ = 0→."}, {"q": "Ba điểm A, B, C thỏa AB→ = 3AC→. Khẳng định nào đúng?", "o": ["Thẳng hàng, C nằm giữa A và B", "A nằm giữa B và C", "B nằm giữa A và C", "A, B, C không thẳng hàng"], "a": 0, "e": "AB→, AC→ cùng hướng và AC = ⅓AB nên C nằm giữa A và B."}, {"q": "G là trọng tâm tam giác ABC, M là điểm bất kì. MA→ + MB→ + MC→ bằng:", "o": ["3MG→", "MG→", "0→", "2MG→"], "a": 0, "e": "Tính chất trọng tâm với điểm M bất kì."}]}]};
+const KTL = Object.fromEntries(KT.lessons.map(l => [l.n, l]));
+const BANK_N = KT.lessons.reduce((t,l)=>t+l.quiz.length,0) + KT.chapters.reduce((t,c)=>t+c.extra.length,0);
+const FIGS = {2:[["b2-ven","Biểu đồ Ven của giao, hợp, hiệu"],["b2-trucso","Tìm A ∩ B trên trục số"]],3:[["b3","Miền nghiệm của x + 2y ≤ 4 (phần không bị gạch)"]],4:[["b4","Miền nghiệm của hệ và giá trị F tại các đỉnh"]],5:[["b5","Giá trị lượng giác trên nửa đường tròn đơn vị"]],6:[["b6","Các yếu tố trong tam giác ABC"]],7:[["b7","Vectơ bằng nhau và hướng của hai vectơ"]],8:[["b8","Hai quy tắc cộng vectơ"]],9:[["b9","Vectơ k·a→, trung tuyến và trọng tâm"]]};
 
 /* ================= Video bài giảng của hai thầy cô ================= */
 const PL_NGUYEN = "PLOVaCZ_HQkvcjYiE4tW0x3w9QuPvVTOWN";
@@ -730,12 +816,18 @@ const ICONS = {
 const TCOL = {"bai-giang":"t-green","tai-lieu":"t-red","video":"t-blue","bai-hat":"t-gold","luyen-tap":"t-green","hoi-dap":"t-blue"};
 const TILES = [
   ["bai-giang","Bài giảng", LESSONS.length+" bài · 4 chương"],
+  ["cong-thuc","Tổng hợp công thức", "Kiến thức đầy đủ từng bài"],
   ["tai-lieu","Tài liệu PDF", DOCS.length+" tài liệu"],
   ["video","Video bài giảng", "2 thầy cô · 18 video"],
   ["bai-hat","Bài hát ghi nhớ", SONGS.length+" bài hát"],
-  ["luyen-tap","Luyện tập", QUIZ.length+" câu trắc nghiệm"],
+  ["bang-nhap","Bảng nháp", "Bút · thước · compa"],
+  ["luyen-tap","Luyện tập", BANK_N+" câu · theo bài, theo chương"],
   ["hoi-dap","Hỏi đáp", "Trợ lý Toán 10"]
 ];
+ICONS["cong-thuc"] = '<path d="M5 4h14v16H5z"/><path d="M8 8h3M9.5 6.5v3M13 8h3M8 14.5l3 3M11 14.5l-3 3M13 15h3M13 17h3"/>';
+TCOL["cong-thuc"] = "t-red";
+ICONS["bang-nhap"] = '<path d="M4 20l3.5-1L18 8.5 15.5 6 5 16.5z"/><path d="M14 20h6M3 4h7M6.5 4v4"/>';
+TCOL["bang-nhap"] = "t-gold";
 ICONS["quan-tri"] = '<circle cx="9" cy="8" r="3.5"/><path d="M2.5 20a6.5 6.5 0 0 1 13 0"/><path d="M17 11h5M19.5 8.5v5"/>';
 TCOL["quan-tri"] = "t-gold";
 function renderTiles(){
@@ -768,12 +860,15 @@ function renderLesson(n){
     <div><div class="ltag">Chương ${l.ch} · Bài ${n}</div><h1>${esc(l.t)}</h1></div>
     <div class="box"><h3>Lý thuyết trọng tâm</h3><ul>${l.th.map(x=>`<li>${esc(x)}</li>`).join("")}</ul></div>
     <div class="box"><h3>Công thức cần nhớ</h3><div class="formula">${esc(l.f)}</div></div>
+    ${(FIGS[n]||[]).map(([f,c])=>`<figure class="fig"><img src="hinh/${f}.png" alt="${esc(c)}" loading="lazy"><figcaption>${esc(c)}</figcaption></figure>`).join("")}
     <div class="box"><h3>Ví dụ</h3><p style="margin:0">${esc(l.exq)}</p><details class="ex"><summary>Xem lời giải</summary><p>${esc(l.exa)}</p></details></div>
     <div class="acts">
       <button class="btn${d?" okb":""}" id="markBtn">${d?"Đã học xong ✓":"Đánh dấu đã học"}</button>
       <a class="btn ghost" href="#video-nguyen-${n}">Video Cô Nguyên</a>
       <a class="btn ghost" href="#video-dat-${n}">Video Thầy Đạt</a>
       <button class="btn ghost" id="docBtn">Đọc tài liệu</button>
+      <a class="btn ghost" href="#luyen-bai-${n}">Luyện tập Bài ${n}</a>
+      <button class="btn ghost" id="ktBtn">Tổng hợp công thức</button>
       <button class="btn ghost" id="askBtn">Hỏi trợ lý</button>
       ${can("sua_bai") ? `<button class="btn ghost" id="editBtn">Sửa bài này</button>` : ""}
     </div>
@@ -790,6 +885,7 @@ function renderLesson(n){
   </article>`;
   $("#markBtn").onclick = () => { toggleDone(n); renderLesson(n); };
   $("#docBtn").onclick = () => openDoc(l.doc);
+  $("#ktBtn").onclick = () => { pendingKT = n; location.hash = "#cong-thuc"; };
   $("#askBtn").onclick = () => { pendingAsk = { ai:`Giải thích giúp mình Bài ${n}. ${l.t} thật dễ hiểu, kèm 1 ví dụ ngắn.`, kw:l.ask }; location.hash = "#hoi-dap"; };
   if(can("sua_bai")){
     const form = $("#lessonEditor");
@@ -964,30 +1060,526 @@ function playSong(i){
   timers.push(setTimeout(stopSong, total+300));
 }
 
-/* ================= Luyện tập ================= */
-let qi=0, score=0, answered=false;
-function renderQuizView(){
-  $("#v-luyen-tap").innerHTML = head("Luyện tập trắc nghiệm", QUIZ.length+" câu trải đều Bài 1 đến Bài 9. Chọn đáp án để xem giải thích ngay.") + `<div class="quiz" id="quiz"></div>`;
-  $("#quiz").onclick = e => {
-    const o=e.target.closest(".opt");
-    if(o && !answered){ answered=true; const q=QUIZ[qi], k=+o.dataset.k;
-      document.querySelectorAll("#quiz .opt")[q.a].classList.add("right"); if(k!==q.a) o.classList.add("wrong"); else score++;
-      $("#ex").hidden=false; $("#ex").textContent=(k===q.a?"Chính xác. ":"Chưa đúng. ")+q.e; $("#next").hidden=false; }
-    if(e.target.id==="next"){ qi++; renderQuiz(); }
-    if(e.target.id==="again"){ qi=0; score=0; renderQuiz(); }
-  };
-  renderQuiz();
+/* ================= Luyện tập: theo bài, theo chương, đề tổng hợp ================= */
+const shuffle = a => { a = a.slice(); for(let i=a.length-1;i>0;i--){ const j=Math.floor(Math.random()*(i+1)); [a[i],a[j]]=[a[j],a[i]]; } return a; };
+const bestKey = () => "toan10-diem-" + (root.dataset.user || "");
+const getBest = () => store.get(bestKey(), {});
+function prepQ(q){ const order = shuffle([0,1,2,3]); return { q:q.q, o:order.map(i=>q.o[i]), a:order.indexOf(q.a), e:q.e }; }
+function setFor(key){
+  if(key.startsWith("b-")){ const L = KTL[+key.slice(2)]; return { key, title:`Bài ${L.n}. ${L.t}`, ch:L.ch, qs:L.quiz }; }
+  if(key.startsWith("c-")){ const C = KT.chapters.find(c=>c.n===key.slice(2)); return { key, title:`Ôn tập Chương ${C.n}. ${C.t}`, ch:C.n, qs:C.lessons.flatMap(n=>KTL[n].quiz).concat(C.extra) }; }
+  const all = KT.lessons.flatMap(l=>l.quiz).concat(KT.chapters.flatMap(c=>c.extra));
+  return { key:"mix", title:"Đề tổng hợp ngẫu nhiên", ch:"", qs:shuffle(all).slice(0,15) };
 }
-function renderQuiz(){
-  if(qi>=QUIZ.length){
-    $("#quiz").innerHTML = `<div class="q-text">Hoàn thành! Bạn đúng ${score}/${QUIZ.length} câu.</div><p class="explain">${score>=10?"Rất tốt, bạn nắm chắc kiến thức Bài 1 đến Bài 9.":score>=7?"Khá ổn. Xem lại các bài có câu sai trong mục Bài giảng nhé.":"Nên đọc lại Tóm tắt công thức trong mục Tài liệu PDF rồi làm lại."}</p><div class="q-foot"><button class="btn" id="again">Làm lại</button></div>`;
+let PQ = null, ptab = "bai";
+const CHN = { I:1, II:2, III:3, IV:4 };
+function bestText(k, n){ const b = getBest()[k]; return b===undefined ? `<span class="pbest none">Chưa làm</span>` : `<span class="pbest${b===n?" full":""}">Cao nhất: ${b}/${n}</span>`; }
+function renderQuizView(){
+  const v = $("#v-luyen-tap");
+  if(PQ){ renderRunner(); return; }
+  const tabs = [["bai","Theo bài"],["chuong","Ôn chương"],["mix","Đề tổng hợp"]];
+  let body = "";
+  if(ptab==="bai") body = `<div class="pgrid">` + KT.lessons.map(l => `<article class="pcard ch-${CHN[l.ch]}"><span class="ptag">Chương ${l.ch} · Bài ${l.n}</span><h3>${esc(l.t)}</h3>
+      <div class="pmeta"><span>${l.quiz.length} câu</span>${bestText("b-"+l.n, l.quiz.length)}</div><button class="btn" data-start="b-${l.n}">Làm bài</button></article>`).join("") + `</div>`;
+  if(ptab==="chuong") body = `<div class="pgrid two">` + KT.chapters.map(c => { const n = c.lessons.reduce((t,x)=>t+KTL[x].quiz.length,0) + c.extra.length;
+      return `<article class="pcard big ch-${CHN[c.n]}"><span class="ptag">Ôn tập chương</span><h3>Chương ${c.n}. ${esc(c.t)}</h3><p>Gồm câu hỏi của ${c.lessons.map(x=>"Bài "+x).join(", ")} và ${c.extra.length} câu tổng hợp cả chương.</p>
+      <div class="pmeta"><span>${n} câu</span>${bestText("c-"+c.n, n)}</div><button class="btn" data-start="c-${c.n}">Ôn chương ${c.n}</button></article>`; }).join("") + `</div>`;
+  if(ptab==="mix") body = `<div class="pgrid two"><article class="pcard big mixc"><span class="ptag">Kiểm tra tổng hợp</span><h3>Đề ngẫu nhiên 15 câu</h3><p>Lấy ngẫu nhiên từ ${BANK_N} câu của cả 9 bài. Mỗi lần làm là một đề khác, thứ tự đáp án cũng được xáo trộn.</p>
+      <div class="pmeta"><span>15 câu</span>${bestText("mix",15)}</div><button class="btn" data-start="mix">Bắt đầu làm đề</button></article></div>`;
+  v.innerHTML = head("Luyện tập", `${BANK_N} câu trắc nghiệm cho Bài 1 đến Bài 9. Chọn đáp án là xem giải thích ngay; điểm cao nhất của bạn được lưu lại.`) +
+    `<div class="ptabs" role="tablist">${tabs.map(([k,t])=>`<button role="tab" aria-selected="${k===ptab}" data-tab="${k}">${t}</button>`).join("")}</div>` + body;
+}
+function startSet(key){ const s = setFor(key); PQ = { ...s, qs:s.qs.map(prepQ), i:0, score:0, picks:[] }; renderQuizView(); window.scrollTo(0,0); }
+function renderRunner(){
+  const v = $("#v-luyen-tap"), n = PQ.qs.length, c = PQ.ch ? CHN[PQ.ch] : 0;
+  const top = `<div class="crumb"><a href="#trang-chu">Trang chủ</a><span>›</span><a href="#luyen-tap" data-back="1">Luyện tập</a><span>›</span><span>${esc(PQ.title)}</span></div>`;
+  if(PQ.i >= n){
+    const best = getBest(), old = best[PQ.key]; if(old===undefined || PQ.score > old){ best[PQ.key] = PQ.score; store.set(bestKey(), best); }
+    const pct = PQ.score / n, wrong = PQ.qs.map((q,i)=>({q, pick:PQ.picks[i]})).filter(x=>x.pick!==x.q.a);
+    const msg = pct>=.9 ? "Xuất sắc! Bạn nắm rất chắc phần này." : pct>=.7 ? "Khá tốt. Xem lại các câu sai bên dưới nhé." : pct>=.5 ? "Đạt yêu cầu. Nên đọc lại phần Tổng hợp công thức rồi làm lại." : "Cần ôn thêm. Đọc lại bài giảng và Tổng hợp công thức rồi thử lại nhé.";
+    v.innerHTML = top + `<div class="quiz ch-${c}"><div class="qres"><div class="ring" style="--p:${pct*100}"><b>${PQ.score}/${n}</b></div><div><div class="q-text">${esc(PQ.title)}</div><p class="explain">${msg}${old!==undefined && PQ.score>old?" Bạn vừa vượt điểm cao nhất cũ!":""}</p></div></div>
+      <div class="q-foot left"><button class="btn" data-start="${PQ.key}">${PQ.key==="mix"?"Làm đề mới":"Làm lại"}</button><button class="btn ghost" data-back="1">Chọn đề khác</button></div>
+      ${wrong.length?`<h3 class="wtitle">Xem lại ${wrong.length} câu sai</h3>`+wrong.map(x=>`<div class="wrong"><div class="wq">${esc(x.q.q)}</div><div class="wa bad">Bạn chọn: ${esc(x.q.o[x.pick])}</div><div class="wa ok">Đáp án đúng: ${esc(x.q.o[x.q.a])}</div><div class="we">${esc(x.q.e)}</div></div>`).join(""):`<p class="explain">Bạn không sai câu nào.</p>`}</div>`;
     return;
   }
-  const q=QUIZ[qi]; answered=false;
-  $("#quiz").innerHTML = `<div class="q-meta"><span>Câu ${qi+1} / ${QUIZ.length}</span><span>Đúng: ${score}</span></div><div class="progress"><i style="width:${qi/QUIZ.length*100}%"></i></div>
+  const q = PQ.qs[PQ.i];
+  v.innerHTML = top + `<div class="quiz ch-${c}"><div class="q-meta"><span>${esc(PQ.title)}</span><span>Câu ${PQ.i+1} / ${n} · Đúng: ${PQ.score}</span></div><div class="progress"><i style="width:${PQ.i/n*100}%"></i></div>
    <div class="q-text">${esc(q.q)}</div><div class="opts">${q.o.map((o,k)=>`<button class="opt" data-k="${k}"><b>${"ABCD"[k]}</b><span>${esc(o)}</span></button>`).join("")}</div>
-   <div class="explain" id="ex" hidden></div><div class="q-foot"><button class="btn" id="next" hidden>${qi===QUIZ.length-1?"Xem kết quả":"Câu tiếp theo"}</button></div>`;
+   <div class="explain" id="ex" hidden></div><div class="q-foot"><button class="btn ghost" data-back="1">Thoát</button><button class="btn" id="next" hidden>${PQ.i===n-1?"Xem kết quả":"Câu tiếp theo"}</button></div></div>`;
 }
+$("#v-luyen-tap").addEventListener("click", e => {
+  const t = e.target.closest("[data-tab]"); if(t){ ptab = t.dataset.tab; renderQuizView(); return; }
+  const s = e.target.closest("[data-start]"); if(s){ startSet(s.dataset.start); return; }
+  const bk = e.target.closest("[data-back]"); if(bk){ e.preventDefault(); PQ = null; if(location.hash!=="#luyen-tap") location.hash = "#luyen-tap"; else renderQuizView(); return; }
+  const o = e.target.closest(".opt");
+  if(o && PQ && PQ.picks.length === PQ.i){ const q = PQ.qs[PQ.i], k = +o.dataset.k; PQ.picks.push(k); if(k===q.a) PQ.score++;
+    document.querySelectorAll("#v-luyen-tap .opt").forEach((b,i)=>{ b.disabled = true; if(i===q.a) b.classList.add("right"); });
+    if(k!==q.a) o.classList.add("wrong");
+    const ex = $("#ex"); ex.hidden = false; ex.innerHTML = `<b>${k===q.a?"Chính xác.":"Chưa đúng."}</b> ${esc(q.e)}`; $("#next").hidden = false; $("#next").focus(); }
+  if(e.target.id==="next"){ PQ.i++; renderRunner(); }
+});
+
+/* ================= Tổng hợp công thức ================= */
+let pendingKT = null, ktFilter = "all";
+function ktBlock(b){
+  if(b.k==="kn") return `<div class="kb kn"><h4>${esc(b.h)}</h4><ul>${b.lines.map(x=>`<li>${esc(x)}</li>`).join("")}</ul></div>`;
+  if(b.k==="ct"){
+    if(b.lines[0].startsWith("α:")){ const rows = b.lines.map(l=>[l.split(":")[0]].concat(l.slice(l.indexOf(":")+1).trim().split(/\s+/)));
+      return `<div class="kb ct"><span class="kchip">Công thức · ${esc(b.h)}</span><div class="tscroll"><table class="gtable">${rows.map((r,i)=>`<tr>${r.map((c,j)=>i===0||j===0?`<th>${esc(c)}</th>`:`<td>${esc(c)}</td>`).join("")}</tr>`).join("")}</table></div></div>`; }
+    return `<div class="kb ct"><span class="kchip">Công thức · ${esc(b.h)}</span>${b.lines.map(x=>`<div class="fl">${esc(x)}</div>`).join("")}</div>`;
+  }
+  const lab = { cy:"Chú ý", loi:"Lỗi hay gặp", meo:"Mẹo nhớ" }[b.k];
+  return `<div class="kb ${b.k}"><span class="kchip">${lab}</span><ul>${b.lines.map(x=>`<li>${esc(x)}</li>`).join("")}</ul></div>`;
+}
+function renderKT(){
+  const v = $("#v-cong-thuc");
+  v.innerHTML = head("Tổng hợp công thức","Toàn bộ kiến thức của từng bài: khái niệm, công thức, chú ý, lỗi hay gặp và mẹo nhớ. Chọn chương hoặc gõ để tìm nhanh.") +
+   `<div class="kt-tools"><div class="chips" id="ktCh">${[["all","Tất cả"],...KT.chapters.map(c=>[c.n,"Chương "+c.n])].map(([k,t])=>`<button class="fchip" data-c="${k}" aria-pressed="${k===ktFilter}">${t}</button>`).join("")}</div>
+    <input id="ktQ" type="search" placeholder="Tìm, ví dụ: côsin, trọng tâm, phần bù…" aria-label="Tìm trong tổng hợp công thức"><button class="btn ghost" id="ktPdf">Xem bản PDF</button></div>
+   <nav class="kt-jump" aria-label="Đi tới bài">${KT.lessons.map(l=>`<a href="#cong-thuc" data-j="${l.n}" class="ch-${CHN[l.ch]}">Bài ${l.n}</a>`).join("")}</nav>
+   <div class="kt-list">${KT.lessons.map(l=>`<article class="kt ch-${CHN[l.ch]}" id="kt-${l.n}" data-c="${l.ch}">
+     <header><span class="kno">Bài ${l.n}</span><div><small>Chương ${l.ch}</small><h3>${esc(l.t)}</h3></div><div class="kt-acts"><a href="#bai-${l.n}">Đọc bài</a><a href="#luyen-bai-${l.n}">Luyện tập</a></div></header>
+     <div class="kt-body">${l.blocks.map(ktBlock).join("")}${(FIGS[l.n]||[]).map(([f,c])=>`<figure class="fig"><img src="hinh/${f}.png" alt="${esc(c)}" loading="lazy"><figcaption>${esc(c)}</figcaption></figure>`).join("")}</div></article>`).join("")}</div>
+   <p class="note" id="ktNone" hidden>Không tìm thấy nội dung phù hợp.</p>`;
+  const apply = () => { const raw = $("#ktQ").value.trim().toLowerCase(), q = norm(raw), dia = q !== raw; let shown = 0;
+    v.querySelectorAll(".kt").forEach(a => { const txt = a.textContent.toLowerCase(); const hit = !raw || (dia ? txt.includes(raw) : norm(txt).includes(q));
+      const ok = (ktFilter==="all"||a.dataset.c===ktFilter) && hit; a.hidden = !ok; if(ok) shown++; });
+    $("#ktNone").hidden = shown > 0; };
+  $("#ktCh").onclick = e => { const b = e.target.closest("[data-c]"); if(!b) return; ktFilter = b.dataset.c; v.querySelectorAll("#ktCh .fchip").forEach(x=>x.setAttribute("aria-pressed", String(x===b))); apply(); };
+  $("#ktQ").oninput = apply;
+  $("#ktPdf").onclick = () => openDoc("tomtat");
+  v.querySelector(".kt-jump").onclick = e => { const a = e.target.closest("[data-j]"); if(!a) return; e.preventDefault(); ktFilter="all"; $("#ktQ").value=""; v.querySelectorAll("#ktCh .fchip").forEach(x=>x.setAttribute("aria-pressed", String(x.dataset.c==="all"))); apply(); document.getElementById("kt-"+a.dataset.j).scrollIntoView({behavior:"smooth", block:"start"}); };
+  apply();
+}
+
+/* ================= Bảng nháp: bảng vô hạn với bút, thước, compa, thước đo góc ================= */
+const BOARD = (() => {
+  const G = 40;                       // 1 ô = 40 đơn vị bảng = 1 đơn vị độ dài
+  const FONT = '"Be Vietnam Pro",system-ui,sans-serif';
+  const COLORS = [["ink","Màu mực"],["#D7261E","Đỏ"],["#1F55B5","Xanh dương"],["#178A43","Xanh lá"],["#E07B00","Cam"],["#8A3FD1","Tím"]];
+  const WIDTHS = [[2,"Nét mảnh"],[4,"Nét vừa"],[8,"Nét đậm"]];
+  const I = d => `<svg viewBox="0 0 24 24" aria-hidden="true">${d}</svg>`;
+  const TOOLS = [
+    ["select","Chọn, di chuyển, đổi tên điểm (V)","v",I('<path d="M5 3l14 8-6 2-2 6z"/>'),"Chạm vào một hình để chọn, kéo để di chuyển. Chạm hai lần vào điểm hoặc chữ để sửa. Phím Delete để xóa."],
+    ["hand","Kéo bảng (H) – hoặc giữ phím cách","h",I('<path d="M8 13V5.5a1.5 1.5 0 0 1 3 0V11M11 11V4.5a1.5 1.5 0 0 1 3 0V11M14 11V6.5a1.5 1.5 0 0 1 3 0V14a6 6 0 0 1-6 6h-1a6 6 0 0 1-5-2.7l-2.2-3.6a1.5 1.5 0 0 1 2.6-1.5L8 14"/>'),"Kéo để di chuyển bảng. Lăn chuột hoặc chụm hai ngón để phóng to, thu nhỏ."],
+    ["pen","Bút (B)","b",I('<path d="M4 20l4-1L19 8l-3-3L5 16z"/><path d="M14 7l3 3"/>'),"Viết, vẽ tự do. Lăn chuột hoặc chụm hai ngón để phóng to, thu nhỏ."],
+    ["hl","Bút dạ quang (D)","d",I('<path d="M8 14l8-8 3 3-8 8z"/><path d="M8 14l-3 5h5l1-2"/>'),"Tô đánh dấu, nét trong suốt."],
+    ["eraser","Tẩy (E)","e",I('<path d="M5 15l9-9 5 5-8 8H8z"/><path d="M8 19h12"/>'),"Rê tẩy qua hình nào thì hình đó bị xóa. Lỡ tay thì bấm Hoàn tác."],
+    ["line","Thước kẻ: đoạn thẳng (L)","l",I('<path d="M5 19L19 5"/><circle cx="5" cy="19" r="1.6"/><circle cx="19" cy="5" r="1.6"/>'),"Kéo từ điểm đầu tới điểm cuối. Đầu bút tự hút vào điểm có sẵn và giao điểm ô li."],
+    ["vec","Vectơ (K)","k",I('<path d="M5 19L18 6"/><path d="M11 6h7v7"/>'),"Kéo từ điểm đầu tới điểm cuối để vẽ vectơ có mũi tên."],
+    ["circle","Compa: đường tròn (O)","o",I('<circle cx="12" cy="12" r="8"/><circle cx="12" cy="12" r="1.3"/>'),"Đặt mũi compa ở tâm, kéo ra để chọn bán kính."],
+    ["poly","Đa giác, tam giác (G)","g",I('<path d="M12 4l8 15H4z"/>'),"Chạm lần lượt từng đỉnh. Chạm lại đỉnh đầu (hoặc Enter) để khép hình. Esc để hủy."],
+    ["point","Điểm có tên (P)","p",I('<circle cx="10" cy="14" r="2.2"/><path d="M14 9l2.5-6L19 9M15 7h3"/>'),"Chạm để đặt điểm, tên tự đặt A, B, C… Dùng công cụ Chọn và chạm hai lần để đổi tên."],
+    ["angle","Thước đo góc (A)","a",I('<path d="M4 19h16M4 19L15 6"/><path d="M10 19a6 6 0 0 0-2-4.6"/>'),"Chạm điểm thứ nhất, rồi đỉnh góc, rồi điểm thứ hai để đo góc."],
+    ["text","Viết chữ (T)","t",I('<path d="M5 7V5h14v2M12 5v14M9 19h6"/>'),"Chạm vào chỗ muốn viết, gõ chữ rồi bấm Enter."]
+  ];
+  const TIPS = Object.fromEntries(TOOLS.map(t => [t[0], t[4]]));
+  const SNAPPING = new Set(["line","vec","circle","poly","point","angle"]);
+  const key = () => "toan10-board-" + (root.dataset.user || "");
+
+  let st = { shapes: [], view: null, bg: "grid", measure: true, snap: true };
+  let tool = "pen", color = "ink", width = 4, undo = [], redo = [], sel = null, draft = null, hoverSnap = null, cursorW = null;
+  let el = {}, cv, ctx, raf = 0, loadedFor = null, saveT = 0, spaceDown = false, needCenter = false;
+  const ptrs = new Map(); let pinch = null, panStart = null, moving = null, erasing = false;
+
+  // ---------- tiện ích ----------
+  const col = n => getComputedStyle(root).getPropertyValue(n).trim() || "#000";
+  const dist = (a, b) => Math.hypot(a[0] - b[0], a[1] - b[1]);
+  const fmtU = x => (Math.round(x * 10) / 10).toString().replace(".", ",");
+  const toW = P => [(P[0] - st.view.x) / st.view.s, (P[1] - st.view.y) / st.view.s];
+  function segDist(p, a, b) { const dx = b[0] - a[0], dy = b[1] - a[1], L = dx * dx + dy * dy; let t = L ? ((p[0] - a[0]) * dx + (p[1] - a[1]) * dy) / L : 0; t = Math.max(0, Math.min(1, t)); return Math.hypot(p[0] - a[0] - t * dx, p[1] - a[1] - t * dy); }
+  const req = () => { if (!raf) raf = requestAnimationFrame(draw); };
+  function save() { clearTimeout(saveT); saveT = setTimeout(() => { try { localStorage.setItem(key(), JSON.stringify(st)); } catch (e) {} }, 400); }
+  function pushUndo() { undo.push(JSON.stringify(st.shapes)); if (undo.length > 100) undo.shift(); redo = []; syncBtns(); }
+  function commit(sh) { pushUndo(); st.shapes.push(sh); save(); syncBtns(); req(); }
+  function nextLabel() {
+    const used = new Set(st.shapes.filter(s => s.t === "point").map(s => s.l));
+    for (let k = 0; ; k++) for (const L of "ABCDEFGHIJKLMNOPQRSTUVWXYZ") { const n = k ? L + k : L; if (!used.has(n)) return n; }
+  }
+  function snapPoints() {
+    const out = [];
+    for (const s of st.shapes) { ["a","b","o","p"].forEach(k => s[k] && s.t !== "text" && out.push(s[k])); if (s.t === "poly") s.pts.forEach(p => out.push(p)); }
+    return out;
+  }
+  function snap(w) {
+    if (!st.snap) return { p: w, hit: false };
+    const tol = 12 / st.view.s; let best = null, bd = tol;
+    for (const p of snapPoints()) { const d = dist(p, w); if (d < bd) { bd = d; best = p; } }
+    if (best) return { p: [best[0], best[1]], hit: true };
+    if (st.bg === "grid" || st.bg === "axes") { const g = [Math.round(w[0] / G) * G, Math.round(w[1] / G) * G]; if (dist(g, w) < 9 / st.view.s) return { p: g, hit: true }; }
+    return { p: w, hit: false };
+  }
+
+  // ---------- vẽ ----------
+  function penPath(pts) {
+    const p = new Path2D(); p.moveTo(pts[0][0], pts[0][1]);
+    for (let i = 1; i < pts.length - 1; i++) { const m = [(pts[i][0] + pts[i + 1][0]) / 2, (pts[i][1] + pts[i + 1][1]) / 2]; p.quadraticCurveTo(pts[i][0], pts[i][1], m[0], m[1]); }
+    const l = pts[pts.length - 1]; p.lineTo(l[0], l[1]); return p;
+  }
+  function label(c, text, x, y, s, fg) {
+    c.save(); c.font = `700 ${13 / s}px ${FONT}`; c.textAlign = "center"; c.textBaseline = "middle";
+    const w = c.measureText(text).width + 8 / s, h = 18 / s;
+    c.globalAlpha = .88; c.fillStyle = col("--sheet"); c.fillRect(x - w / 2, y - h / 2, w, h); c.globalAlpha = 1;
+    c.fillStyle = fg; c.fillText(text, x, y); c.restore();
+  }
+  function arrowHead(c, a, b, size) {
+    const ang = Math.atan2(b[1] - a[1], b[0] - a[0]);
+    c.beginPath(); c.moveTo(b[0], b[1]);
+    c.lineTo(b[0] - size * Math.cos(ang - .45), b[1] - size * Math.sin(ang - .45));
+    c.lineTo(b[0] - size * Math.cos(ang + .45), b[1] - size * Math.sin(ang + .45)); c.closePath(); c.fill();
+  }
+  function angleInfo(a, o, b) {
+    const a1 = Math.atan2(a[1] - o[1], a[0] - o[0]), a2 = Math.atan2(b[1] - o[1], b[0] - o[0]);
+    let d = a2 - a1; while (d > Math.PI) d -= 2 * Math.PI; while (d <= -Math.PI) d += 2 * Math.PI;
+    return { a1, d, deg: Math.abs(d) * 180 / Math.PI };
+  }
+  function drawShape(c, sh, s, C, selected) {
+    const fg = sh.c === "ink" ? C.ink : sh.c;
+    c.save(); c.strokeStyle = fg; c.fillStyle = fg; c.lineWidth = sh.w || 2; c.lineCap = "round"; c.lineJoin = "round";
+    const glow = path => { if (!selected) return; c.save(); c.strokeStyle = C.pen; c.globalAlpha = .35; c.lineWidth = (sh.t === "hl" ? sh.w * 4 : sh.w || 2) + 10 / s; c.stroke(path); c.restore(); };
+    if (sh.t === "pen" || sh.t === "hl") {
+      if (sh.t === "hl") { c.globalAlpha = .35; c.lineWidth = sh.w * 4; }
+      if (sh.pts.length === 1) { c.beginPath(); c.arc(sh.pts[0][0], sh.pts[0][1], c.lineWidth / 2, 0, 7); c.fill(); }
+      else { const p = penPath(sh.pts); glow(p); c.stroke(p); }
+    } else if (sh.t === "line" || sh.t === "vec") {
+      const p = new Path2D(); p.moveTo(sh.a[0], sh.a[1]); p.lineTo(sh.b[0], sh.b[1]); glow(p); c.stroke(p);
+      if (sh.t === "vec") arrowHead(c, sh.a, sh.b, Math.max(12 / s, sh.w * 3.2));
+      else [sh.a, sh.b].forEach(q => { c.beginPath(); c.arc(q[0], q[1], Math.max(2.5 / s, sh.w * .8), 0, 7); c.fill(); });
+      if (st.measure) { const m = [(sh.a[0] + sh.b[0]) / 2, (sh.a[1] + sh.b[1]) / 2], L = dist(sh.a, sh.b), nx = -(sh.b[1] - sh.a[1]) / (L || 1), ny = (sh.b[0] - sh.a[0]) / (L || 1);
+        label(c, fmtU(L / G), m[0] + nx * 14 / s, m[1] + ny * 14 / s, s, fg); }
+    } else if (sh.t === "circle") {
+      const p = new Path2D(); p.arc(sh.o[0], sh.o[1], sh.r, 0, Math.PI * 2); glow(p); c.stroke(p);
+      c.beginPath(); c.arc(sh.o[0], sh.o[1], Math.max(2.5 / s, sh.w * .8), 0, 7); c.fill();
+      if (st.measure) { c.save(); c.setLineDash([5 / s, 5 / s]); c.lineWidth = 1.2 / s; c.beginPath(); c.moveTo(sh.o[0], sh.o[1]); c.lineTo(sh.o[0] + sh.r, sh.o[1]); c.stroke(); c.restore();
+        label(c, "R = " + fmtU(sh.r / G), sh.o[0] + sh.r / 2, sh.o[1] - 12 / s, s, fg); }
+    } else if (sh.t === "poly") {
+      const p = new Path2D(); sh.pts.forEach((q, i) => i ? p.lineTo(q[0], q[1]) : p.moveTo(q[0], q[1])); if (sh.closed !== false) p.closePath();
+      glow(p); c.globalAlpha = .08; c.fill(p); c.globalAlpha = 1; c.stroke(p);
+      if (st.measure && sh.pts.length > 1) {
+        const n = sh.pts.length, cx = sh.pts.reduce((t, q) => t + q[0], 0) / n, cy = sh.pts.reduce((t, q) => t + q[1], 0) / n;
+        for (let i = 0; i < n; i++) { const a = sh.pts[i], b = sh.pts[(i + 1) % n], m = [(a[0] + b[0]) / 2, (a[1] + b[1]) / 2], L = dist(a, b), v = [m[0] - cx, m[1] - cy], vl = Math.hypot(v[0], v[1]) || 1;
+          label(c, fmtU(L / G), m[0] + v[0] / vl * 14 / s, m[1] + v[1] / vl * 14 / s, s, fg); }
+      }
+    } else if (sh.t === "point") {
+      c.beginPath(); c.arc(sh.p[0], sh.p[1], 4.5 / s, 0, 7); c.fill();
+      if (selected) { c.save(); c.strokeStyle = C.pen; c.lineWidth = 3 / s; c.beginPath(); c.arc(sh.p[0], sh.p[1], 9 / s, 0, 7); c.stroke(); c.restore(); }
+      c.font = `800 ${16 / s}px ${FONT}`; c.textBaseline = "bottom"; c.fillText(sh.l, sh.p[0] + 7 / s, sh.p[1] - 5 / s);
+    } else if (sh.t === "angle") {
+      c.lineWidth = 1.6 / s; const p = new Path2D(); p.moveTo(sh.a[0], sh.a[1]); p.lineTo(sh.o[0], sh.o[1]); p.lineTo(sh.b[0], sh.b[1]); glow(p);
+      c.setLineDash([6 / s, 4 / s]); c.stroke(p); c.setLineDash([]);
+      const A = angleInfo(sh.a, sh.o, sh.b), r = 26 / s; c.lineWidth = 2.4 / s;
+      c.beginPath(); c.arc(sh.o[0], sh.o[1], r, A.a1, A.a1 + A.d, A.d < 0); c.stroke();
+      const mid = A.a1 + A.d / 2; label(c, fmtU(A.deg) + "°", sh.o[0] + Math.cos(mid) * (r + 18 / s), sh.o[1] + Math.sin(mid) * (r + 18 / s), s, fg);
+    } else if (sh.t === "text") {
+      c.font = `600 ${sh.size}px ${FONT}`; c.textBaseline = "top";
+      sh.s.split("\n").forEach((ln, i) => c.fillText(ln, sh.p[0], sh.p[1] + i * sh.size * 1.25));
+      if (selected) { const b = textBox(c, sh); c.save(); c.strokeStyle = C.pen; c.lineWidth = 2 / s; c.setLineDash([4 / s, 3 / s]); c.strokeRect(b[0], b[1], b[2], b[3]); c.restore(); }
+    }
+    c.restore();
+  }
+  function textBox(c, sh) { c.save(); c.font = `600 ${sh.size}px ${FONT}`; const lines = sh.s.split("\n"); const w = Math.max(...lines.map(l => c.measureText(l).width)); c.restore(); return [sh.p[0] - 3, sh.p[1] - 3, w + 6, lines.length * sh.size * 1.25 + 6]; }
+  function drawBg(c, W, H, v, C) {
+    const step = G * v.s;
+    const vline = (x, a) => { c.globalAlpha = a; c.beginPath(); c.moveTo(x, 0); c.lineTo(x, H); c.stroke(); };
+    const hline = (y, a) => { c.globalAlpha = a; c.beginPath(); c.moveTo(0, y); c.lineTo(W, y); c.stroke(); };
+    c.save(); c.strokeStyle = C.line; c.lineWidth = 1;
+    if ((st.bg === "grid" || st.bg === "axes") && step >= 6) {
+      for (let x = ((v.x % step) + step) % step; x < W; x += step) vline(Math.round(x) + .5, Math.round((x - v.x) / step) % 5 === 0 ? .95 : .5);
+      for (let y = ((v.y % step) + step) % step; y < H; y += step) hline(Math.round(y) + .5, Math.round((y - v.y) / step) % 5 === 0 ? .95 : .5);
+    }
+    if (st.bg === "lines" && step >= 6) for (let y = ((v.y % step) + step) % step; y < H; y += step) hline(Math.round(y) + .5, .8);
+    c.globalAlpha = 1;
+    if (st.bg === "axes") {
+      c.strokeStyle = C.ink; c.fillStyle = C.ink; c.lineWidth = 1.6;
+      c.beginPath(); c.moveTo(0, v.y); c.lineTo(W, v.y); c.moveTo(v.x, 0); c.lineTo(v.x, H); c.stroke();
+      arrowHead(c, [W - 20, v.y], [W - 4, v.y], 10); arrowHead(c, [v.x, 20], [v.x, 4], 10);
+      c.font = `700 12px ${FONT}`; c.fillStyle = C.muted;
+      const k = step >= 28 ? 1 : step >= 12 ? 5 : step >= 3 ? 10 : 50;
+      c.textAlign = "center"; c.textBaseline = "top";
+      for (let i = Math.ceil(-v.x / step / k) * k; i * step + v.x < W; i += k) if (i) { const x = v.x + i * step; c.fillText(String(i).replace("-", "−"), x, Math.min(Math.max(v.y + 5, 4), H - 18)); }
+      c.textAlign = "right"; c.textBaseline = "middle";
+      for (let i = Math.ceil(-v.y / step / k) * k; i * step + v.y < H; i += k) if (i) { const y = v.y + i * step; c.fillText(String(-i).replace("-", "−"), Math.min(Math.max(v.x - 6, 22), W - 4), y); }
+      c.fillStyle = C.ink; c.font = `800 14px ${FONT}`; c.textAlign = "right"; c.textBaseline = "top";
+      c.fillText("O", v.x - 5, v.y + 4); c.fillText("x", W - 8, v.y + 8); c.textAlign = "left"; c.fillText("y", v.x + 8, 6);
+    }
+    c.restore();
+  }
+  function render(c, W, H, dpr, v, withUi) {
+    const C = { ink: col("--ink"), sheet: col("--sheet"), line: col("--line"), muted: col("--muted"), pen: col("--pen") };
+    c.setTransform(dpr, 0, 0, dpr, 0, 0); c.globalAlpha = 1; c.fillStyle = C.sheet; c.fillRect(0, 0, W, H);
+    drawBg(c, W, H, v, C);
+    c.setTransform(dpr * v.s, 0, 0, dpr * v.s, dpr * v.x, dpr * v.y);
+    st.shapes.forEach((sh, i) => drawShape(c, sh, v.s, C, withUi && i === sel));
+    if (!withUi) return;
+    if (draft) drawDraft(c, v.s, C);
+    if (hoverSnap) { c.save(); c.strokeStyle = C.pen; c.lineWidth = 2 / v.s; c.beginPath(); c.arc(hoverSnap[0], hoverSnap[1], 8 / v.s, 0, 7); c.stroke(); c.restore(); }
+  }
+  function drawDraft(c, s, C) {
+    const d = draft;
+    if (d.t === "pen" || d.t === "hl" || d.t === "line" || d.t === "vec" || d.t === "circle") return drawShape(c, d, s, C, false);
+    if (d.t === "poly") { const pts = cursorW ? d.pts.concat([cursorW]) : d.pts; drawShape(c, { t: "poly", pts, c: d.c, w: d.w, closed: false }, s, C, false);
+      c.save(); c.fillStyle = C.pen; d.pts.forEach(q => { c.beginPath(); c.arc(q[0], q[1], 4 / s, 0, 7); c.fill(); }); c.restore(); }
+    if (d.t === "angle") {
+      c.save(); c.strokeStyle = C.pen; c.fillStyle = C.pen; c.lineWidth = 1.6 / s; c.setLineDash([6 / s, 4 / s]);
+      const pts = cursorW ? d.pts.concat([cursorW]) : d.pts;
+      c.beginPath(); pts.forEach((q, i) => i ? c.lineTo(q[0], q[1]) : c.moveTo(q[0], q[1])); c.stroke(); c.restore();
+      if (pts.length === 3) drawShape(c, { t: "angle", a: pts[0], o: pts[1], b: pts[2], c: d.c }, s, C, false);
+    }
+  }
+  function draw() {
+    raf = 0; if (!cv) return; const W = cv.clientWidth, H = cv.clientHeight; if (!W || !H) return;
+    const dpr = Math.min(window.devicePixelRatio || 1, 2.5);
+    if (cv.width !== Math.round(W * dpr) || cv.height !== Math.round(H * dpr)) { cv.width = Math.round(W * dpr); cv.height = Math.round(H * dpr); }
+    render(ctx, W, H, dpr, st.view, true);
+    el.zoom.textContent = Math.round(st.view.s * 100) + "%";
+  }
+
+  // ---------- chọn, tẩy ----------
+  function hit(sh, w, tol) {
+    const t = tol + (sh.w || 2) / 2;
+    switch (sh.t) {
+      case "pen": case "hl": { const tt = sh.t === "hl" ? tol + sh.w * 2 : t; if (sh.pts.length === 1) return dist(sh.pts[0], w) < tt; for (let i = 1; i < sh.pts.length; i++) if (segDist(w, sh.pts[i - 1], sh.pts[i]) < tt) return true; return false; }
+      case "line": case "vec": return segDist(w, sh.a, sh.b) < t;
+      case "circle": return Math.abs(dist(w, sh.o) - sh.r) < t || dist(w, sh.o) < t;
+      case "poly": { const n = sh.pts.length; for (let i = 0; i < n; i++) if (segDist(w, sh.pts[i], sh.pts[(i + 1) % n]) < t) return true; return false; }
+      case "point": return dist(w, sh.p) < tol + 6 / st.view.s;
+      case "angle": return dist(w, sh.o) < 30 / st.view.s || segDist(w, sh.a, sh.o) < t || segDist(w, sh.o, sh.b) < t;
+      case "text": { const b = textBox(ctx, sh); return w[0] >= b[0] && w[0] <= b[0] + b[2] && w[1] >= b[1] && w[1] <= b[1] + b[3]; }
+    }
+    return false;
+  }
+  const hitIndex = w => { const tol = 8 / st.view.s; for (let i = st.shapes.length - 1; i >= 0; i--) if (hit(st.shapes[i], w, tol)) return i; return null; };
+  function shift(sh, dx, dy) { const m = p => { p[0] += dx; p[1] += dy; }; ["a","b","o","p"].forEach(k => sh[k] && m(sh[k])); (sh.pts || []).forEach(m); }
+  function eraseAt(w) {
+    const tol = 10 / st.view.s; let changed = false;
+    for (let i = st.shapes.length - 1; i >= 0; i--) if (hit(st.shapes[i], w, tol)) { if (!erasing.pushed) { pushUndo(); erasing.pushed = true; } st.shapes.splice(i, 1); changed = true; }
+    if (changed) { sel = null; save(); syncBtns(); req(); }
+  }
+
+  // ---------- ô nhập chữ ----------
+  function editText(P, w, init, onDone) {
+    const inp = document.createElement("textarea"); inp.className = "board-text"; inp.value = init || ""; inp.rows = 1;
+    inp.style.left = P[0] + "px"; inp.style.top = P[1] + "px"; inp.setAttribute("aria-label", "Nhập chữ lên bảng");
+    el.canvasWrap.appendChild(inp); setTimeout(() => inp.focus(), 0);
+    let done = false;
+    const finish = ok => { if (done) return; done = true; const v = inp.value.replace(/\s+$/, ""); inp.remove(); if (ok && v) onDone(v); req(); };
+    inp.addEventListener("keydown", e => { e.stopPropagation(); if (e.key === "Enter" && !e.shiftKey) { e.preventDefault(); finish(true); } if (e.key === "Escape") finish(false); });
+    inp.addEventListener("blur", () => finish(true));
+  }
+
+  // ---------- con trỏ / chạm ----------
+  const local = e => { const r = cv.getBoundingClientRect(); return [e.clientX - r.left, e.clientY - r.top]; };
+  function zoomAt(P, f) {
+    const v = st.view, s = Math.min(6, Math.max(.15, v.s * f)), w = toW(P);
+    v.s = s; v.x = P[0] - w[0] * s; v.y = P[1] - w[1] * s; save(); req();
+  }
+  function finishPoly() { if (draft && draft.t === "poly") { if (draft.pts.length >= 2) commit({ t: "poly", pts: draft.pts, c: draft.c, w: draft.w, closed: draft.pts.length >= 3 }); draft = null; req(); } }
+  function onDown(e) {
+    if (e.pointerType === "mouse" && e.button === 2) return;
+    cv.setPointerCapture(e.pointerId); const P = local(e); ptrs.set(e.pointerId, P);
+    if (ptrs.size === 2) {
+      if (draft && ["pen","hl","line","vec","circle"].includes(draft.t)) draft = null; erasing = false; moving = null;
+      const [a, b] = [...ptrs.values()]; pinch = { d: dist(a, b), m: [(a[0] + b[0]) / 2, (a[1] + b[1]) / 2], v: { ...st.view } }; req(); return;
+    }
+    if (ptrs.size > 2) return;
+    const w = toW(P);
+    if (e.button === 1 || tool === "hand" || spaceDown) { panStart = { P, x: st.view.x, y: st.view.y }; cv.style.cursor = "grabbing"; return; }
+    const sp = SNAPPING.has(tool) ? snap(w).p : w;
+    switch (tool) {
+      case "pen": case "hl": draft = { t: tool, pts: [w], c: color, w: width }; break;
+      case "eraser": erasing = { pushed: false }; eraseAt(w); break;
+      case "line": case "vec": draft = { t: tool, a: sp, b: [...sp], c: color, w: width }; break;
+      case "circle": draft = { t: "circle", o: sp, r: 0, c: color, w: width }; break;
+      case "poly":
+        if (!draft) draft = { t: "poly", pts: [sp], c: color, w: width };
+        else if (draft.pts.length >= 3 && dist(sp, draft.pts[0]) < 12 / st.view.s) { finishPoly(); }
+        else draft.pts.push(sp);
+        break;
+      case "point": commit({ t: "point", p: sp, l: nextLabel(), c: color }); break;
+      case "angle":
+        if (!draft) draft = { t: "angle", pts: [sp], c: color };
+        else { draft.pts.push(sp); if (draft.pts.length === 3) { commit({ t: "angle", a: draft.pts[0], o: draft.pts[1], b: draft.pts[2], c: color }); draft = null; } }
+        break;
+      case "text": editText(P, w, "", v => commit({ t: "text", p: w, s: v, size: 22 / st.view.s, c: color })); break;
+      case "select": { sel = hitIndex(w); moving = sel !== null ? { last: w, pushed: false } : null; syncBtns(); if (sel === null) panStart = { P, x: st.view.x, y: st.view.y }; break; }
+    }
+    req();
+  }
+  function onMove(e) {
+    const P = local(e);
+    if (ptrs.has(e.pointerId)) ptrs.set(e.pointerId, P);
+    if (pinch && ptrs.size === 2) {
+      const [a, b] = [...ptrs.values()], m = [(a[0] + b[0]) / 2, (a[1] + b[1]) / 2], v0 = pinch.v;
+      const s = Math.min(6, Math.max(.15, v0.s * dist(a, b) / (pinch.d || 1))), wm = [(pinch.m[0] - v0.x) / v0.s, (pinch.m[1] - v0.y) / v0.s];
+      st.view.s = s; st.view.x = m[0] - wm[0] * s; st.view.y = m[1] - wm[1] * s; save(); req(); return;
+    }
+    const w = toW(P); cursorW = w;
+    if (st.bg === "axes") el.coord.textContent = `x = ${fmtU(w[0] / G)}; y = ${fmtU(-w[1] / G)}`; else el.coord.textContent = "";
+    if (panStart) { st.view.x = panStart.x + P[0] - panStart.P[0]; st.view.y = panStart.y + P[1] - panStart.P[1]; save(); req(); return; }
+    if (SNAPPING.has(tool)) { const r = snap(w); hoverSnap = r.hit ? r.p : null; cursorW = r.p; } else hoverSnap = null;
+    if (!ptrs.has(e.pointerId)) { req(); return; }
+    if (erasing) { eraseAt(w); return; }
+    if (moving && sel !== null) {
+      if (!moving.pushed) { pushUndo(); moving.pushed = true; }
+      shift(st.shapes[sel], w[0] - moving.last[0], w[1] - moving.last[1]); moving.last = w; save(); req(); return;
+    }
+    if (!draft) { req(); return; }
+    if (draft.t === "pen" || draft.t === "hl") { const l = draft.pts[draft.pts.length - 1]; if (dist(l, w) > 1.5 / st.view.s) draft.pts.push(w); }
+    else if (draft.t === "line" || draft.t === "vec") draft.b = cursorW;
+    else if (draft.t === "circle") draft.r = dist(draft.o, cursorW);
+    req();
+  }
+  function onUp(e) {
+    ptrs.delete(e.pointerId);
+    if (pinch) { if (ptrs.size < 2) pinch = null; return; }
+    if (panStart) { panStart = null; setCursor(); }
+    if (erasing) erasing = false;
+    if (moving) moving = null;
+    if (draft) {
+      const d = draft, tiny = 3 / st.view.s;
+      if (d.t === "pen" || d.t === "hl") { commit(d); draft = null; }
+      else if ((d.t === "line" || d.t === "vec")) { if (dist(d.a, d.b) > tiny) commit(d); draft = null; }
+      else if (d.t === "circle") { if (d.r > tiny) commit(d); draft = null; }
+    }
+    req();
+  }
+  function onDbl(e) {
+    const P = local(e), w = toW(P);
+    if (tool === "poly") { if (draft && draft.pts.length > 3) draft.pts.pop(); finishPoly(); return; }
+    if (tool !== "select") return;
+    const i = hitIndex(w); if (i === null) return; const sh = st.shapes[i];
+    if (sh.t === "point") { const sp = [sh.p[0] * st.view.s + st.view.x + 8, sh.p[1] * st.view.s + st.view.y - 30]; editText(sp, w, sh.l, v => { pushUndo(); sh.l = v.slice(0, 6); save(); }); }
+    if (sh.t === "text") { const sp = [sh.p[0] * st.view.s + st.view.x, sh.p[1] * st.view.s + st.view.y]; editText(sp, w, sh.s, v => { pushUndo(); sh.s = v; save(); }); }
+  }
+  function setCursor() { cv.style.cursor = tool === "hand" || spaceDown ? "grab" : tool === "select" ? "default" : tool === "text" ? "text" : "crosshair"; }
+
+  // ---------- thanh công cụ ----------
+  function setTool(t) {
+    tool = t; draft = null; hoverSnap = null; if (t !== "select") sel = null;
+    el.tools.querySelectorAll("[data-tool]").forEach(b => b.setAttribute("aria-pressed", String(b.dataset.tool === t)));
+    el.tip.textContent = TIPS[t]; setCursor(); syncBtns(); req();
+  }
+  function syncBtns() {
+    if (!el.undo) return;
+    el.undo.disabled = !undo.length; el.redo.disabled = !redo.length; el.del.hidden = sel === null;
+  }
+  function doUndo() { if (!undo.length) return; redo.push(JSON.stringify(st.shapes)); st.shapes = JSON.parse(undo.pop()); sel = null; draft = null; save(); syncBtns(); req(); }
+  function doRedo() { if (!redo.length) return; undo.push(JSON.stringify(st.shapes)); st.shapes = JSON.parse(redo.pop()); sel = null; save(); syncBtns(); req(); }
+  function delSel() { if (sel === null) return; pushUndo(); st.shapes.splice(sel, 1); sel = null; save(); syncBtns(); req(); }
+  function center() { st.view = { x: cv.clientWidth / 2, y: cv.clientHeight / 2, s: 1 }; save(); req(); }
+  async function exportPng() {
+    const W = cv.clientWidth, H = cv.clientHeight, c2 = document.createElement("canvas"); c2.width = W * 2; c2.height = H * 2;
+    render(c2.getContext("2d"), W, H, 2, st.view, false);
+    const ctx2 = c2.getContext("2d"); ctx2.setTransform(2, 0, 0, 2, 0, 0); ctx2.font = `600 11px ${FONT}`; ctx2.fillStyle = col("--muted"); ctx2.textAlign = "right"; ctx2.fillText("Góc Toán 10 · THPT Lý Thường Kiệt", W - 10, H - 10);
+    const blob = await new Promise(r => c2.toBlob(r, "image/png")); if (!blob) return toast("Không tạo được ảnh", true);
+    const name = "bang-nhap-toan-10.png";
+    if (window.claude && typeof window.claude.use === "function") {
+      try { const dl = await window.claude.use("downloads"); if (!dl) return toast("Trang này chưa lưu được ảnh. Hãy mở trang trên Vercel.", true);
+        await dl.save({ filename: name, data: blob }); toast("Đã lưu ảnh bảng nháp"); }
+      catch (e) { if (e && e.code !== "declined") toast("Chưa lưu được ảnh", true); }
+      return;
+    }
+    const a = document.createElement("a"); a.href = URL.createObjectURL(blob); a.download = name; document.body.appendChild(a); a.click(); a.remove(); setTimeout(() => URL.revokeObjectURL(a.href), 4000); toast("Đã lưu ảnh bảng nháp");
+  }
+  function toggleFull(on) { const b = el.board; const f = on === undefined ? !b.classList.contains("full") : on; b.classList.toggle("full", f); el.full.setAttribute("aria-pressed", String(f)); el.full.title = f ? "Thoát toàn màn hình (Esc)" : "Toàn màn hình"; setTimeout(req, 30); }
+
+  function build(host) {
+    host.innerHTML = head("Bảng nháp", "Bảng vẽ không giới hạn để làm nháp và vẽ hình: bút, thước kẻ, compa, thước đo góc, đặt điểm, viết chữ. Bảng tự lưu trên trình duyệt của bạn.") + `
+    <div class="board" id="board">
+      <div class="btools" role="toolbar" aria-label="Công cụ bảng nháp">
+        <div class="bgroup" id="bTools">${TOOLS.map(t => `<button type="button" class="tb" data-tool="${t[0]}" title="${t[1]}" aria-label="${t[1]}" aria-pressed="false">${t[3]}</button>`).join("")}</div>
+        <div class="bgroup">${COLORS.map(([c, n]) => `<button type="button" class="sw" data-color="${c}" title="${n}" aria-label="${n}" style="--swc:${c === "ink" ? "var(--ink)" : c}"></button>`).join("")}</div>
+        <div class="bgroup">${WIDTHS.map(([w, n]) => `<button type="button" class="tb wd" data-w="${w}" title="${n}" aria-label="${n}"><i style="height:${w}px"></i></button>`).join("")}</div>
+        <div class="bgroup">
+          <button type="button" class="tb" id="bUndo" title="Hoàn tác (Ctrl+Z)" aria-label="Hoàn tác">${I('<path d="M9 14L4 9l5-5"/><path d="M4 9h10a6 6 0 0 1 0 12h-3"/>')}</button>
+          <button type="button" class="tb" id="bRedo" title="Làm lại (Ctrl+Y)" aria-label="Làm lại">${I('<path d="M15 14l5-5-5-5"/><path d="M20 9H10a6 6 0 0 0 0 12h3"/>')}</button>
+          <button type="button" class="tb danger" id="bDel" title="Xóa hình đang chọn (Delete)" aria-label="Xóa hình đang chọn" hidden>${I('<path d="M4 7h16M9 7V4h6v3M6 7l1 13h10l1-13"/>')}</button>
+        </div>
+        <div class="bgroup">
+          <label class="bsel"><span>Nền</span><select id="bBg"><option value="grid">Ô li</option><option value="axes">Hệ trục Oxy</option><option value="lines">Dòng kẻ</option><option value="plain">Trơn</option></select></label>
+          <label class="bchk" title="Hiện độ dài, bán kính, số đo góc"><input type="checkbox" id="bMeasure"> Số đo</label>
+          <label class="bchk" title="Đầu bút tự hút vào điểm có sẵn và giao điểm ô li"><input type="checkbox" id="bSnap"> Hút điểm</label>
+        </div>
+        <div class="bgroup bright">
+          <button type="button" class="tb" id="bZoomOut" title="Thu nhỏ" aria-label="Thu nhỏ">${I('<circle cx="11" cy="11" r="6"/><path d="M8 11h6M20 20l-4.5-4.5"/>')}</button>
+          <button type="button" class="zval" id="bZoom" title="Về giữa, cỡ 100%">100%</button>
+          <button type="button" class="tb" id="bZoomIn" title="Phóng to" aria-label="Phóng to">${I('<circle cx="11" cy="11" r="6"/><path d="M8 11h6M11 8v6M20 20l-4.5-4.5"/>')}</button>
+          <button type="button" class="tb" id="bPng" title="Lưu ảnh PNG" aria-label="Lưu ảnh PNG">${I('<path d="M12 4v11M7 10l5 5 5-5M5 20h14"/>')}</button>
+          <button type="button" class="tb" id="bFull" title="Toàn màn hình" aria-label="Toàn màn hình" aria-pressed="false">${I('<path d="M4 9V4h5M20 9V4h-5M4 15v5h5M20 15v5h-5"/>')}</button>
+          <button type="button" class="sbtn danger" id="bClear">Xóa bảng</button>
+        </div>
+      </div>
+      <div class="bcanvas" id="bCanvas"><canvas aria-label="Bảng nháp" role="img"></canvas></div>
+      <div class="bhint"><span id="bTip"></span><span id="bCoord" class="mono"></span></div>
+    </div>`;
+    el = { board: $("#board"), tools: $("#board .btools"), canvasWrap: $("#bCanvas"), tip: $("#bTip"), coord: $("#bCoord"), zoom: $("#bZoom"),
+      undo: $("#bUndo"), redo: $("#bRedo"), del: $("#bDel"), full: $("#bFull") };
+    cv = el.canvasWrap.querySelector("canvas"); ctx = cv.getContext("2d");
+    el.tools.addEventListener("click", e => {
+      const b = e.target.closest("button"); if (!b) return;
+      if (b.dataset.tool) setTool(b.dataset.tool);
+      if (b.dataset.color) { color = b.dataset.color; paintPicks(); if (sel !== null && st.shapes[sel]) { pushUndo(); st.shapes[sel].c = color; save(); req(); } if (["select","hand","eraser"].includes(tool)) setTool("pen"); }
+      if (b.dataset.w) { width = +b.dataset.w; paintPicks(); if (sel !== null && st.shapes[sel] && st.shapes[sel].w) { pushUndo(); st.shapes[sel].w = width; save(); req(); } }
+    });
+    el.undo.onclick = doUndo; el.redo.onclick = doRedo; el.del.onclick = delSel;
+    $("#bZoomIn").onclick = () => zoomAt([cv.clientWidth / 2, cv.clientHeight / 2], 1.25);
+    $("#bZoomOut").onclick = () => zoomAt([cv.clientWidth / 2, cv.clientHeight / 2], 1 / 1.25);
+    el.zoom.onclick = center; $("#bPng").onclick = exportPng; el.full.onclick = () => toggleFull();
+    $("#bBg").onchange = e => { st.bg = e.target.value; save(); req(); };
+    $("#bMeasure").onchange = e => { st.measure = e.target.checked; save(); req(); };
+    $("#bSnap").onchange = e => { st.snap = e.target.checked; hoverSnap = null; save(); req(); };
+    const clr = $("#bClear"); let armed = false;
+    clr.onclick = () => { if (!armed) { armed = true; clr.textContent = "Bấm lần nữa để xóa"; clr.classList.add("confirm"); setTimeout(() => { armed = false; clr.textContent = "Xóa bảng"; clr.classList.remove("confirm"); }, 3000); return; }
+      armed = false; clr.textContent = "Xóa bảng"; clr.classList.remove("confirm"); if (!st.shapes.length) return; pushUndo(); st.shapes = []; sel = null; draft = null; save(); syncBtns(); req(); toast("Đã xóa bảng. Bấm Hoàn tác nếu lỡ tay."); };
+    cv.addEventListener("pointerdown", onDown); cv.addEventListener("pointermove", onMove);
+    cv.addEventListener("pointerup", onUp); cv.addEventListener("pointercancel", onUp);
+    cv.addEventListener("pointerleave", () => { hoverSnap = null; if (!ptrs.size) req(); });
+    cv.addEventListener("dblclick", onDbl);
+    cv.addEventListener("contextmenu", e => e.preventDefault());
+    cv.addEventListener("wheel", e => { e.preventDefault(); const P = local(e);
+      if (e.ctrlKey || e.metaKey || Math.abs(e.deltaY) >= 40 || e.deltaMode) zoomAt(P, Math.exp(-e.deltaY * (e.deltaMode ? 0.05 : 0.0018)));
+      else { st.view.x -= e.deltaX; st.view.y -= e.deltaY; save(); req(); } }, { passive: false });
+    new ResizeObserver(req).observe(el.canvasWrap);
+    document.addEventListener("keydown", onKey); document.addEventListener("keyup", e => { if (e.code === "Space" && spaceDown) { spaceDown = false; setCursor(); } });
+  }
+  function paintPicks() {
+    el.tools.querySelectorAll("[data-color]").forEach(b => b.setAttribute("aria-pressed", String(b.dataset.color === color)));
+    el.tools.querySelectorAll("[data-w]").forEach(b => b.setAttribute("aria-pressed", String(+b.dataset.w === width)));
+  }
+  function visible() { const v = $("#v-bang-nhap"); return v && !v.hidden && root.dataset.user; }
+  function onKey(e) {
+    if (!visible() || e.target.closest("input,textarea,select")) return;
+    const k = e.key.toLowerCase();
+    if ((e.ctrlKey || e.metaKey) && k === "z") { e.preventDefault(); e.shiftKey ? doRedo() : doUndo(); return; }
+    if ((e.ctrlKey || e.metaKey) && k === "y") { e.preventDefault(); doRedo(); return; }
+    if (e.ctrlKey || e.metaKey || e.altKey) return;
+    if (e.code === "Space") { e.preventDefault(); if (!spaceDown) { spaceDown = true; setCursor(); } return; }
+    if (e.key === "Escape") { if (draft) { draft = null; req(); } else if (el.board.classList.contains("full")) toggleFull(false); else if (sel !== null) { sel = null; syncBtns(); req(); } return; }
+    if (e.key === "Enter") { finishPoly(); return; }
+    if ((e.key === "Delete" || e.key === "Backspace") && sel !== null) { e.preventDefault(); delSel(); return; }
+    const t = TOOLS.find(x => x[2] === k); if (t) { e.preventDefault(); setTool(t[0]); }
+  }
+  function load() {
+    loadedFor = root.dataset.user; undo = []; redo = []; sel = null; draft = null;
+    let s = null; try { s = JSON.parse(localStorage.getItem(key()) || "null"); } catch (e) {}
+    st = { shapes: [], view: null, bg: "grid", measure: true, snap: true, ...(s || {}) };
+    if (!Array.isArray(st.shapes)) st.shapes = [];
+    needCenter = !st.view || !isFinite(st.view.s) || !isFinite(st.view.x);
+    if (needCenter) st.view = { x: 0, y: 0, s: 1 };
+    $("#bBg").value = st.bg; $("#bMeasure").checked = st.measure; $("#bSnap").checked = st.snap;
+  }
+  return {
+    show() {
+      const host = $("#v-bang-nhap");
+      if (!el.board || !host.contains(el.board)) build(host);
+      if (loadedFor !== root.dataset.user) load();
+      setTool(tool); paintPicks(); syncBtns();
+      requestAnimationFrame(() => { if (needCenter && cv.clientWidth) { needCenter = false; center(); } req(); });
+    },
+    hide() { if (el.board) toggleFull(false); draft = null; spaceDown = false; }
+  };
+})();
+
 
 /* ================= Quản lý tài khoản ================= */
 const permBoxes = (pre, on) => `<fieldset class="perms"><legend>Quyền</legend>
@@ -1049,27 +1641,33 @@ $("#v-quan-tri").addEventListener("submit", async e => {
 });
 
 /* ================= Hỏi đáp ================= */
-function renderAsk(){ $("#v-hoi-dap").innerHTML = head("Hỏi đáp","Trò chuyện với trợ lý AI: hỏi lý thuyết, nhờ giải thích từng bước, xin bài tập để luyện. Trợ lý ưu tiên nội dung Bài 1 đến Bài 9.") + `<div id="chatHost"></div>`; }
+function renderAsk(){ $("#v-hoi-dap").innerHTML = head("Hỏi đáp","Trò chuyện với trợ lý học tập: hỏi bài, nhờ giải thích từng bước, lên kế hoạch ôn thi, hay tâm sự chuyện học hành. Trợ lý giỏi nhất ở Toán 10 Bài 1 đến Bài 9.") + `<div id="chatHost"></div>`; }
 
 /* ================= Điều hướng: mỗi lần chỉ hiện một mục ================= */
-const VIEWS = { "quan-tri":renderAdmin, "trang-chu":renderHome, "bai-giang":renderLessons, "tai-lieu":renderDocs, "video":renderVideos, "bai-hat":renderSongs, "luyen-tap":renderQuizView, "hoi-dap":renderAsk };
+const VIEWS = { "cong-thuc":renderKT, "bang-nhap":()=>BOARD.show(), "quan-tri":renderAdmin, "trang-chu":renderHome, "bai-giang":renderLessons, "tai-lieu":renderDocs, "video":renderVideos, "bai-hat":renderSongs, "luyen-tap":renderQuizView, "hoi-dap":renderAsk };
 const rendered = {};
 let pendingAsk = null;
 function route(){
   if(!root.dataset.user) return;
   let h = location.hash.slice(1) || "trang-chu", m = h.match(/^bai-([1-9])$/), mv = h.match(/^video-(nguyen|dat)-([1-9])$/);
+  const mq = h.match(/^luyen-bai-([1-9])$/) || h.match(/^on-chuong-([1-4])$/);
+  if(mq){ const key = h.startsWith("luyen") ? "b-"+mq[1] : "c-"+["I","II","III","IV"][mq[1]-1]; const s0 = setFor(key); PQ = { ...s0, qs:s0.qs.map(prepQ), i:0, score:0, picks:[] }; h = "luyen-tap"; }
+
   let view = m ? "bai" : mv ? "xem-video" : (VIEWS[h] ? h : "trang-chu");
   if($("#reader").open) closeReader();
   if(view !== "bai-hat") stopSong();
   document.querySelectorAll("[data-view]").forEach(s => s.hidden = s.id !== "v-"+view);
   if(m) renderLesson(+m[1]);
   else if(mv) renderPlayer(mv[1], +mv[2]);
-  else if(view==="trang-chu" || view==="bai-giang" || view==="quan-tri" || view==="video") VIEWS[view]();
+  else if(["trang-chu","bai-giang","quan-tri","video","bang-nhap","luyen-tap"].includes(view)) VIEWS[view]();
+  else if(view==="cong-thuc"){ if(!rendered[view]){ renderKT(); rendered[view]=true; } if(pendingKT){ const n = pendingKT; pendingKT = null; setTimeout(()=>{ const el = document.getElementById("kt-"+n); if(el) el.scrollIntoView({block:"start"}); }, 30); } }
   else if(!rendered[view]){ VIEWS[view](); rendered[view]=true; }
+  if(view!=="bang-nhap") BOARD.hide();
   $("#navAdmin").hidden = !can("quan_tri");
   const navKey = m ? "bai-giang" : mv ? "video" : view;
   document.querySelectorAll("#sideNav a").forEach(a => a.dataset.v===navKey ? a.setAttribute("aria-current","page") : a.removeAttribute("aria-current"));
   placeChat(view==="hoi-dap");
+  if(view==="bang-nhap"){ fab.hidden = true; chat.hidden = true; }
   if(view==="hoi-dap" && pendingAsk){ const q = pendingAsk; pendingAsk = null; ask(AI.mode ? q.ai : q.kw); }
   const name = root.dataset.name || root.dataset.user;
   $("#whoName").textContent = name; $("#avatar").textContent = root.dataset.user===DEMO.user ? "K" : (name.trim().split(/\s+/).pop()[0]||"H").toUpperCase();
@@ -1077,6 +1675,8 @@ function route(){
   window.scrollTo(0,0);
 }
 addEventListener("hashchange", route);
+// Bấm vào “Luyện tập” ở menu, ô trang chủ… luôn mở trang chọn đề
+document.addEventListener("click", e => { const a = e.target.closest('a[href="#luyen-tap"]'); if(!a || a.closest("#v-luyen-tap")) return; PQ = null; if(location.hash === "#luyen-tap"){ e.preventDefault(); renderQuizView(); window.scrollTo(0,0); } });
 
 /* ================= Trợ lý Toán (Bài 1–9) ================= */
 const KB = [
@@ -1168,16 +1768,25 @@ const msgs=$("#msgs"), chat=$("#chat"), fab=$("#fab");
    - Trên máy chủ của trường: gửi tới /api/chat, máy chủ gọi Gemini hoặc Claude bằng khóa API trong ai-config.json.
    - Không có AI: tự quay về trợ lý theo từ khóa. */
 const SYLLABUS = LESSONS.map(l => `Bài ${l.n}. ${l.t} (Chương ${l.ch}): ${l.f.replace(/\n/g,"; ")}`).join("\n");
-const RULES = `Bạn là "Trợ lý Toán 10" trên trang học liệu Góc Toán 10 do học sinh trường THPT Lý Thường Kiệt làm, dành cho học sinh lớp 10 (sách Kết nối tri thức).
-Cách trả lời:
-- Luôn trả lời bằng tiếng Việt, thân thiện, ngắn gọn, rõ ràng như một bạn học giỏi đang giảng bài.
-- Trọng tâm là Bài 1 đến Bài 9 bên dưới. Câu hỏi toán khác vẫn trả lời, nhưng nói rõ nếu nằm ngoài phạm vi Bài 1–9.
-- Khi học sinh nhờ giải bài tập: hướng dẫn từng bước, đặt câu hỏi gợi mở; chỉ đưa lời giải đầy đủ khi học sinh yêu cầu rõ.
-- Khi học sinh xin bài tập: cho 1 bài, chờ học sinh trả lời rồi mới chấm và giải thích.
-- Chỉ dùng chữ thường, KHÔNG dùng LaTeX, KHÔNG dùng bảng, KHÔNG dùng tiêu đề Markdown. Viết công thức bằng ký hiệu như a² = b² + c² − 2bc·cosA, AB→, √2/2, ≤, ≥, ∈. Có thể in đậm ý quan trọng bằng **…**. Dùng gạch đầu dòng "- " khi liệt kê.
-- Không bịa. Nếu không chắc, nói thẳng là không chắc.
-- Câu hỏi không liên quan đến học tập: từ chối nhẹ nhàng và gợi ý quay lại môn Toán.
-Nội dung Bài 1–9 và công thức chính:
+const RULES = `Bạn là "Trợ lý học tập" của trang Học Liệu Toán 10 (Góc Toán 10) do học sinh trường THPT Lý Thường Kiệt làm. Người trò chuyện với bạn chủ yếu là học sinh lớp 10.
+
+Vai trò: một người bạn đồng hành trong việc học – thân thiện, kiên nhẫn, biết lắng nghe – không chỉ là máy giải toán.
+
+Cách trò chuyện:
+- Nói chuyện tự nhiên bằng tiếng Việt như một anh chị khóa trên tận tình: xưng "mình", gọi "bạn"; câu ngắn, ấm áp, gần gũi. Khi chưa rõ bạn cần gì thì hỏi lại một câu ngắn.
+- Chào hỏi, tâm sự hay hỏi chuyện thường ngày thì đáp lại như một cuộc trò chuyện bình thường, không lái ngay sang bài tập.
+- Trả lời vừa đủ, đúng trọng tâm câu hỏi; chỉ viết dài khi bạn cần giải thích kỹ.
+- Hỗ trợ việc học nói chung: cách học hiệu quả, lập kế hoạch ôn tập, quản lý thời gian, chuẩn bị kiểm tra, giữ động lực, vượt qua áp lực thi cử, giải đáp thắc mắc các môn ở mức lớp 10.
+- Thế mạnh riêng là Toán 10 từ Bài 1 đến Bài 9 (mệnh đề, tập hợp, bất phương trình và hệ bất phương trình bậc nhất hai ẩn, giá trị lượng giác, hệ thức lượng trong tam giác, vectơ). Khi giảng: dùng ví dụ đời thường, đi từng bước, đặt câu hỏi gợi mở để bạn tự nghĩ; chỉ đưa lời giải đầy đủ khi bạn muốn.
+- Khi phù hợp, gợi ý các mục có sẵn trên trang: Bài giảng, Tổng hợp công thức, Tài liệu PDF, Video bài giảng (Cô Nguyễn Hà Nguyên, Thầy Đạt), Bài hát ghi nhớ, Bảng nháp, Luyện tập.
+- Động viên chân thành, khen nỗ lực cụ thể; không phán xét khi bạn nói mình học kém, chán học hay bị điểm thấp.
+- Nếu bạn chia sẻ chuyện buồn, áp lực nặng nề hoặc điều khiến bạn thấy không an toàn: lắng nghe, thể hiện sự quan tâm, và khuyến khích bạn nói chuyện với người lớn tin cậy như bố mẹ, thầy cô chủ nhiệm hoặc phòng tư vấn tâm lý của trường.
+- Không hỏi và không ghi nhớ thông tin cá nhân (họ tên đầy đủ, số điện thoại, địa chỉ…). Không bịa; không chắc thì nói thẳng là không chắc.
+- Từ chối nhẹ nhàng nội dung không phù hợp với học sinh, rồi gợi ý chuyện khác.
+
+Hình thức: chỉ dùng chữ thường; KHÔNG dùng LaTeX, KHÔNG dùng bảng, KHÔNG dùng tiêu đề Markdown. Viết công thức bằng ký hiệu như a² = b² + c² − 2bc·cosA, AB→, √2/2, ≤, ≥, ∈. Có thể in đậm ý quan trọng bằng **…** và dùng gạch đầu dòng "- " khi liệt kê.
+
+Công thức chính của Bài 1–9 (để tham khảo khi giảng):
 ${SYLLABUS}`;
 const AI = { mode:null, sample:null, history:[], busy:false, ctl:null };
 function setAiStatus(){
@@ -1185,7 +1794,7 @@ function setAiStatus(){
   st.className = on ? "ai" : "";
   st.querySelector("span").textContent = on ? "Trực tuyến · sẵn sàng" : "Trả lời nhanh theo từ khóa";
   $("#aiNote").hidden = !on;
-  const SUG = on ? ["Giải thích định lý côsin bằng ví dụ dễ hiểu","Cho mình 1 bài tập về vectơ rồi chấm giúp","Cùng phương khác cùng hướng thế nào?","Giải tam giác có b = 6, c = 8, góc A = 60°"]
+  const SUG = on ? ["Chào bạn, hôm nay mình nên học gì?","Lập giúp mình kế hoạch ôn kiểm tra Toán","Mình thấy vectơ khó quá","Làm sao để bớt áp lực khi thi?"]
                  : ["Định lý côsin","sin 150","b=6, c=8, A=60","tam giác 13 14 15","Quy tắc ba điểm","Tích vectơ với một số"];
   $("#sugg").innerHTML = SUG.map(x=>`<button type="button">${esc(x)}</button>`).join("");
 }
@@ -1231,7 +1840,7 @@ function ask(t){
   if(AI.mode) askAI(t); else setTimeout(()=>add(reply(t),"bot"), 250);
 }
 const HELLO = () => AI.mode
-  ? "Chào bạn! Mình là trợ lý AI của Góc Toán 10 – THPT Lý Thường Kiệt. Bạn cứ hỏi tự nhiên như nói chuyện: hỏi lý thuyết, nhờ giải thích từng bước, hay xin một bài tập để luyện đều được."
+  ? "Chào bạn! Mình là trợ lý học tập của Học Liệu Toán 10 – THPT Lý Thường Kiệt. Hôm nay bạn thế nào? Bạn muốn cùng mình ôn bài, lên kế hoạch học, hay chỉ cần ai đó trò chuyện cho đỡ áp lực cũng được nhé."
   : "Chào bạn! Mình là trợ lý Góc Toán 10 của học sinh THPT Lý Thường Kiệt (Bài 1 đến Bài 9). Hỏi mình công thức, nhờ tính “sin 150” hoặc giải tam giác “b=6, c=8, A=60” nhé.";
 function newChat(){ if(AI.ctl) AI.ctl.abort(); AI.history = []; msgs.innerHTML = ""; $("#sugg").hidden = false; add(HELLO(), "bot"); }
 $("#newChat").onclick = newChat;
