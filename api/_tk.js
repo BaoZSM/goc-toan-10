@@ -6,7 +6,7 @@
 const crypto = require("crypto");
 
 const DEMO = { user: "khach", pass: "ltk2026", ten: "Khách tham quan" };
-const PERMS = ["sua_bai", "sua_tai_lieu", "quan_tri"];
+const PERMS = ["sua_bai", "sua_tai_lieu", "quan_tri", "giao_vien"];
 const USER_RE = /^[a-z0-9._-]{3,30}$/;
 const KEY = "toan10:tai-khoan";
 const SESSION_HOURS = 24 * 7;
@@ -49,10 +49,10 @@ const cookie = (tok, age) => `tk=${tok}; HttpOnly; Secure; SameSite=Lax; Path=/;
 
 async function currentUser(req, accs) {
   const t = readToken(req); if (!t) return null;
-  if (t.u === DEMO.user && t.pv === "khach") return { user: DEMO.user, ten: DEMO.ten, quyen: [] };
+  if (t.u === DEMO.user && t.pv === "khach") return { user: DEMO.user, ten: DEMO.ten, lop: "", quyen: [], khach: true };
   accs = accs || await loadAccounts();
   const a = accs[t.u]; if (!a || a.salt.slice(0, 8) !== t.pv) return null;
-  return { user: t.u, ten: a.ten || t.u, quyen: cleanPerms(a.quyen) };
+  return { user: t.u, ten: a.ten || t.u, lop: a.lop || "", quyen: cleanPerms(a.quyen) };
 }
 
 function send(res, code, obj, headers = {}) {
@@ -88,4 +88,10 @@ function guard(fn, { need } = {}) {
   };
 }
 
-module.exports = { DEMO, PERMS, USER_RE, SESSION_HOURS, redis, loadAccounts, saveAccounts, cleanPerms, str, today, hashPass, passOK, makeToken, cookie, send, fail, body, ipOf, guard, dbOn };
+// Mỗi tài khoản có một "ngăn" riêng trong cơ sở dữ liệu
+const userKey = u => "toan10:u:" + u;
+const DIEM = "toan10:diem", DANHGIA = "toan10:danhgia";
+// Bỏ dữ liệu của tài khoản đã xóa
+async function dropUserData(u) { await redis("DEL", userKey(u)); await redis("HDEL", DIEM, u); await redis("HDEL", DANHGIA, u); }
+const isStudent = a => !!a && !cleanPerms(a.quyen).some(p => p === "quan_tri" || p === "giao_vien");
+module.exports = { userKey, DIEM, DANHGIA, dropUserData, isStudent, DEMO, PERMS, USER_RE, SESSION_HOURS, redis, loadAccounts, saveAccounts, cleanPerms, str, today, hashPass, passOK, makeToken, cookie, send, fail, body, ipOf, guard, dbOn };

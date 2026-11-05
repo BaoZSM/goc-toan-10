@@ -7,6 +7,7 @@ module.exports = T.guard(async (req, res, { me, accs }) => {
   if (req.method === "PUT") {
     const b = await T.body(req);
     if (b.ten !== undefined) a.ten = T.str(b.ten, 60) || u;
+    if (b.lop !== undefined) a.lop = T.str(b.lop, 20);
     if (b.quyen !== undefined) {
       const q = T.cleanPerms(b.quyen);
       if (u === me.user && !q.includes("quan_tri")) return T.fail(res, 400, "Bạn không thể tự bỏ quyền quản lý tài khoản của chính mình");
@@ -23,7 +24,7 @@ module.exports = T.guard(async (req, res, { me, accs }) => {
   }
   if (req.method === "DELETE") {
     if (u === me.user) return T.fail(res, 400, "Không thể tự xóa tài khoản của mình");
-    delete accs[u]; await T.saveAccounts(accs);
+    delete accs[u]; await T.saveAccounts(accs); await T.dropUserData(u);
     return T.send(res, 200, { ok: true });
   }
   return T.fail(res, 405, "Không hỗ trợ");

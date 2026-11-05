@@ -117,3 +117,28 @@ Nếu bạn đã push code trước khi làm A và B: vào **Deployments**, bấ
 | Quên mật khẩu admin | Nhờ một tài khoản quản trị khác đặt lại. Nếu không còn ai: vào Upstash, xóa khóa `toan10:tai-khoan` (mất toàn bộ tài khoản), rồi làm lại bước B, D |
 
 Lưu ý: tài khoản `khach` / `ltk2026` luôn dùng được. Học sinh đăng nhập được giữ phiên 7 ngày trên máy đó.
+
+## Tạo tài khoản cho cả lớp một lần
+
+1. Đăng nhập admin, mở **Quản lý tài khoản**, tìm khung **Thêm nhiều tài khoản**.
+2. Dán danh sách vào ô **Danh sách**, mỗi dòng một học sinh: `số báo danh, họ và tên`. Có thể dán thẳng 2 cột từ Excel.
+3. Điền **Lớp** (vd `10C09`) và **Mật khẩu chung**, rồi bấm **Tạo các tài khoản học sinh**.
+4. Dòng nào đã có tài khoản hoặc sai định dạng sẽ được bỏ qua và báo lại, không tạo trùng.
+5. Học sinh nên tự đổi mật khẩu: bấm vào **tên của mình** ở góc trên bên phải, chọn đổi mật khẩu.
+
+Tài khoản giáo viên: khi tạo hoặc sửa, tích **Giáo viên**. Giáo viên và quản trị không bị tính vào bảng thi đua.
+
+## Dữ liệu được lưu theo từng tài khoản
+
+| Mục | Lưu ở đâu | Ghi chú |
+|---|---|---|
+| Lịch sử trò chuyện với trợ lý | Cơ sở dữ liệu, theo tài khoản | Tối đa 80 cuộc trò chuyện; mở trên máy nào cũng thấy |
+| Bảng nháp | Cơ sở dữ liệu, theo tài khoản | Tối đa 30 bảng; tự lưu sau mỗi nét vẽ |
+| Bài đã học, điểm luyện tập | Cơ sở dữ liệu, theo tài khoản | Dùng để tính bảng thi đua; điểm luyện tập chỉ giữ mức cao nhất |
+| Đánh giá website | Cơ sở dữ liệu | Mỗi tài khoản 1 đánh giá; quản trị ẩn/hiện/xóa được |
+| Tài khoản khách | Chỉ trên máy đang dùng | Khách không được xếp hạng, không viết đánh giá |
+
+Mọi thay đổi được ghi vào máy ngay rồi gửi lên máy chủ. Nếu mất mạng, trang ghi chú "Chưa lưu được lên máy chủ – sẽ thử lại" và tự gửi lại khi có mạng hoặc lần mở trang sau.
+Xóa một tài khoản cũng xóa luôn trò chuyện, bảng nháp, điểm và đánh giá của tài khoản đó.
+
+Gói miễn phí của Upstash giới hạn số lệnh mỗi tháng. Một lớp khoảng 45 học sinh dùng bình thường vẫn nằm trong giới hạn; nếu trang báo lỗi lưu hàng loạt, vào Upstash xem mục **Usage**.
