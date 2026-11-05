@@ -22,6 +22,14 @@ async function redis(...cmd) {
   if (!r.ok || d.error) throw new Error("Lỗi cơ sở dữ liệu: " + (d.error || r.status));
   return d.result;
 }
+// Gửi nhiều lệnh một lúc (1 lần gọi mạng)
+async function pipe(cmds) {
+  if (!cmds.length) return [];
+  const r = await fetch(DB_URL.replace(/\/$/, "") + "/pipeline", { method: "POST", headers: { Authorization: "Bearer " + DB_TOKEN, "Content-Type": "application/json" }, body: JSON.stringify(cmds) });
+  const d = await r.json().catch(() => null);
+  if (!r.ok || !Array.isArray(d)) throw new Error("Lỗi cơ sở dữ liệu: " + r.status);
+  return d.map(x => x && x.result);
+}
 async function loadAccounts() { const v = await redis("GET", KEY); try { return v ? JSON.parse(v) : {}; } catch { return {}; } }
 const saveAccounts = accs => redis("SET", KEY, JSON.stringify(accs));
 
@@ -92,6 +100,7 @@ function guard(fn, { need } = {}) {
 const userKey = u => "toan10:u:" + u;
 const DIEM = "toan10:diem", DANHGIA = "toan10:danhgia";
 // Bỏ dữ liệu của tài khoản đã xóa
-async function dropUserData(u) { await redis("DEL", userKey(u)); await redis("HDEL", DIEM, u); await redis("HDEL", DANHGIA, u); }
+const tlKey = u => "toan10:tl:" + u, voteKey = u => "toan10:vote:" + u;
+async function dropUserData(u) { await pipe([["DEL", userKey(u)], ["HDEL", DIEM, u], ["HDEL", DANHGIA, u], ["DEL", tlKey(u)], ["DEL", voteKey(u)]]); }
 const isStudent = a => !!a && !cleanPerms(a.quyen).some(p => p === "quan_tri" || p === "giao_vien");
-module.exports = { userKey, DIEM, DANHGIA, dropUserData, isStudent, DEMO, PERMS, USER_RE, SESSION_HOURS, redis, loadAccounts, saveAccounts, cleanPerms, str, today, hashPass, passOK, makeToken, cookie, send, fail, body, ipOf, guard, dbOn };
+module.exports = { pipe, tlKey, voteKey, userKey, DIEM, DANHGIA, dropUserData, isStudent, DEMO, PERMS, USER_RE, SESSION_HOURS, redis, loadAccounts, saveAccounts, cleanPerms, str, today, hashPass, passOK, makeToken, cookie, send, fail, body, ipOf, guard, dbOn };
