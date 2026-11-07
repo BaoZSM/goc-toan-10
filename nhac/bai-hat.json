@@ -1,0 +1,67 @@
+[
+  {
+    "ten": "Tập hợp chơi trò ghép",
+    "bai": "Chương I · Bài 2",
+    "file": "nhac/tap-hop.mp3",
+    "loi": [
+      "Giao là phần chung của hai ta",
+      "Hợp là gom hết chẳng sót ai",
+      "Hiệu a trừ bê lấy riêng a",
+      "Bỏ đi những gì bê đang có",
+      "Phần bù trong e là phần còn lại",
+      "Vẽ trục số ra là thấy ngay"
+    ]
+  },
+  {
+    "ten": "Tìm miền nghiệm",
+    "bai": "Chương II · Bài 3, 4",
+    "file": "nhac/mien-nghiem.mp3",
+    "loi": [
+      "Vẽ đường thẳng biên trước tiên",
+      "Chọn gốc tọa độ thử vào xem",
+      "Đúng thì giữ sai thì gạch",
+      "Nửa còn lại là miền nghiệm",
+      "Hệ nhiều dòng thì lấy phần chung",
+      "Tìm lớn nhỏ cứ thử ở các đỉnh"
+    ]
+  },
+  {
+    "ten": "Góc bù nhau",
+    "bai": "Chương III · Bài 5",
+    "file": "nhac/goc-bu.mp3",
+    "loi": [
+      "Hai góc bù cộng lại một trăm tám mươi",
+      "Sin góc bù vẫn giữ nguyên",
+      "Cô sin góc bù đổi dấu liền",
+      "Tang cô tang cũng đổi theo",
+      "Góc tù thì cô sin âm",
+      "Còn sin thì luôn không âm"
+    ]
+  },
+  {
+    "ten": "Định lý Côsin",
+    "bai": "Chương III · Bài 6",
+    "file": "nhac/dinh-ly-cosin.mp3",
+    "loi": [
+      "A bình bằng bê bình cộng xê bình",
+      "Trừ đi hai bê xê cô sin a",
+      "Muốn tìm góc thì đảo lại thôi",
+      "Cô sin a bằng bê bình cộng xê bình",
+      "Trừ a bình chia hai bê xê",
+      "Định lý cô sin nhớ mãi không quên"
+    ]
+  },
+  {
+    "ten": "Vectơ đi đường",
+    "bai": "Chương IV · Bài 8, 9",
+    "file": "nhac/vecto.mp3",
+    "loi": [
+      "A sang bê rồi bê sang xê",
+      "Gộp lại thành a tới xê thôi",
+      "Hình bình hành chung một gốc",
+      "Đường chéo là tổng hai cạnh kề",
+      "Nhân với ca dương thì cùng hướng",
+      "Ca âm quay ngược lại liền"
+    ]
+  }
+]

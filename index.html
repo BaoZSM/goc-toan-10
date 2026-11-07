@@ -552,6 +552,67 @@ dialog::backdrop{background:rgba(10,20,15,.6)}
 .tl-form .acts{display:flex;gap:6px;margin-top:6px}
 .note-box{padding:16px 18px;border-radius:14px;background:var(--paper);border:1px dashed var(--line);color:var(--muted)}
 
+/* ================= Hiệu ứng chuyển động ================= */
+::view-transition-old(root),::view-transition-new(root){animation:none;mix-blend-mode:normal}
+::view-transition-old(root){z-index:1}::view-transition-new(root){z-index:2}
+html.theme-fade,html.theme-fade *{transition:background-color .45s ease,color .45s ease,border-color .45s ease,fill .45s ease!important}
+[data-theme-toggle] svg{transition:transform .6s cubic-bezier(.3,1.6,.5,1)}
+[data-theme-toggle].spin svg{transform:rotate(360deg) scale(1.15)}
+@keyframes viewIn{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}
+@keyframes stIn{from{opacity:0;transform:translateY(18px) scale(.97)}to{opacity:1;transform:none}}
+@keyframes popIn{0%{transform:scale(.6);opacity:0}60%{transform:scale(1.08);opacity:1}100%{transform:scale(1)}}
+@keyframes shake{0%,100%{transform:translateX(0)}20%{transform:translateX(-8px)}40%{transform:translateX(7px)}60%{transform:translateX(-5px)}80%{transform:translateX(3px)}}
+@keyframes pulseOk{0%{box-shadow:0 0 0 0 rgba(34,170,90,.55)}100%{box-shadow:0 0 0 16px rgba(34,170,90,0)}}
+@keyframes toastIn{0%{transform:translate(-50%,30px) scale(.9);opacity:0}60%{transform:translate(-50%,-4px) scale(1.02);opacity:1}100%{transform:translate(-50%,0)}}
+@keyframes winIn{from{opacity:0;transform:translateY(16px) scale(.94)}to{opacity:1;transform:none}}
+@keyframes floatUp{from{opacity:1;transform:translate(-50%,0) scale(1)}to{opacity:0;transform:translate(-50%,-46px) scale(1.25)}}
+@keyframes ripple{from{transform:translate(-50%,-50%) scale(0);opacity:.35}to{transform:translate(-50%,-50%) scale(1);opacity:0}}
+@keyframes rise{from{transform:translateY(60px);opacity:0}to{transform:none;opacity:1}}
+@keyframes wave{0%,60%,100%{transform:rotate(0)}10%,30%{transform:rotate(16deg)}20%,40%{transform:rotate(-10deg)}}
+@keyframes eq{0%,100%{transform:scaleY(.3)}50%{transform:scaleY(1)}}
+@keyframes logoIn{0%{transform:scale(.3) rotate(-200deg);opacity:0}70%{transform:scale(1.08) rotate(8deg);opacity:1}100%{transform:none}}
+@keyframes cardUp{from{opacity:0;transform:translateY(30px)}to{opacity:1;transform:none}}
+@keyframes appIn{from{opacity:0;transform:scale(.985)}to{opacity:1;transform:none}}
+.view-in{animation:viewIn .38s cubic-bezier(.2,.8,.2,1) both}
+.st-in{animation:stIn .5s cubic-bezier(.2,.8,.2,1) both;animation-delay:calc(var(--i,0)*45ms)}
+.toast:not([hidden]){animation:toastIn .45s cubic-bezier(.2,.9,.3,1.2) both}
+.sgk:not([hidden]),.pwdlg[open]{animation:winIn .3s cubic-bezier(.2,.9,.3,1.1) both}
+.opt.right{animation:popIn .4s ease both,pulseOk .8s ease-out .1s}
+.opt.wrong{animation:shake .45s ease both}
+.pod{animation:rise .6s cubic-bezier(.2,.9,.3,1.15) both}
+.pod:nth-child(1){animation-delay:.15s}.pod:nth-child(2){animation-delay:0s}.pod:nth-child(3){animation-delay:.3s}
+.pod.r1 .md{animation:popIn .5s .45s both}
+.login .lcard{animation:cardUp .6s cubic-bezier(.2,.8,.2,1) both}
+.login .lschool img{animation:logoIn .9s cubic-bezier(.2,.8,.2,1) both}
+.login .feat span{animation:popIn .4s both}.login .feat span:nth-child(2){animation-delay:.08s}.login .feat span:nth-child(3){animation-delay:.16s}.login .feat span:nth-child(4){animation-delay:.24s}.login .feat span:nth-child(5){animation-delay:.32s}
+#app.entering{animation:appIn .45s ease both}
+.wave-hand{display:inline-block;transform-origin:70% 80%;animation:wave 1.8s ease .4s 2}
+.bar i{transition:width 1s cubic-bezier(.2,.8,.2,1)}
+.rpl{position:absolute;border-radius:50%;background:currentColor;pointer-events:none;animation:ripple .55s ease-out forwards}
+.has-rpl{position:relative;overflow:hidden}
+.plusone{position:fixed;z-index:120;pointer-events:none;font:800 16px var(--f-body);color:var(--pen-d);animation:floatUp .8s ease-out forwards}
+.vbtn.bump,.starpick button.bump,#markBtn.bump{animation:popIn .4s ease}
+.starpick button{transition:transform .15s}
+.starpick button:hover{transform:scale(1.2) rotate(-6deg)}
+.tile{transition:transform .2s ease,box-shadow .2s ease}
+.tile:hover{transform:translateY(-4px)}
+.m{animation:stIn .32s ease both}
+.m.me{transform-origin:right bottom}.m.bot{transform-origin:left bottom}
+.playbtn.on{position:relative}
+.playbtn.on::after{content:"";position:absolute;inset:-6px;border-radius:50%;border:3px solid var(--pen);animation:pulseOk 1.2s ease-out infinite;opacity:.6}
+.mocbtn{margin-top:8px;font-size:12.5px;color:var(--muted)}
+.mocbar{position:fixed;left:50%;bottom:18px;transform:translateX(-50%);z-index:90;display:flex;gap:10px;align-items:center;flex-wrap:wrap;max-width:min(760px,calc(100vw - 24px));padding:12px 14px;border-radius:16px;background:var(--sheet);border:2px solid var(--pen);box-shadow:0 18px 50px rgba(0,0,0,.25);animation:winIn .3s both}
+.mocbar>div{flex:1;min-width:220px}.mocbar small{display:block;color:var(--muted);font-size:12px}.mocbar b{font-size:14.5px}
+.mocbar code{display:block;margin-top:4px;font:600 13px ui-monospace,monospace;background:var(--paper);padding:6px 8px;border-radius:8px;overflow-wrap:anywhere}
+.eqbars{display:inline-flex;gap:3px;align-items:flex-end;height:14px;margin-left:8px;vertical-align:middle}
+.eqbars i{width:3px;height:100%;background:var(--pen);border-radius:2px;transform-origin:bottom;animation:eq .8s ease-in-out infinite}
+.eqbars i:nth-child(2){animation-delay:-.25s}.eqbars i:nth-child(3){animation-delay:-.5s}.eqbars i:nth-child(4){animation-delay:-.1s}
+.ring{transition:--p 1s}
+#fxCanvas{position:fixed;inset:0;z-index:150;pointer-events:none}
+@media (prefers-reduced-motion:reduce){
+  *,*::before,*::after{animation-duration:.01ms!important;animation-iteration-count:1!important;animation-delay:0s!important;transition-duration:.01ms!important}
+}
+
 /* trợ lý */
 .fab{background:var(--pen)!important;color:var(--on-pen)!important;position:fixed;right:calc(18px + env(safe-area-inset-right,0px));bottom:calc(18px + env(safe-area-inset-bottom,0px));z-index:40;display:flex;align-items:center;gap:8px;padding:12px 18px;border-radius:999px;border:none;background:var(--ink);color:var(--sheet);font:600 15px var(--f-body);cursor:pointer;box-shadow:0 8px 24px rgba(0,0,0,.2)}
 .fab i{width:9px;height:9px;border-radius:50%;background:var(--mark)}
@@ -794,7 +855,7 @@ dialog::backdrop{background:rgba(10,20,15,.6)}
       <!-- Trang chủ: chỉ có các mục -->
       <section id="v-trang-chu" data-view>
         <div class="hello">
-          <div><div class="eyebrow">Trường THPT Lý Thường Kiệt · Toán 10</div><h1>Xin chào, <em id="helloName">bạn</em></h1>
+          <div><div class="eyebrow">Trường THPT Lý Thường Kiệt · Toán 10</div><h1>Xin chào, <em id="helloName">bạn</em> <span class="wave-hand" aria-hidden="true">👋</span></h1>
             <p>Chọn một mục bên dưới để bắt đầu học. Nội dung hiện có từ Bài 1 đến Bài 9.</p></div>
           <div class="prog"><div class="prog-n"><b id="doneN">0</b> / 9 bài đã học</div><div class="bar"><i id="doneBar"></i></div><button class="cont" id="contBtn">Học tiếp: Bài 1</button></div>
         </div>
@@ -890,6 +951,17 @@ dialog::backdrop{background:rgba(10,20,15,.6)}
 <script>
 const DEMO = { user:"khach", pass:"ltk2026", name:"Khách tham quan" };
 let DOCS = [{"id": "infographic", "file": "pdf/Infographic-Toan-10-Bai-1-9.pdf", "title": "Infographic Toán 10 – Bài 1 đến Bài 9", "tag": "Tài liệu chính", "chapter": "Chương I – IV", "desc": "Tóm tắt kiến thức bằng hình ảnh, mỗi bài một trang: sơ đồ, công thức và ví dụ minh họa từ Bài 1 Mệnh đề đến Bài 9 Tích của một vectơ với một số.", "pages": 10, "featured": true, "source": "Nguồn: Infographic Toán 10 – NXB Giáo dục Việt Nam", "sections": []}, {"id": "tomtat", "file": "pdf/Tom-tat-cong-thuc-Bai-1-9.pdf", "title": "Tóm tắt công thức Toán 10 – Bài 1 đến Bài 9", "tag": "Sổ tay", "chapter": "Chương I – IV", "sections": [{"h": "Chương I. Mệnh đề và tập hợp", "items": ["Mệnh đề P ⇒ Q chỉ sai khi P đúng và Q sai.", "Phủ định của '∀x, P(x)' là '∃x, P̄(x)'; phủ định của '∃x, P(x)' là '∀x, P̄(x)'.", "A ∩ B = {x | x ∈ A và x ∈ B};  A ∪ B = {x | x ∈ A hoặc x ∈ B}.", "A \\ B = {x | x ∈ A và x ∉ B};  nếu A ⊂ E thì C_E A = E \\ A.", "Tập hợp có n phần tử có 2ⁿ tập con."]}, {"h": "Chương II. Bất phương trình bậc nhất hai ẩn", "items": ["Dạng ax + by < c (hoặc >, ≤, ≥), a và b không đồng thời bằng 0.", "Miền nghiệm: vẽ đường thẳng ax + by = c, thử một điểm không nằm trên đường thẳng (thường là O).", "Miền nghiệm của hệ là phần giao các miền nghiệm.", "F = ax + by đạt giá trị lớn nhất, nhỏ nhất tại một đỉnh của miền nghiệm đa giác."]}, {"h": "Chương III. Hệ thức lượng trong tam giác", "items": ["sin²α + cos²α = 1;  tanα = sinα / cosα;  cotα = cosα / sinα.", "sin(180° − α) = sinα;  cos(180° − α) = −cosα;  tan(180° − α) = −tanα.", "Định lý côsin: a² = b² + c² − 2bc·cosA.", "Định lý sin: a/sinA = b/sinB = c/sinC = 2R.", "Diện tích: S = ½·bc·sinA = abc/(4R) = p·r = √[p(p−a)(p−b)(p−c)]."]}, {"h": "Chương IV. Vectơ (Bài 7 – Bài 9)", "items": ["Hai vectơ bằng nhau khi cùng hướng và cùng độ dài. ABCD là hình bình hành ⇔ AB→ = DC→.", "Quy tắc ba điểm: AB→ + BC→ = AC→.  Quy tắc hình bình hành: AB→ + AD→ = AC→.", "Quy tắc hiệu: OB→ − OA→ = AB→.", "I là trung điểm AB ⇔ IA→ + IB→ = 0→ ⇔ MA→ + MB→ = 2MI→ (với mọi M).", "G là trọng tâm ΔABC ⇔ GA→ + GB→ + GC→ = 0→ ⇔ MA→ + MB→ + MC→ = 3MG→.", "k·a→ cùng hướng a→ khi k > 0, ngược hướng khi k < 0; |k·a→| = |k|·|a→|.", "A, B, C thẳng hàng ⇔ có số k sao cho AB→ = k·AC→."]}], "desc": "Sổ tay công thức Bài 1 → Bài 9, mỗi chương một màu, kèm mẹo nhớ.", "pages": 6}, {"id": "b1", "file": "pdf/Bai-1-Menh-de.pdf", "title": "Bài 1. Mệnh đề", "tag": "Bài học", "chapter": "Chương I", "desc": "Kiến thức, công thức, bảng chân trị, 4 ví dụ có lời giải, 6 câu trắc nghiệm và 2 bài tự luận có đáp án.", "pages": 4, "sections": []}, {"id": "b2", "file": "pdf/Bai-2-Tap-hop-va-cac-phep-toan.pdf", "title": "Bài 2. Tập hợp và các phép toán trên tập hợp", "tag": "Bài học", "chapter": "Chương I", "desc": "Kiến thức, công thức, 2 hình minh họa, 5 ví dụ có lời giải, 6 câu trắc nghiệm và 2 bài tự luận có đáp án.", "pages": 4, "sections": []}, {"id": "b3", "file": "pdf/Bai-3-Bat-phuong-trinh-bac-nhat-hai-an.pdf", "title": "Bài 3. Bất phương trình bậc nhất hai ẩn", "tag": "Bài học", "chapter": "Chương II", "desc": "Kiến thức, công thức, 1 hình minh họa, 4 ví dụ có lời giải, 5 câu trắc nghiệm và 2 bài tự luận có đáp án.", "pages": 4, "sections": []}, {"id": "b4", "file": "pdf/Bai-4-He-bat-phuong-trinh-bac-nhat-hai-an.pdf", "title": "Bài 4. Hệ bất phương trình bậc nhất hai ẩn", "tag": "Bài học", "chapter": "Chương II", "desc": "Kiến thức, công thức, 1 hình minh họa, 3 ví dụ có lời giải, 5 câu trắc nghiệm và 2 bài tự luận có đáp án.", "pages": 4, "sections": []}, {"id": "b5", "file": "pdf/Bai-5-Gia-tri-luong-giac-goc-0-180.pdf", "title": "Bài 5. Giá trị lượng giác của một góc từ 0° đến 180°", "tag": "Bài học", "chapter": "Chương III", "desc": "Kiến thức, công thức, 1 hình minh họa, 4 ví dụ có lời giải, 6 câu trắc nghiệm và 2 bài tự luận có đáp án.", "pages": 4, "sections": []}, {"id": "b6", "file": "pdf/Bai-6-He-thuc-luong-trong-tam-giac.pdf", "title": "Bài 6. Hệ thức lượng trong tam giác", "tag": "Bài học", "chapter": "Chương III", "desc": "Kiến thức, công thức, 1 hình minh họa, 5 ví dụ có lời giải, 6 câu trắc nghiệm và 3 bài tự luận có đáp án.", "pages": 4, "sections": []}, {"id": "b7", "file": "pdf/Bai-7-Cac-khai-niem-mo-dau-vecto.pdf", "title": "Bài 7. Các khái niệm mở đầu", "tag": "Bài học", "chapter": "Chương IV", "desc": "Kiến thức, công thức, 1 hình minh họa, 4 ví dụ có lời giải, 5 câu trắc nghiệm và 2 bài tự luận có đáp án.", "pages": 4, "sections": []}, {"id": "b8", "file": "pdf/Bai-8-Tong-va-hieu-hai-vecto.pdf", "title": "Bài 8. Tổng và hiệu của hai vectơ", "tag": "Bài học", "chapter": "Chương IV", "desc": "Kiến thức, công thức, 1 hình minh họa, 4 ví dụ có lời giải, 6 câu trắc nghiệm và 2 bài tự luận có đáp án.", "pages": 4, "sections": []}, {"id": "b9", "file": "pdf/Bai-9-Tich-vecto-voi-mot-so.pdf", "title": "Bài 9. Tích của một vectơ với một số", "tag": "Bài học", "chapter": "Chương IV", "desc": "Kiến thức, công thức, 1 hình minh họa, 5 ví dụ có lời giải, 6 câu trắc nghiệm và 2 bài tự luận có đáp án.", "pages": 4, "sections": []}, {"id": "de1", "file": "pdf/De-on-tap-giua-hoc-ki-1.pdf", "title": "Đề ôn tập giữa học kì I (có đáp án)", "tag": "Đề ôn", "chapter": "Chương I – III", "sections": [{"h": "Phần I. Trắc nghiệm (mỗi câu 0,5 điểm)", "items": ["Câu 1. Phủ định của mệnh đề '∀x ∈ ℝ, x² ≥ 0' là: A. ∃x ∈ ℝ, x² < 0  B. ∀x ∈ ℝ, x² < 0  C. ∃x ∈ ℝ, x² ≤ 0  D. ∀x ∈ ℝ, x² ≤ 0.", "Câu 2. Cho A = [1; 5), B = (3; 7]. A ∩ B là: A. (3; 5)  B. [1; 7]  C. [1; 3]  D. [5; 7].", "Câu 3. Điểm nào thuộc miền nghiệm của 2x − y > 3? A. (0;0)  B. (1;1)  C. (3;1)  D. (1;−0,5).", "Câu 4. Giá trị cos135° bằng: A. √2/2  B. −√2/2  C. −1/2  D. √3/2."]}, {"h": "Phần II. Tự luận", "items": ["Bài 1 (2 điểm). Cho E = {x ∈ ℤ | −2 ≤ x < 4}, A = {0; 1; 2}. Liệt kê E và tìm C_E A.", "Bài 2 (2 điểm). Biểu diễn miền nghiệm của hệ x ≥ 0, y ≥ 0, x + y ≤ 4. Tìm giá trị lớn nhất của F = 2x + 3y.", "Bài 3 (2 điểm). Cho ΔABC có AB = 5, AC = 8, A = 60°. Tính BC và bán kính R."]}, {"h": "Đáp án", "items": ["Trắc nghiệm: 1A  2A  3C  4B.", "Bài 1: E = {−2; −1; 0; 1; 2; 3}, C_E A = {−2; −1; 3}.", "Bài 2: Miền nghiệm là tam giác O(0;0), (4;0), (0;4). F lớn nhất bằng 12 tại (0;4).", "Bài 3: BC = 7, R = 7/√3 = 7√3/3."]}], "desc": "Đề trắc nghiệm và tự luận Chương I – III, có ô ghi họ tên và đáp án ở trang cuối.", "pages": 3}];
+/* Tài liệu thêm thủ công: liệt kê trong file pdf/tai-lieu-them.json (không cần sửa code)
+   [ { "file":"pdf/ten-file.pdf", "ten":"Tên tài liệu", "loai":"Đề ôn", "chuong":"Chương I", "mo_ta":"…", "so_trang":4 } ] */
+let DOCS_ERR = "";
+const docsReady = (!document.documentElement.dataset.server && /^https?:$/.test(location.protocol) && !/claude|anthropic/i.test(location.hostname)) ? fetch("pdf/tai-lieu-them.json", { cache:"no-cache" }).then(async r => {
+  if(!r.ok) return; const txt = await r.text();
+  try{ const arr = JSON.parse(txt); if(!Array.isArray(arr)) throw new Error("file phải bắt đầu bằng [ và kết thúc bằng ]");
+    const add = arr.filter(o => o && o.file).map((o, i) => { let f = String(o.file).trim().replace(/^\/+/, ""); if(!f.includes("/")) f = "pdf/" + f;
+      return { id:"them-" + i, file:f, title:String(o.ten || f.split("/").pop()), tag:String(o.loai || "Tài liệu"), chapter:String(o.chuong || ""), desc:String(o.mo_ta || ""), pages:+o.so_trang || 0, featured: !!o.noi_bat, sections:[] }; });
+    DOCS = DOCS.concat(add); }
+  catch(e){ DOCS_ERR = "File pdf/tai-lieu-them.json đang bị lỗi (" + e.message + "), nên các tài liệu thêm chưa hiện. Kiểm tra dấu phẩy và dấu ngoặc kép."; }
+}).catch(() => {}) : Promise.resolve();
 
 const CHAPTERS = [
  {n:"I", t:"Mệnh đề và tập hợp", lessons:[1,2]},
@@ -1005,15 +1077,69 @@ const store = {
 };
 
 /* ================= Giao diện sáng / tối ================= */
+
+/* ================= Hiệu ứng chuyển động ================= */
+const ANIM = (() => {
+  const reduce = () => matchMedia("(prefers-reduced-motion: reduce)").matches;
+  const ITEMS = ".tile,.lrow,.lesson,.chap,.teacher,.pcard,.pitem,.doc,.feature,.song,.kt,.lbt tbody tr,.rv,.urow,.box,.lb-me,.rv-sum,.rv-form,.qres,.kt-tools,.vhead";
+  // các khối trong trang hiện lần lượt
+  function stagger(scope){ if(!scope || reduce()) return; let i = 0;
+    scope.querySelectorAll(ITEMS).forEach(el => { if(el.closest(".hist") || el.offsetParent === null) return; el.classList.remove("st-in"); el.style.setProperty("--i", Math.min(i++, 14)); void el.offsetWidth; el.classList.add("st-in"); }); }
+  function view(sec){ if(!sec || reduce()) return; sec.classList.remove("view-in"); void sec.offsetWidth; sec.classList.add("view-in"); stagger(sec); }
+  // pháo giấy
+  let cv = null, parts = [], raf = 0;
+  const COLS = ["#22C26E","#FFC93C","#2F6FD0","#E0453A","#8A4FD6","#139A7E","#FF8A3D"];
+  function confetti(x, y, n = 60, spread = 1){
+    if(reduce()) return;
+    if(!cv){ cv = document.createElement("canvas"); cv.id = "fxCanvas"; document.body.appendChild(cv); }
+    cv.width = innerWidth * devicePixelRatio; cv.height = innerHeight * devicePixelRatio; cv.style.width = innerWidth + "px"; cv.style.height = innerHeight + "px";
+    for(let i = 0; i < n; i++){ const a = -Math.PI/2 + (Math.random() - .5) * Math.PI * 1.3 * spread, sp = 5 + Math.random() * 9;
+      parts.push({ x, y, vx: Math.cos(a)*sp, vy: Math.sin(a)*sp, r: Math.random()*6.28, vr: (Math.random()-.5)*.4, s: 5 + Math.random()*6, c: COLS[i % COLS.length], life: 1, round: Math.random() < .3 }); }
+    if(!raf) raf = requestAnimationFrame(step);
+  }
+  function step(){
+    const c = cv.getContext("2d"), d = devicePixelRatio; c.setTransform(d,0,0,d,0,0); c.clearRect(0, 0, innerWidth, innerHeight);
+    parts = parts.filter(p => p.life > 0 && p.y < innerHeight + 40);
+    for(const p of parts){ p.vy += .32; p.vx *= .985; p.x += p.vx; p.y += p.vy; p.r += p.vr; p.life -= .011;
+      c.save(); c.globalAlpha = Math.min(1, p.life * 2); c.translate(p.x, p.y); c.rotate(p.r); c.fillStyle = p.c;
+      if(p.round){ c.beginPath(); c.arc(0, 0, p.s/2, 0, 7); c.fill(); } else c.fillRect(-p.s/2, -p.s/4, p.s, p.s/2); c.restore(); }
+    raf = parts.length ? requestAnimationFrame(step) : (c.clearRect(0, 0, innerWidth, innerHeight), 0);
+  }
+  const center = el => { const r = el.getBoundingClientRect(); return [r.left + r.width/2, r.top + r.height/2]; };
+  function burstFrom(el, n){ if(el) confetti(...center(el), n); }
+  function bump(el){ if(!el) return; el.classList.remove("bump"); void el.offsetWidth; el.classList.add("bump"); }
+  function plus(el, text){ if(!el || reduce()) return; const [x, y] = center(el), s = document.createElement("span"); s.className = "plusone"; s.textContent = text; s.style.left = x + "px"; s.style.top = (y - 18) + "px"; document.body.appendChild(s); setTimeout(() => s.remove(), 900); }
+  // số đếm lên
+  function count(el, to, ms = 900, fmt = v => v){ if(!el) return; if(reduce()){ el.textContent = fmt(to); return; } const t0 = performance.now(), from = 0;
+    const f = now => { const k = Math.min(1, (now - t0)/ms), e = 1 - Math.pow(1-k, 3); el.textContent = fmt(Math.round(from + (to-from)*e)); if(k < 1) requestAnimationFrame(f); }; requestAnimationFrame(f); }
+  // gợn sóng khi bấm nút
+  document.addEventListener("pointerdown", e => {
+    const b = e.target.closest(".btn,.sbtn,.tile,.playbtn,.opt,.fchip,.chipf,.vbtn,.cont,.aitem,.hist-new,.newchat"); if(!b || b.disabled || reduce()) return;
+    const r = b.getBoundingClientRect(), d = Math.max(r.width, r.height) * 2.2, s = document.createElement("span");
+    s.className = "rpl"; s.style.width = s.style.height = d + "px"; s.style.left = (e.clientX - r.left) + "px"; s.style.top = (e.clientY - r.top) + "px";
+    b.classList.add("has-rpl"); b.appendChild(s); setTimeout(() => s.remove(), 600);
+  }, { passive:true });
+  // đổi sáng / tối: vòng tròn lan ra từ nút bấm (giống video giới thiệu)
+  function theme(next, btn){
+    const apply = () => { root.dataset.theme = next; try{ localStorage.setItem("toan10-theme", next); }catch(e){} paintThemeBtns(); };
+    if(btn){ btn.classList.remove("spin"); void btn.offsetWidth; btn.classList.add("spin"); setTimeout(() => btn.classList.remove("spin"), 700); }
+    if(reduce()) return apply();
+    const [x, y] = btn ? center(btn) : [innerWidth - 40, 40], R = Math.hypot(Math.max(x, innerWidth - x), Math.max(y, innerHeight - y));
+    if(document.startViewTransition){
+      const tr = document.startViewTransition(apply);
+      tr.ready.then(() => document.documentElement.animate({ clipPath: [`circle(0px at ${x}px ${y}px)`, `circle(${R}px at ${x}px ${y}px)`] },
+        { duration: 750, easing: "cubic-bezier(.4,0,.2,1)", pseudoElement: "::view-transition-new(root)" })).catch(() => {});
+    } else { root.classList.add("theme-fade"); apply(); setTimeout(() => root.classList.remove("theme-fade"), 500); }
+  }
+  return { stagger, view, confetti, burstFrom, bump, plus, count, theme, reduce };
+})();
 const SUN = '<svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="4.5"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></svg>';
 const MOON = '<svg viewBox="0 0 24 24"><path d="M20.5 14.5A8.5 8.5 0 0 1 9.5 3.5a8.5 8.5 0 1 0 11 11z"/></svg>';
 const darkMQ = window.matchMedia ? matchMedia("(prefers-color-scheme: dark)") : { matches:false };
 const curTheme = () => root.dataset.theme || (darkMQ.matches ? "dark" : "light");
 function paintThemeBtns(){ const d = curTheme()==="dark";
   document.querySelectorAll("[data-theme-toggle]").forEach(b => { b.innerHTML = d ? SUN : MOON; b.setAttribute("aria-label", d ? "Chuyển sang chế độ sáng" : "Chuyển sang chế độ tối"); b.title = d ? "Chế độ sáng" : "Chế độ tối"; }); }
-document.querySelectorAll("[data-theme-toggle]").forEach(b => b.addEventListener("click", () => {
-  const next = curTheme()==="dark" ? "light" : "dark"; root.dataset.theme = next;
-  try{ localStorage.setItem("toan10-theme", next); }catch(e){} paintThemeBtns(); }));
+document.querySelectorAll("[data-theme-toggle]").forEach(b => b.addEventListener("click", () => ANIM.theme(curTheme()==="dark" ? "light" : "dark", b)));
 if(darkMQ.addEventListener) darkMQ.addEventListener("change", paintThemeBtns);
 paintThemeBtns();
 
@@ -1173,6 +1299,7 @@ function afterLogin(){ RV_SAO = 0; RV_OPEN = new Set(); LB_LOP = ""; PROG.pull()
 function signIn(user, name){
   root.dataset.user = user; root.dataset.name = name || user;
   $("#password").value = ""; lmsg.hidden = true;
+  const app = $("#app"); app.classList.remove("entering"); void app.offsetWidth; app.classList.add("entering");
   if(location.hash !== "#trang-chu") location.hash = "#trang-chu"; else route();
   window.scrollTo(0,0);
   afterLogin();
@@ -1237,7 +1364,7 @@ function renderHome(){
   renderTiles();
   const name = root.dataset.name || root.dataset.user || "bạn", d = getDone().length, nx = nextLesson();
   $("#helloName").textContent = name;
-  $("#doneN").textContent = d; $("#doneBar").style.width = (d/LESSONS.length*100)+"%";
+  ANIM.count($("#doneN"), d, 800); const bar = $("#doneBar"); bar.style.width = "0%"; requestAnimationFrame(() => requestAnimationFrame(() => { bar.style.width = (d/LESSONS.length*100)+"%"; }));
   $("#contBtn").textContent = nx ? `Học tiếp: Bài ${nx.n}. ${nx.t}` : "Đã học hết. Ôn lại Bài 1";
   $("#contBtn").onclick = () => location.hash = "#bai-" + (nx ? nx.n : 1);
 }
@@ -1280,7 +1407,7 @@ function renderLesson(n){
     </form>
     <div class="pager">${prev?`<a href="#bai-${prev.n}">← Bài ${prev.n}. ${esc(prev.t)}</a>`:"<span></span>"}${next?`<a href="#bai-${next.n}">Bài ${next.n}. ${esc(next.t)} →</a>`:`<a href="#luyen-tap">Làm bài luyện tập →</a>`}</div>
   </article>`;
-  $("#markBtn").onclick = () => { toggleDone(n); renderLesson(n); };
+  $("#markBtn").onclick = () => { const was = getDone().includes(n); toggleDone(n); renderLesson(n); const b = $("#markBtn"); ANIM.bump(b); if(!was) ANIM.burstFrom(b, 70); };
   $("#docBtn").onclick = () => openDoc(l.doc);
   $("#ktBtn").onclick = () => { pendingKT = n; location.hash = "#cong-thuc"; };
   $("#askBtn").onclick = () => { pendingAsk = { ai:`Giải thích giúp mình Bài ${n}. ${l.t} thật dễ hiểu, kèm 1 ví dụ ngắn.`, kw:l.ask }; location.hash = "#hoi-dap"; };
@@ -1304,7 +1431,7 @@ function renderDocs(){
   const edit = can("sua_tai_lieu");
   const feat = DOCS.filter(d => d.featured), rest = DOCS.filter(d => !d.featured);
   const delBtn = d => edit ? `<button class="sbtn danger" data-del="${esc(d.id)}">Xóa</button>` : "";
-  $("#v-tai-lieu").innerHTML = head("Tài liệu PDF","Bấm “Xem tài liệu” để đọc ngay trên trang, phóng to thu nhỏ tùy ý.") +
+  $("#v-tai-lieu").innerHTML = head("Tài liệu PDF","Bấm “Xem tài liệu” để đọc ngay trên trang, phóng to thu nhỏ tùy ý.") + (DOCS_ERR && (edit || can("quan_tri") || !SERVER) ? `<div class="note-box" style="margin-bottom:14px;color:var(--bad)">${esc(DOCS_ERR)}</div>` : "") +
   feat.map(d => `<article class="feature">${COVER.startsWith("data:") ? `<img class="cover" src="${COVER}" alt="Bìa ${esc(d.title)}" data-open="${esc(d.id)}">` : ""}
      <div><span class="badge">${esc(d.tag)}</span><h3>${esc(d.title)}</h3><p>${esc(d.desc||"")}</p><span class="src">${d.pages?d.pages+" trang · ":""}${esc(d.source||"")}</span>
      <div class="acts"><button class="btn" data-open="${esc(d.id)}">Xem infographic</button>${delBtn(d)}</div></div></article>`).join("") +
@@ -1434,53 +1561,104 @@ function renderPlayer(k, n){
 const PLAY = '<svg viewBox="0 0 24 24"><path d="M7 4l14 8-14 8z"/></svg>', STOP = '<svg viewBox="0 0 24 24"><rect x="6" y="6" width="12" height="12" rx="1"/></svg>';
 // Lời hát kèm thời điểm từng chữ (tạo bởi src/hat.py), file nhạc ở nhac/<id>.mp3
 const SONG_LY = [{"id": "tap-hop", "t": "Tập hợp chơi trò ghép", "dur": 36.92, "intro": 4.615384615384615, "lines": [{"words": [{"w": "Giao", "s": 4.615, "e": 4.904}, {"w": "là", "s": 4.904, "e": 5.192}, {"w": "phần", "s": 5.192, "e": 5.481}, {"w": "chung", "s": 5.481, "e": 5.769}, {"w": "của", "s": 5.769, "e": 6.058}, {"w": "hai", "s": 6.058, "e": 6.346}, {"w": "ta", "s": 6.346, "e": 8.942}]}, {"words": [{"w": "Hợp", "s": 9.231, "e": 9.519}, {"w": "là", "s": 9.519, "e": 9.808}, {"w": "gom", "s": 9.808, "e": 10.096}, {"w": "hết", "s": 10.096, "e": 10.385}, {"w": "chẳng", "s": 10.385, "e": 10.673}, {"w": "sót", "s": 10.673, "e": 10.962}, {"w": "ai", "s": 10.962, "e": 13.558}]}, {"words": [{"w": "Hiệu", "s": 13.846, "e": 14.135}, {"w": "a", "s": 14.135, "e": 14.423}, {"w": "trừ", "s": 14.423, "e": 14.712}, {"w": "bê", "s": 14.712, "e": 15.0}, {"w": "lấy", "s": 15.0, "e": 15.288}, {"w": "riêng", "s": 15.288, "e": 15.577}, {"w": "a", "s": 15.577, "e": 18.173}]}, {"words": [{"w": "Bỏ", "s": 18.462, "e": 18.75}, {"w": "đi", "s": 18.75, "e": 19.038}, {"w": "những", "s": 19.038, "e": 19.327}, {"w": "gì", "s": 19.327, "e": 19.615}, {"w": "bê", "s": 19.615, "e": 19.904}, {"w": "đang", "s": 19.904, "e": 20.192}, {"w": "có", "s": 20.192, "e": 22.788}]}, {"words": [{"w": "Phần", "s": 23.077, "e": 23.365}, {"w": "bù", "s": 23.365, "e": 23.654}, {"w": "trong", "s": 23.654, "e": 23.942}, {"w": "e", "s": 23.942, "e": 24.231}, {"w": "là", "s": 24.231, "e": 24.519}, {"w": "phần", "s": 24.519, "e": 24.808}, {"w": "còn", "s": 24.808, "e": 25.096}, {"w": "lại", "s": 25.096, "e": 27.404}]}, {"words": [{"w": "Vẽ", "s": 27.692, "e": 27.981}, {"w": "trục", "s": 27.981, "e": 28.269}, {"w": "số", "s": 28.269, "e": 28.558}, {"w": "ra", "s": 28.558, "e": 28.846}, {"w": "là", "s": 28.846, "e": 29.135}, {"w": "thấy", "s": 29.135, "e": 29.423}, {"w": "ngay", "s": 29.423, "e": 32.019}]}]}, {"id": "mien-nghiem", "t": "Tìm miền nghiệm", "dur": 38.4, "intro": 4.8, "lines": [{"words": [{"w": "Vẽ", "s": 4.8, "e": 5.1}, {"w": "đường", "s": 5.1, "e": 5.4}, {"w": "thẳng", "s": 5.4, "e": 5.7}, {"w": "biên", "s": 5.7, "e": 6.0}, {"w": "trước", "s": 6.0, "e": 6.3}, {"w": "tiên", "s": 6.3, "e": 9.3}]}, {"words": [{"w": "Chọn", "s": 9.6, "e": 9.9}, {"w": "gốc", "s": 9.9, "e": 10.2}, {"w": "tọa", "s": 10.2, "e": 10.5}, {"w": "độ", "s": 10.5, "e": 10.8}, {"w": "thử", "s": 10.8, "e": 11.1}, {"w": "vào", "s": 11.1, "e": 11.4}, {"w": "xem", "s": 11.4, "e": 14.1}]}, {"words": [{"w": "Đúng", "s": 14.4, "e": 14.7}, {"w": "thì", "s": 14.7, "e": 15.0}, {"w": "giữ", "s": 15.0, "e": 15.3}, {"w": "sai", "s": 15.3, "e": 15.6}, {"w": "thì", "s": 15.6, "e": 15.9}, {"w": "gạch", "s": 15.9, "e": 18.9}]}, {"words": [{"w": "Nửa", "s": 19.2, "e": 19.5}, {"w": "còn", "s": 19.5, "e": 19.8}, {"w": "lại", "s": 19.8, "e": 20.1}, {"w": "là", "s": 20.1, "e": 20.4}, {"w": "miền", "s": 20.4, "e": 20.7}, {"w": "nghiệm", "s": 20.7, "e": 23.7}]}, {"words": [{"w": "Hệ", "s": 24.0, "e": 24.3}, {"w": "nhiều", "s": 24.3, "e": 24.6}, {"w": "dòng", "s": 24.6, "e": 24.9}, {"w": "thì", "s": 24.9, "e": 25.2}, {"w": "lấy", "s": 25.2, "e": 25.5}, {"w": "phần", "s": 25.5, "e": 25.8}, {"w": "chung", "s": 25.8, "e": 28.5}]}, {"words": [{"w": "Tìm", "s": 28.8, "e": 29.1}, {"w": "lớn", "s": 29.1, "e": 29.4}, {"w": "nhỏ", "s": 29.4, "e": 29.7}, {"w": "cứ", "s": 29.7, "e": 30.0}, {"w": "thử", "s": 30.0, "e": 30.3}, {"w": "ở", "s": 30.3, "e": 30.6}, {"w": "các", "s": 30.6, "e": 30.9}, {"w": "đỉnh", "s": 30.9, "e": 33.3}]}]}, {"id": "goc-bu", "t": "Góc bù nhau", "dur": 40.0, "intro": 5.0, "lines": [{"words": [{"w": "Hai", "s": 5.0, "e": 5.312}, {"w": "góc", "s": 5.312, "e": 5.625}, {"w": "bù", "s": 5.625, "e": 5.938}, {"w": "cộng", "s": 5.938, "e": 6.25}, {"w": "lại", "s": 6.25, "e": 6.562}, {"w": "một", "s": 6.562, "e": 6.875}, {"w": "trăm", "s": 6.875, "e": 7.188}, {"w": "tám", "s": 7.188, "e": 7.5}, {"w": "mươi", "s": 7.5, "e": 9.688}]}, {"words": [{"w": "Sin", "s": 10.0, "e": 10.312}, {"w": "góc", "s": 10.312, "e": 10.625}, {"w": "bù", "s": 10.625, "e": 10.938}, {"w": "vẫn", "s": 10.938, "e": 11.25}, {"w": "giữ", "s": 11.25, "e": 11.562}, {"w": "nguyên", "s": 11.562, "e": 14.688}]}, {"words": [{"w": "Cô", "s": 15.0, "e": 15.312}, {"w": "sin", "s": 15.312, "e": 15.625}, {"w": "góc", "s": 15.625, "e": 15.938}, {"w": "bù", "s": 15.938, "e": 16.25}, {"w": "đổi", "s": 16.25, "e": 16.562}, {"w": "dấu", "s": 16.562, "e": 16.875}, {"w": "liền", "s": 16.875, "e": 19.688}]}, {"words": [{"w": "Tang", "s": 20.0, "e": 20.312}, {"w": "cô", "s": 20.312, "e": 20.625}, {"w": "tang", "s": 20.625, "e": 20.938}, {"w": "cũng", "s": 20.938, "e": 21.25}, {"w": "đổi", "s": 21.25, "e": 21.562}, {"w": "theo", "s": 21.562, "e": 24.688}]}, {"words": [{"w": "Góc", "s": 25.0, "e": 25.312}, {"w": "tù", "s": 25.312, "e": 25.625}, {"w": "thì", "s": 25.625, "e": 25.938}, {"w": "cô", "s": 25.938, "e": 26.25}, {"w": "sin", "s": 26.25, "e": 26.562}, {"w": "âm", "s": 26.562, "e": 29.688}]}, {"words": [{"w": "Còn", "s": 30.0, "e": 30.312}, {"w": "sin", "s": 30.312, "e": 30.625}, {"w": "thì", "s": 30.625, "e": 30.938}, {"w": "luôn", "s": 30.938, "e": 31.25}, {"w": "không", "s": 31.25, "e": 31.562}, {"w": "âm", "s": 31.562, "e": 34.688}]}]}, {"id": "dinh-ly-cosin", "t": "Định lý Côsin", "dur": 38.4, "intro": 4.8, "lines": [{"words": [{"w": "A", "s": 4.8, "e": 5.1}, {"w": "bình", "s": 5.1, "e": 5.4}, {"w": "bằng", "s": 5.4, "e": 5.7}, {"w": "bê", "s": 5.7, "e": 6.0}, {"w": "bình", "s": 6.0, "e": 6.3}, {"w": "cộng", "s": 6.3, "e": 6.6}, {"w": "xê", "s": 6.6, "e": 6.9}, {"w": "bình", "s": 6.9, "e": 9.3}]}, {"words": [{"w": "Trừ", "s": 9.6, "e": 9.9}, {"w": "đi", "s": 9.9, "e": 10.2}, {"w": "hai", "s": 10.2, "e": 10.5}, {"w": "bê", "s": 10.5, "e": 10.8}, {"w": "xê", "s": 10.8, "e": 11.1}, {"w": "cô", "s": 11.1, "e": 11.4}, {"w": "sin", "s": 11.4, "e": 11.7}, {"w": "a", "s": 11.7, "e": 14.1}]}, {"words": [{"w": "Muốn", "s": 14.4, "e": 14.7}, {"w": "tìm", "s": 14.7, "e": 15.0}, {"w": "góc", "s": 15.0, "e": 15.3}, {"w": "thì", "s": 15.3, "e": 15.6}, {"w": "đảo", "s": 15.6, "e": 15.9}, {"w": "lại", "s": 15.9, "e": 16.2}, {"w": "thôi", "s": 16.2, "e": 18.9}]}, {"words": [{"w": "Cô", "s": 19.2, "e": 19.5}, {"w": "sin", "s": 19.5, "e": 19.8}, {"w": "a", "s": 19.8, "e": 20.1}, {"w": "bằng", "s": 20.1, "e": 20.4}, {"w": "bê", "s": 20.4, "e": 20.7}, {"w": "bình", "s": 20.7, "e": 21.0}, {"w": "cộng", "s": 21.0, "e": 21.3}, {"w": "xê", "s": 21.3, "e": 21.6}, {"w": "bình", "s": 21.6, "e": 23.7}]}, {"words": [{"w": "Trừ", "s": 24.0, "e": 24.3}, {"w": "a", "s": 24.3, "e": 24.6}, {"w": "bình", "s": 24.6, "e": 24.9}, {"w": "chia", "s": 24.9, "e": 25.2}, {"w": "hai", "s": 25.2, "e": 25.5}, {"w": "bê", "s": 25.5, "e": 25.8}, {"w": "xê", "s": 25.8, "e": 28.5}]}, {"words": [{"w": "Định", "s": 28.8, "e": 29.1}, {"w": "lý", "s": 29.1, "e": 29.4}, {"w": "cô", "s": 29.4, "e": 29.7}, {"w": "sin", "s": 29.7, "e": 30.0}, {"w": "nhớ", "s": 30.0, "e": 30.3}, {"w": "mãi", "s": 30.3, "e": 30.6}, {"w": "không", "s": 30.6, "e": 30.9}, {"w": "quên", "s": 30.9, "e": 33.3}]}]}, {"id": "vecto", "t": "Vectơ đi đường", "dur": 35.56, "intro": 4.444444444444445, "lines": [{"words": [{"w": "A", "s": 4.444, "e": 4.722}, {"w": "sang", "s": 4.722, "e": 5.0}, {"w": "bê", "s": 5.0, "e": 5.278}, {"w": "rồi", "s": 5.278, "e": 5.556}, {"w": "bê", "s": 5.556, "e": 5.833}, {"w": "sang", "s": 5.833, "e": 6.111}, {"w": "xê", "s": 6.111, "e": 8.611}]}, {"words": [{"w": "Gộp", "s": 8.889, "e": 9.167}, {"w": "lại", "s": 9.167, "e": 9.444}, {"w": "thành", "s": 9.444, "e": 9.722}, {"w": "a", "s": 9.722, "e": 10.0}, {"w": "tới", "s": 10.0, "e": 10.278}, {"w": "xê", "s": 10.278, "e": 10.556}, {"w": "thôi", "s": 10.556, "e": 13.056}]}, {"words": [{"w": "Hình", "s": 13.333, "e": 13.611}, {"w": "bình", "s": 13.611, "e": 13.889}, {"w": "hành", "s": 13.889, "e": 14.167}, {"w": "chung", "s": 14.167, "e": 14.444}, {"w": "một", "s": 14.444, "e": 14.722}, {"w": "gốc", "s": 14.722, "e": 17.5}]}, {"words": [{"w": "Đường", "s": 17.778, "e": 18.056}, {"w": "chéo", "s": 18.056, "e": 18.333}, {"w": "là", "s": 18.333, "e": 18.611}, {"w": "tổng", "s": 18.611, "e": 18.889}, {"w": "hai", "s": 18.889, "e": 19.167}, {"w": "cạnh", "s": 19.167, "e": 19.444}, {"w": "kề", "s": 19.444, "e": 21.944}]}, {"words": [{"w": "Nhân", "s": 22.222, "e": 22.5}, {"w": "với", "s": 22.5, "e": 22.778}, {"w": "ca", "s": 22.778, "e": 23.056}, {"w": "dương", "s": 23.056, "e": 23.333}, {"w": "thì", "s": 23.333, "e": 23.611}, {"w": "cùng", "s": 23.611, "e": 23.889}, {"w": "hướng", "s": 23.889, "e": 26.389}]}, {"words": [{"w": "Ca", "s": 26.667, "e": 26.944}, {"w": "âm", "s": 26.944, "e": 27.222}, {"w": "quay", "s": 27.222, "e": 27.5}, {"w": "ngược", "s": 27.5, "e": 27.778}, {"w": "lại", "s": 27.778, "e": 28.056}, {"w": "liền", "s": 28.056, "e": 30.833}]}]}];
-const fmtT = x => { x = Math.max(0, Math.floor(x)); return Math.floor(x/60) + ":" + String(x%60).padStart(2,"0"); };
+const fmtT = x => { x = Math.max(0, Math.floor(x || 0)); return Math.floor(x/60) + ":" + String(x%60).padStart(2,"0"); };
+/* Danh sách bài hát. Có thể thay bằng file nhac/bai-hat.json trong repo (không cần sửa code):
+   [ { "ten":"Tên bài", "bai":"Bài 2", "file":"nhac/ten-file.mp3", "loi":["câu 1","câu 2"], "moc":[3.5, 8.2] } ]
+   "moc" (không bắt buộc) là giây bắt đầu của từng câu, để tô sáng lời như karaoke. */
+const lineText = ln => ln.words.map(w => w.w).join(" ");
+let SL = SONG_LY.map((L, i) => ({ ten:SONGS[i].t, bai:SONGS[i].about, file:"nhac/" + L.id + ".mp3", dur:L.dur, lines:L.lines, beat:i }));
+let SL_ERR = "";
+function songFromJson(o, k){
+  const file = String(o.file || "").trim().replace(/^\/+/, "");
+  const loi = (Array.isArray(o.loi) ? o.loi : String(o.loi || "").split(/\n/)).map(x => String(x).trim()).filter(Boolean);
+  const builtin = SONG_LY.findIndex(L => "nhac/" + L.id + ".mp3" === (file.includes("/") ? file : "nhac/" + file));
+  // Bài có sẵn và lời giữ nguyên → dùng mốc từng chữ có sẵn
+  if(builtin >= 0 && (!loi.length || loi.join("|").toLowerCase() === SONG_LY[builtin].lines.map(lineText).join("|").toLowerCase()) && !o.moc)
+    return { ...SL[builtin], ten:o.ten || SL[builtin].ten, bai:o.bai || SL[builtin].bai };
+  const moc = Array.isArray(o.moc) ? o.moc.map(Number).filter(x => isFinite(x)) : [];
+  const lines = loi.map((t, i) => { const ws = t.split(/\s+/), s0 = moc[i], s1 = moc[i+1];
+    return { words: ws.map((w, j) => s0 === undefined ? { w } : { w, s: s0 + (s1 !== undefined ? (s1 - s0) * .85 : ws.length * .35) * j / ws.length, e: s1 !== undefined ? s1 : s0 + ws.length * .35 + .4 }) }; });
+  return { ten: o.ten || ("Bài hát " + (k+1)), bai: o.bai || "", file: file.includes("/") ? file : "nhac/" + file, dur: 0, lines, beat: builtin >= 0 ? builtin : -1, timed: moc.length > 0 };
+}
+const songsReady = (/^https?:$/.test(location.protocol) && !/claude|anthropic/i.test(location.hostname)) ? fetch("nhac/bai-hat.json", { cache:"no-cache" }).then(async r => {
+  if(!r.ok) return; const txt = await r.text();
+  try{ const arr = JSON.parse(txt); if(!Array.isArray(arr)) throw new Error("file phải bắt đầu bằng [ và kết thúc bằng ]"); const list = arr.map(songFromJson).filter(x => x.file && x.lines);
+    if(list.length) SL = list; }
+  catch(e){ SL_ERR = "File nhac/bai-hat.json đang bị lỗi (" + e.message + "). Trang tạm dùng danh sách bài hát có sẵn."; }
+}).catch(() => {}) : Promise.resolve();
+const timedLine = ln => ln.words[0] && ln.words[0].s !== undefined;
 function renderSongs(){
-  $("#v-bai-hat").innerHTML = head("Bài hát ghi nhớ công thức","Lời tự sáng tác theo từng bài học, có giọng hát và nhạc đệm. Chữ đang hát được tô sáng như karaoke; bấm vào một câu để hát từ câu đó.") +
-  `<div class="songs">` + SONGS.map((s,i)=>{ const L = SONG_LY[i]; return `<article class="song" id="song${i}"><div class="song-top"><div><small>${esc(s.about)} · ${fmtT(L.dur)}</small><h3>${esc(s.t)}</h3></div>
-    <button class="playbtn" data-song="${i}" aria-label="Phát bài hát ${esc(s.t)}">${PLAY}</button></div>
-    <div class="sprog" data-seek="${i}"><i id="sp${i}"></i></div><div class="stime"><span id="st${i}">0:00</span><span>${fmtT(L.dur)}</span></div>
-    <ul class="lyrics" id="ly${i}">${L.lines.map((ln,k)=>`<li data-line="${k}" data-t="${ln.words[0].s}">${ln.words.map((w,j)=>`<span data-s="${w.s}">${esc(j===0 ? w.w[0].toUpperCase()+w.w.slice(1) : w.w)}</span>`).join(" ")}</li>`).join("")}</ul></article>`; }).join("") + `</div>
-    <p class="role-note" style="margin-top:14px">Giọng hát được tổng hợp bằng máy từ mô hình giọng nói tiếng Việt piper vi-vivos (giấy phép CC BY-NC-SA 4.0), nên còn hơi “robot”. Lời và giai điệu do nhóm thực hiện tự soạn.</p>`;
-  $("#v-bai-hat").onclick = e => {
+  const v = $("#v-bai-hat");
+  v.innerHTML = head("Bài hát ghi nhớ công thức","Lời tự sáng tác theo từng bài học, có giọng hát và nhạc đệm. Chữ đang hát được tô sáng như karaoke; bấm vào một câu để hát từ câu đó.") +
+  (SL_ERR ? `<div class="note-box" style="margin-bottom:14px;color:var(--bad)">${esc(SL_ERR)}</div>` : "") +
+  `<div class="songs">` + SL.map((S,i)=>`<article class="song" id="song${i}"><div class="song-top"><div><small>${esc(S.bai)}${S.bai?" · ":""}<span id="sd${i}">${S.dur ? fmtT(S.dur) : "–:–"}</span></small><h3>${esc(S.ten)}</h3></div>
+    <button class="playbtn" data-song="${i}" aria-label="Phát bài hát ${esc(S.ten)}">${PLAY}</button></div>
+    <div class="sprog" data-seek="${i}"><i id="sp${i}"></i></div><div class="stime"><span id="st${i}">0:00</span><span id="se${i}">${S.dur ? fmtT(S.dur) : ""}</span></div>
+    <ul class="lyrics" id="ly${i}">${S.lines.map((ln,k)=>`<li data-line="${k}"${timedLine(ln) ? ` data-t="${ln.words[0].s}"` : ""}>${ln.words.map((w,j)=>`<span>${esc(j===0 ? w.w[0].toUpperCase()+w.w.slice(1) : w.w)}</span>`).join(" ")}</li>`).join("")}</ul>
+    <button class="lnk mocbtn" data-moc="${i}" title="Dùng khi thay bài hát mới: bấm theo nhạc để tạo mốc thời gian cho lời">⏱ Tạo mốc lời karaoke</button></article>`).join("") + `</div>
+    <p class="role-note" style="margin-top:14px">Giọng hát của các bài có sẵn được tổng hợp bằng máy từ mô hình giọng nói tiếng Việt piper vi-vivos (giấy phép CC BY-NC-SA 4.0). Lời và giai điệu do nhóm thực hiện tự soạn.</p>`;
+  v.onclick = e => {
+    const mc = e.target.closest("[data-moc]"); if(mc){ startMoc(+mc.dataset.moc); return; }
     const b = e.target.closest("[data-song]"); if(b){ const i=+b.dataset.song; if(playing===i) stopSong(); else playSong(i); return; }
-    const li = e.target.closest("[data-line]"); if(li){ const i = +li.closest(".lyrics").id.slice(2); playSong(i, +li.dataset.t - 0.3); return; }
-    const sk = e.target.closest("[data-seek]"); if(sk){ const i = +sk.dataset.seek, r = sk.getBoundingClientRect(); playSong(i, (e.clientX - r.left)/r.width * SONG_LY[i].dur); }
+    const li = e.target.closest("[data-line]"); if(li && li.dataset.t){ const i = +li.closest(".lyrics").id.slice(2); playSong(i, +li.dataset.t - 0.3); return; }
+    const sk = e.target.closest("[data-seek]"); if(sk){ const i = +sk.dataset.seek, r = sk.getBoundingClientRect(), d = SL[i].dur || (songAudio && playing===i ? songAudio.duration : 0); if(d) playSong(i, (e.clientX - r.left)/r.width * d); else playSong(i); }
   };
 }
 let ac=null, playing=null, timers=[], master=null, songAudio=null, songRaf=0;
 const FREQ = n => { const m={C:0,D:2,E:4,F:5,G:7,A:9,B:11}; return 440*Math.pow(2,(m[n[0]]+12*(+n.slice(-1)+1)-69)/12); };
 function paintSong(i, t){
-  const L = SONG_LY[i]; const p = $("#sp"+i), tm = $("#st"+i); if(p) p.style.width = Math.min(100, t/L.dur*100) + "%"; if(tm) tm.textContent = fmtT(t);
-  document.querySelectorAll(`#ly${i} li`).forEach((li, k) => { const ws = L.lines[k].words, on = t >= ws[0].s - 0.15 && t < ws[ws.length-1].e + 0.1;
+  const S = SL[i]; if(!S) return; const d = S.dur || 1; const p = $("#sp"+i), tm = $("#st"+i); if(p) p.style.width = Math.min(100, t/d*100) + "%"; if(tm) tm.textContent = fmtT(t);
+  document.querySelectorAll(`#ly${i} li`).forEach((li, k) => { const ws = S.lines[k].words; if(ws[0].s === undefined) return; const on = t >= ws[0].s - 0.15 && t < ws[ws.length-1].e + 0.1;
     li.classList.toggle("on", on); li.querySelectorAll("span").forEach((sp, j) => sp.classList.toggle("sung", t >= ws[j].s)); });
 }
 function stopSong(){ timers.forEach(clearTimeout); timers=[]; cancelAnimationFrame(songRaf); if(master){ try{master.disconnect();}catch(e){} master=null; }
   if(songAudio){ songAudio.pause(); }
+  document.querySelectorAll(".eqbars").forEach(e => e.remove()); document.querySelectorAll(".playbtn.on").forEach(e => e.classList.remove("on"));
   if(playing!==null){ const b=document.querySelector(`[data-song="${playing}"]`); if(b) b.innerHTML=PLAY; paintSong(playing, 0); document.querySelectorAll(`#ly${playing} li`).forEach(l=>l.classList.remove("on")); } playing=null; }
 function playSong(i, from){
   if(playing !== i) stopSong();
-  const L = SONG_LY[i];
+  const S = SL[i];
   if(!songAudio){ songAudio = new Audio(); songAudio.preload = "auto"; }
-  const src = "nhac/" + L.id + ".mp3";
-  if(!songAudio.src.endsWith(src)) songAudio.src = src;
-  playing = i; const b = document.querySelector(`[data-song="${i}"]`); if(b) b.innerHTML = STOP;
-  songAudio.onended = () => stopSong();
-  songAudio.onerror = () => { if(playing === i){ stopSong(); toast("Không tải được file bài hát, phát giai điệu không lời", true); playBeat(i); } };
+  const src = new URL(S.file, location.href).href;
+  if(songAudio.src !== src) songAudio.src = src;
+  playing = i; const b = document.querySelector(`[data-song="${i}"]`); if(b){ b.innerHTML = STOP; b.classList.add("on"); }
+  const h3 = document.querySelector(`#song${i} h3`); if(h3 && !h3.querySelector(".eqbars")) h3.insertAdjacentHTML("beforeend", '<span class="eqbars" aria-hidden="true"><i></i><i></i><i></i><i></i></span>');
+  songAudio.onloadedmetadata = () => { if(isFinite(songAudio.duration)){ S.dur = songAudio.duration; const a = $("#sd"+i), z = $("#se"+i); if(a) a.textContent = fmtT(S.dur); if(z) z.textContent = fmtT(S.dur); } };
+  songAudio.onended = () => { stopSong(); if(MOC && MOC.i === i) finishMoc(); };
+  songAudio.onerror = () => { if(playing === i){ stopSong(); if(S.beat >= 0){ toast("Không tải được file bài hát, phát giai điệu không lời", true); playBeat(S.beat); } else toast("Không tải được file " + S.file + ". Kiểm tra lại tên file trong thư mục nhac.", true); } };
   try{ songAudio.currentTime = from || 0; }catch(e){}
   const pr = songAudio.play(); if(pr && pr.catch) pr.catch(err => { if(err && err.name === "NotAllowedError") return; });
   const tick = () => { if(playing !== i) return; paintSong(i, songAudio.currentTime); songRaf = requestAnimationFrame(tick); }; tick();
+}
+/* Công cụ tạo mốc lời: phát bài, bấm "Câu tiếp" (hoặc phím cách) đúng lúc mỗi câu bắt đầu → ra đoạn "moc" để dán vào nhac/bai-hat.json */
+let MOC = null;
+function startMoc(i){
+  const S = SL[i]; MOC = { i, k: 0, t: [] };
+  let bar = $("#mocBar"); if(!bar){ bar = document.createElement("div"); bar.id = "mocBar"; bar.className = "mocbar"; document.body.appendChild(bar); }
+  const paint = () => { bar.innerHTML = MOC.k < S.lines.length
+    ? `<div><small>Tạo mốc cho “${esc(S.ten)}” · câu ${MOC.k+1}/${S.lines.length}</small><b>Bấm khi bắt đầu hát: “${esc(lineText(S.lines[MOC.k]))}”</b></div><button class="btn" id="mocNext">Câu tiếp (phím cách)</button><button class="btn ghost" id="mocStop">Dừng</button>` : ""; 
+    const n = $("#mocNext"); if(n) n.onclick = tap; const st = $("#mocStop"); if(st) st.onclick = () => { stopSong(); finishMoc(); }; };
+  const tap = () => { if(!MOC) return; MOC.t.push(Math.round(songAudio.currentTime * 10) / 10); MOC.k++; if(MOC.k >= S.lines.length){ stopSong(); finishMoc(); } else paint(); };
+  MOC.tap = tap; paint(); bar.hidden = false; playSong(i, 0);
+}
+document.addEventListener("keydown", e => { if(MOC && e.code === "Space" && !e.target.closest("input,textarea")){ e.preventDefault(); MOC.tap(); } });
+function finishMoc(){
+  if(!MOC) return; const bar = $("#mocBar"), m = MOC; MOC = null;
+  const txt = `"moc": [${m.t.join(", ")}]`;
+  bar.innerHTML = `<div><small>Xong ${m.t.length} mốc. Dán dòng này vào bài hát tương ứng trong nhac/bai-hat.json:</small><code>${esc(txt)}</code></div><button class="btn" id="mocCopy">Sao chép</button><button class="btn ghost" id="mocClose">Đóng</button>`;
+  $("#mocCopy").onclick = () => { navigator.clipboard && navigator.clipboard.writeText(txt).then(() => toast("Đã sao chép")).catch(() => toast("Hãy bôi đen rồi sao chép thủ công", true)); };
+  $("#mocClose").onclick = () => { bar.hidden = true; };
 }
 // Dự phòng khi không có file nhạc: giai điệu không lời như bản cũ
 function playBeat(i){
   try{ ac = ac || new (window.AudioContext||window.webkitAudioContext)(); }catch(e){ return; }
   if(ac.resume) ac.resume();
   master=ac.createGain(); master.connect(ac.destination);
-  const s=SONGS[i], notes=s.notes.split(" "), seq=notes.concat(notes), beat=60/s.tempo, t0=ac.currentTime+.1;
+  const s=SONGS[i]; if(!s) return; const notes=s.notes.split(" "), seq=notes.concat(notes), beat=60/s.tempo, t0=ac.currentTime+.1;
   seq.forEach((n,k)=>{ if(n==="-") return; const o=ac.createOscillator(), g=ac.createGain(); o.type="triangle"; o.frequency.value=FREQ(n);
     const t=t0+k*beat; g.gain.setValueAtTime(0,t); g.gain.linearRampToValueAtTime(.18,t+.02); g.gain.exponentialRampToValueAtTime(.001,t+beat*.95);
     o.connect(g); g.connect(master); o.start(t); o.stop(t+beat); });
-  playing=i; document.querySelector(`[data-song="${i}"]`).innerHTML=STOP;
+  playing=SL.findIndex(x=>x.beat===i); const pb=document.querySelector(`[data-song="${playing}"]`); if(pb) pb.innerHTML=STOP;
   timers.push(setTimeout(stopSong, seq.length*beat*1000+300));
 }
 
@@ -1518,6 +1696,7 @@ function renderRunner(){
   const v = $("#v-luyen-tap"), n = PQ.qs.length, c = PQ.ch ? CHN[PQ.ch] : 0;
   const top = `<div class="crumb"><a href="#trang-chu">Trang chủ</a><span>›</span><a href="#luyen-tap" data-back="1">Luyện tập</a><span>›</span><span>${esc(PQ.title)}</span></div>`;
   if(PQ.i >= n){
+    setTimeout(() => { const r = $("#v-luyen-tap .ring"); if(!r) return; const b = r.querySelector("b"); ANIM.count(b, PQ.score, 900, x => x + "/" + n); if(PQ.score/n >= .8) ANIM.burstFrom(r, 110); }, 60);
     const best = getBest(), old = best[PQ.key]; if(old===undefined || PQ.score > old){ best[PQ.key] = PQ.score; store.set(bestKey(), best); PROG.push(true); }
     const pct = PQ.score / n, wrong = PQ.qs.map((q,i)=>({q, pick:PQ.picks[i]})).filter(x=>x.pick!==x.q.a);
     const msg = pct>=.9 ? "Xuất sắc! Bạn nắm rất chắc phần này." : pct>=.7 ? "Khá tốt. Xem lại các câu sai bên dưới nhé." : pct>=.5 ? "Đạt yêu cầu. Nên đọc lại phần Tổng hợp công thức rồi làm lại." : "Cần ôn thêm. Đọc lại bài giảng và Tổng hợp công thức rồi thử lại nhé.";
@@ -1538,7 +1717,7 @@ $("#v-luyen-tap").addEventListener("click", e => {
   const o = e.target.closest(".opt");
   if(o && PQ && PQ.picks.length === PQ.i){ const q = PQ.qs[PQ.i], k = +o.dataset.k; PQ.picks.push(k); if(k===q.a) PQ.score++;
     document.querySelectorAll("#v-luyen-tap .opt").forEach((b,i)=>{ b.disabled = true; if(i===q.a) b.classList.add("right"); });
-    if(k!==q.a) o.classList.add("wrong");
+    if(k!==q.a) o.classList.add("wrong"); else ANIM.burstFrom(o, 26);
     const ex = $("#ex"); ex.hidden = false; ex.innerHTML = `<b>${k===q.a?"Chính xác.":"Chưa đúng."}</b> ${esc(q.e)}`; $("#next").hidden = false; $("#next").focus(); }
   if(e.target.id==="next"){ PQ.i++; renderRunner(); }
 });
@@ -2191,6 +2370,8 @@ async function renderThiDua(){
     : `<div class="note-box">Chưa có học sinh nào trong danh sách.</div>`) +
     `<p class="lb-rule">Điểm tối đa: ${d.toi_da}. Không tính tài khoản khách, giáo viên và quản trị. Điểm được lưu theo tài khoản, học trên máy nào cũng được cộng.</p>`;
   v.querySelectorAll("[data-lop]").forEach(b => b.onclick = () => { LB_LOP = b.dataset.lop; renderThiDua(); });
+  ANIM.stagger(v); v.querySelectorAll(".pod .pt").forEach(e => ANIM.count(e, +e.textContent, 1100));
+  if(mine && mine.hang === 1 && mine.tong > 0 && !renderThiDua.cheered){ renderThiDua.cheered = true; setTimeout(() => ANIM.burstFrom(v.querySelector(".lb-me"), 120), 500); }
   $("#lbRefresh").onclick = () => renderThiDua();
 }
 
@@ -2219,7 +2400,7 @@ function rvCard(r, admin, me, guest){
   </div></article>`;
 }
 const starTxt = n => `<span class="stars">${"★".repeat(n)}<span class="off">${"★".repeat(5-n)}</span></span>`;
-async function renderDanhGia(){
+async function renderDanhGia(quiet){
   const v = $("#v-danh-gia"), intro = "Mỗi tài khoản viết được một đánh giá (sửa lại lúc nào cũng được). Đánh giá hiện kèm tên người viết.";
   if(!HOSTED){ v.innerHTML = head("Đánh giá website", intro) + `<div class="note-box">Phần đánh giá cần trang đã kết nối cơ sở dữ liệu tài khoản (bản trên Vercel).</div>`; return; }
   if(!v.querySelector(".rv-top")) v.innerHTML = head("Đánh giá website", intro) + `<p class="role-note">Đang tải…</p>`;
@@ -2239,35 +2420,37 @@ async function renderDanhGia(){
     <h3 class="big" style="margin:0 0 10px">Tất cả đánh giá${d.admin && d.list.some(r=>r.an) ? ` <small class="role-note">(bạn là quản trị nên thấy cả đánh giá đã ẩn)</small>` : ""}</h3>
     <div class="rv-sort"><span>Sắp xếp:</span><button class="chipf" data-sort="moi" aria-pressed="${RV_SORT==="moi"}">Mới nhất</button><button class="chipf" data-sort="huuich" aria-pressed="${RV_SORT==="huuich"}">Hữu ích nhất</button></div>
     <div class="rv-list">${d.list.length ? rvSorted(d.list).map(r => rvCard(r, d.admin, me, guest)).join("") : `<div class="note-box">Chưa có đánh giá nào. Hãy là người đầu tiên!</div>`}</div>`;
+  if(!quiet) ANIM.stagger(v);
   const f = $("#rvForm");
   if(f){
-    $("#rvStars").onclick = e => { const b = e.target.closest("[data-s]"); if(!b) return; RV_SAO = +b.dataset.s; $("#rvStars").querySelectorAll("button").forEach(x => { x.classList.toggle("on", +x.dataset.s <= RV_SAO); x.setAttribute("aria-checked", String(+x.dataset.s === RV_SAO)); }); };
+    $("#rvStars").onclick = e => { const b = e.target.closest("[data-s]"); if(!b) return; RV_SAO = +b.dataset.s; $("#rvStars").querySelectorAll("button").forEach(x => { if(+x.dataset.s <= RV_SAO) setTimeout(() => ANIM.bump(x), (+x.dataset.s-1)*60); }); $("#rvStars").querySelectorAll("button").forEach(x => { x.classList.toggle("on", +x.dataset.s <= RV_SAO); x.setAttribute("aria-checked", String(+x.dataset.s === RV_SAO)); }); };
     $("#rvText").oninput = e => { $("#rvCnt").textContent = e.target.value.length; };
     f.onsubmit = async e => { e.preventDefault(); if(!RV_SAO) return toast("Chọn số sao trước nhé", true);
-      try{ await api("PUT", "/api/danhgia", { sao:RV_SAO, nd:$("#rvText").value.trim() }); toast(mine ? "Đã cập nhật đánh giá" : "Đã đăng đánh giá. Cảm ơn bạn!"); renderDanhGia(); }catch(err){ toast(err.message, true); } };
+      try{ await api("PUT", "/api/danhgia", { sao:RV_SAO, nd:$("#rvText").value.trim() }); toast(mine ? "Đã cập nhật đánh giá" : "Đã đăng đánh giá. Cảm ơn bạn!"); if(!mine) ANIM.burstFrom(f.querySelector(".btn"), 80); renderDanhGia(true); }catch(err){ toast(err.message, true); } };
     const del = $("#rvDel"); if(del) del.onclick = async () => { if(!del.classList.contains("confirm")){ del.classList.add("confirm"); del.textContent = "Bấm lần nữa để xóa"; setTimeout(()=>{ del.classList.remove("confirm"); del.textContent = "Xóa đánh giá của tôi"; }, 3000); return; }
-      try{ await api("DELETE", "/api/danhgia"); RV_SAO = 0; toast("Đã xóa đánh giá của bạn"); renderDanhGia(); }catch(err){ toast(err.message, true); } };
+      try{ await api("DELETE", "/api/danhgia"); RV_SAO = 0; toast("Đã xóa đánh giá của bạn"); renderDanhGia(true); }catch(err){ toast(err.message, true); } };
   }
   v.querySelectorAll("[data-sort]").forEach(b => b.onclick = () => { RV_SORT = b.dataset.sort; renderDanhGia(); });
   v.querySelectorAll(".rv").forEach(card => {
     const u = card.dataset.u, thread = card.querySelector(".thread"), form = card.querySelector(".tl-form");
     card.querySelectorAll("[data-vote]").forEach(b => b.onclick = async () => { const v0 = +b.dataset.vote, cur = b.getAttribute("aria-pressed") === "true";
-      try{ await api("POST", "/api/danhgia", { act:"vote", user:u, v: cur ? 0 : v0 }); renderDanhGia(); }catch(err){ toast(err.message, true); } });
+      ANIM.bump(b); if(!cur) ANIM.plus(b, v0 > 0 ? "+1 👍" : "+1 👎");
+      try{ await api("POST", "/api/danhgia", { act:"vote", user:u, v: cur ? 0 : v0 }); renderDanhGia(true); }catch(err){ toast(err.message, true); } });
     const tg = card.querySelector("[data-toggle-tl]"); if(tg) tg.onclick = () => { if(RV_OPEN.has(u)) RV_OPEN.delete(u); else RV_OPEN.add(u); thread.hidden = !thread.hidden; };
     card.querySelectorAll("[data-reply]").forEach(b => b.onclick = () => { if(!form) return; thread.hidden = false; RV_OPEN.add(u); form.hidden = false; const ta = form.querySelector("textarea");
       if(b.dataset.reply && !ta.value.startsWith("@")) ta.value = "@" + b.dataset.reply + " " + ta.value; ta.focus(); });
     if(form){ form.querySelector("[data-cancel]").onclick = () => { form.hidden = true; form.querySelector("textarea").value = ""; };
       form.onsubmit = async e => { e.preventDefault(); const nd = form.querySelector("textarea").value.trim(); if(!nd) return;
         const btn = form.querySelector(".btn"); btn.disabled = true;
-        try{ await api("POST", "/api/danhgia", { act:"tl", user:u, nd }); RV_OPEN.add(u); toast("Đã gửi trả lời"); renderDanhGia(); }catch(err){ toast(err.message, true); btn.disabled = false; } }; }
+        try{ await api("POST", "/api/danhgia", { act:"tl", user:u, nd }); RV_OPEN.add(u); toast("Đã gửi trả lời"); renderDanhGia(true); }catch(err){ toast(err.message, true); btn.disabled = false; } }; }
     card.querySelectorAll("[data-tl]").forEach(b => b.onclick = async () => { const id = b.closest(".tl").dataset.id, act = b.dataset.tl;
       if(act === "xoa" && !b.classList.contains("confirm")){ b.classList.add("confirm"); b.textContent = "Bấm lần nữa để xóa"; setTimeout(()=>{ b.classList.remove("confirm"); b.textContent = "Xóa"; }, 3000); return; }
-      try{ await api("POST", "/api/danhgia", act === "xoa" ? { act:"xoa_tl", user:u, id } : { act:"an_tl", user:u, id, an: act === "an" }); toast(act === "xoa" ? "Đã xóa trả lời" : act === "an" ? "Đã ẩn trả lời" : "Đã hiện lại trả lời"); renderDanhGia(); }catch(err){ toast(err.message, true); } });
+      try{ await api("POST", "/api/danhgia", act === "xoa" ? { act:"xoa_tl", user:u, id } : { act:"an_tl", user:u, id, an: act === "an" }); toast(act === "xoa" ? "Đã xóa trả lời" : act === "an" ? "Đã ẩn trả lời" : "Đã hiện lại trả lời"); renderDanhGia(true); }catch(err){ toast(err.message, true); } });
   });
   v.querySelectorAll("[data-rv]").forEach(b => b.onclick = async () => {
     const u = b.closest(".rv").dataset.u, act = b.dataset.rv;
     if(act === "xoa" && !b.classList.contains("confirm")){ b.classList.add("confirm"); b.textContent = "Bấm lần nữa để xóa"; setTimeout(()=>{ b.classList.remove("confirm"); b.textContent = "Xóa"; }, 3000); return; }
-    try{ await api("POST", "/api/danhgia", act === "xoa" ? { user:u, xoa:true } : { user:u, an: act === "an" }); toast(act === "xoa" ? "Đã xóa đánh giá" : act === "an" ? "Đã ẩn đánh giá" : "Đã hiện lại đánh giá"); renderDanhGia(); }catch(err){ toast(err.message, true); }
+    try{ await api("POST", "/api/danhgia", act === "xoa" ? { user:u, xoa:true } : { user:u, an: act === "an" }); toast(act === "xoa" ? "Đã xóa đánh giá" : act === "an" ? "Đã ẩn đánh giá" : "Đã hiện lại đánh giá"); renderDanhGia(true); }catch(err){ toast(err.message, true); }
   });
 }
 
@@ -2303,6 +2486,7 @@ function route(){
   $("#whoName").textContent = name; $("#avatar").textContent = root.dataset.user===DEMO.user ? "K" : (name.trim().split(/\s+/).pop()[0]||"H").toUpperCase();
   $("#whoRole").textContent = roleLabel() + (root.dataset.lop ? " · " + root.dataset.lop : "");
   window.scrollTo(0,0);
+  ANIM.view(document.getElementById("v-"+view));
 }
 addEventListener("hashchange", route);
 // Bấm vào “Luyện tập” ở menu, ô trang chủ… luôn mở trang chọn đề
@@ -2870,6 +3054,7 @@ const SGK = (() => {
 })();
 
 route();
+Promise.all([songsReady, docsReady]).then(() => { delete rendered["bai-hat"]; delete rendered["tai-lieu"]; const h = location.hash.slice(1); if(root.dataset.user && (h === "bai-hat" || h === "tai-lieu")) route(); });
 ACC_READY.then(() => { if(HOSTED && root.dataset.user){ route(); afterLogin(); } else if(root.dataset.user) CHATS.load(); });
 if(SERVER && root.dataset.user) loadContent().then(route);
 if(!SERVER || root.dataset.user) detectAI();

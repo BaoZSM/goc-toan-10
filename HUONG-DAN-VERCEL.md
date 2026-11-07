@@ -142,3 +142,40 @@ Mọi thay đổi được ghi vào máy ngay rồi gửi lên máy chủ. Nếu
 Xóa một tài khoản cũng xóa luôn trò chuyện, bảng nháp, điểm và đánh giá của tài khoản đó.
 
 Gói miễn phí của Upstash giới hạn số lệnh mỗi tháng. Một lớp khoảng 45 học sinh dùng bình thường vẫn nằm trong giới hạn; nếu trang báo lỗi lưu hàng loạt, vào Upstash xem mục **Usage**.
+
+## Tự thay bài hát và thêm tài liệu PDF (không cần sửa code)
+
+### Thay hoặc thêm bài hát
+1. Tải file nhạc (.mp3) vào thư mục `nhac` trong repo. Tên file nên viết không dấu, không khoảng trắng, ví dụ `dinh-ly-sin.mp3`.
+2. Mở file `nhac/bai-hat.json` trên GitHub (bút chì để sửa). Mỗi bài là một khối:
+```json
+  {
+    "ten": "Định lý sin",
+    "bai": "Chương III · Bài 6",
+    "file": "nhac/dinh-ly-sin.mp3",
+    "loi": ["Câu hát thứ nhất", "Câu hát thứ hai"]
+  }
+```
+   Các khối cách nhau bằng dấu phẩy, cả danh sách nằm trong `[ ]`. Thứ tự trong file là thứ tự hiện trên web.
+3. Muốn lời sáng lên theo nhạc (karaoke): mở trang Bài hát, bấm **⏱ Tạo mốc lời karaoke** dưới bài đó, bấm phím cách mỗi khi bắt đầu một câu. Xong bấm **Sao chép** và dán dòng `"moc": [...]` vào khối của bài (thêm dấu phẩy sau dòng `"loi"`).
+4. Commit. Trang tự đọc danh sách mới, không cần sửa `index.html`.
+
+Nếu file JSON viết sai (thiếu dấu phẩy, ngoặc kép…), trang Bài hát báo lỗi màu đỏ và tạm dùng danh sách cũ. Có thể dán nội dung file vào jsonlint.com để tìm chỗ sai.
+
+### Thêm tài liệu PDF
+1. Tải file PDF vào thư mục `pdf`.
+2. Mở `pdf/tai-lieu-them.json` và thêm một khối cho mỗi file:
+```json
+[
+  {
+    "file": "pdf/De-kiem-tra-chuong-1.pdf",
+    "ten": "Đề kiểm tra Chương I",
+    "loai": "Đề ôn",
+    "chuong": "Chương I",
+    "mo_ta": "Đề 45 phút có đáp án",
+    "so_trang": 3
+  }
+]
+```
+   Chỉ `file` và `ten` là bắt buộc. Thêm `"noi_bat": true` nếu muốn tài liệu hiện to ở đầu trang.
+3. Commit. Tài liệu hiện trong mục Tài liệu PDF và trong khung Sách giáo khoa của Tiện ích.
