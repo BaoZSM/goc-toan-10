@@ -806,8 +806,8 @@ html.theme-fade,html.theme-fade *{transition:background-color .45s ease,color .4
 .cpk small{display:block;color:var(--muted);font-size:13px;line-height:1.45;margin-top:2px}
 .cpk-ic{flex:none;width:38px;height:56px;border-radius:9px 9px 12px 12px;position:relative;box-shadow:inset 0 0 0 1px rgba(0,0,0,.15)}
 .cpk-ic i{position:absolute;left:5px;right:5px;top:6px;height:14px;border-radius:3px;background:#c9d6c2}
-.cpk-580{background:linear-gradient(170deg,#3b4048,#1b1e24)}.cpk-880{background:linear-gradient(170deg,#fff,#d9e0e4)}
-.cpk-880 i{background:#e9eef0;box-shadow:inset 0 0 0 1.5px #2c3740}
+.cpk-580{background:linear-gradient(170deg,#3b4048,#1b1e24)}.cpk-880{background:linear-gradient(170deg,#3b4048,#1c1e23);border-radius:12px 12px 14px 14px}
+.cpk-880 i{background:#e9eef0;height:16px}
 .cgrid{display:grid;grid-template-columns:minmax(0,420px) minmax(0,1fr);gap:28px;align-items:start}
 .cmount{max-width:420px;width:100%;margin:0 auto}
 .ctips{background:var(--sheet);border:1px solid var(--line);border-radius:18px;padding:18px 20px}
@@ -3077,18 +3077,51 @@ const CALC = (() => {
       ],
       big:BIG(k("exe","=","cmd:exe","≈","cmd:approx"))
     },
+    /* Bố cục phím theo máy thật dòng ClassWiz CW (fx-880BTG): phím tròn, chữ vàng là chức năng SHIFT,
+       chữ trắng phía trên là tên phím. Không có ALPHA: biến A–F là SHIFT + 4,5,6,1,2,3; x, y, z là SHIFT + 0 . ×10ⁿ. */
     "880": {
-      top:[k("shift","SHIFT","mod:shift"), k("home","HOME","cmd:menu","SETTINGS","cmd:setup"), "pad", k("back","BACK","cmd:back"), k("on","ON","cmd:on")],
-      fn:[
-        [k("tools","TOOLS","cmd:optn"), k("catalog","CATALOG","cmd:catalog"), k("format","FORMAT","cmd:format","FACT","cmd:pfact"), k("var","VARIABLE","cmd:variable","STO","cmd:sto"), k("func","FUNCTION","cmd:function","CALC","cmd:calc"), k("integ","∫","ins:integ(","d/dx","ins:deriv(")],
-        [k("frac","a/b","ins:frac"), k("sqrt","√","ins:sqrt(","∛","ins:cbrt("), k("sq","x²","ins:sq","x³","ins:cube",null,null,"DEC"), k("pow","xⁿ","ins:^(","ⁿ√","ins:xrt(",null,null,"HEX"), k("log","log","ins:log(","10ˣ","ins:pow10(",null,null,"BIN"), k("ln","ln","ins:ln(","eˣ","ins:exp(",null,null,"OCT")],
-        [k("neg","(−)","ins:neg","∠","ins:ang",null,null,"A"), k("inv","x⁻¹","ins:inv","x!","ins:fact",null,null,"B"), k("loga","logₐb","ins:log(","Σ","ins:sum(",null,null,"C"), k("sin","sin","ins:sin(","sin⁻¹","ins:asin(",null,null,"D"), k("cos","cos","ins:cos(","cos⁻¹","ins:acos(",null,null,"E"), k("tan","tan","ins:tan(","tan⁻¹","ins:atan(",null,null,"F")],
-        [k("xv","x","ins:x","y","ins:y"), k("abs","Abs","ins:abs(","%","ins:pct"), k("lp","(","ins:(","Π","ins:prod("), k("rp",")","ins:)",",","ins:,"), k("dms","°′″","ins:dms","z","ins:z"), k("pi","π","ins:pi","e","ins:e",null,null,"𝑖")]
+      top:[
+        { ...k("on","ON","cmd:on"), cap:"ON", face:"", c:1, r:1, cls:"pw" },
+        { ...k("home","HOME","cmd:menu"), cap:"HOME", icon:"home", c:2, r:1 },
+        { ...k("set","SETTINGS","cmd:setup"), cap:"SETTINGS", icon:"set", c:1, r:2 },
+        { ...k("back","BACK","cmd:back"), icon:"back", c:2, r:2 },
+        { ...k("shift","SHIFT","mod:shift"), cap:"SHIFT", icon:"shift", c:1, r:3 },
+        { ...k("var","VARIABLE","cmd:variable"), cap:"VARIABLE", icon:"var", c:2, r:3 },
+        { ...k("func","FUNCTION","cmd:function"), cap:"FUNCTION", face:"f(𝑥)", c:3, r:3 },
+        { ...k("catalog","CATALOG","cmd:catalog"), cap:"CATALOG", icon:"book", c:5, r:3 },
+        { ...k("tools","TOOLS","cmd:optn"), cap:"TOOLS", icon:"dots", c:6, r:3 },
+        { id:"up", a:"cmd:up", l:"Lên", icon:"up", c:4, r:1, cls:"pd" }, { id:"left", a:"cmd:left", l:"Trái", icon:"left", c:3, r:2, cls:"pd" },
+        { id:"ok", a:"cmd:ok", l:"OK", face:"OK", c:4, r:2, cls:"pd okk" }, { id:"right", a:"cmd:right", l:"Phải", icon:"right", c:5, r:2, cls:"pd" },
+        { id:"down", a:"cmd:down", l:"Xuống", icon:"down", c:4, r:3, cls:"pd" },
+        { id:"pgup", a:"cmd:pgup", l:"Lên một trang", icon:"pgup", c:6, r:1, cls:"rk rk1" }, { id:"pgdn", a:"cmd:pgdn", l:"Xuống một trang", icon:"pgdn", c:6, r:2, cls:"rk rk2" }
       ],
-      big:BIG(k("exe","EXE","cmd:exe","=","ins:eq"), true)
+      fn:[
+        [k("xv","𝑥","ins:x","QR","cmd:qr"), k("frac","▭⁄▭","ins:frac","a b/c","cmd:mixed"), k("sqrt","√▭","ins:sqrt(","ⁿ√","ins:xrt("), k("pow","▭ⁿ","ins:^(","x⁻¹","ins:inv"), k("sq","▭²","ins:sq","log","ins:log("), k("loga","logₐb","ins:log(","ln","ins:ln(")],
+        [k("ans","Ans","ins:ans"), k("sin","sin","ins:sin(","sin⁻¹","ins:asin("), k("cos","cos","ins:cos(","cos⁻¹","ins:acos("), k("tan","tan","ins:tan(","tan⁻¹","ins:atan("), k("lp","(","ins:(","=","ins:eq"), k("rp",")","ins:)",",","ins:,")]
+      ],
+      big:[
+        [k("7","7","ins:7","π","ins:pi"), k("8","8","ins:8","e","ins:e"), k("9","9","ins:9","𝑖","ins:i"), { ...k("del","DEL","cmd:del","INS","cmd:ins"), icon:"del" }, k("ac","AC","cmd:ac","OFF","cmd:off")],
+        [k("4","4","ins:4","A","ins:A"), k("5","5","ins:5","B","ins:B"), k("6","6","ins:6","C","ins:C"), k("mul","×","ins:×"), k("div","÷","ins:÷")],
+        [k("1","1","ins:1","D","ins:D"), k("2","2","ins:2","E","ins:E_"), k("3","3","ins:3","F","ins:F"), k("plus","+","ins:+","°′″","ins:dms"), k("minus","−","ins:−","(−)","ins:neg")],
+        [k("0","0","ins:0","𝑥","ins:x"), k("dot",".","ins:.","𝑦","ins:y"), k("exp","×10ⁿ","ins:E","𝑧","ins:z"), { ...k("format","FORMAT","cmd:format"), face:"FORMAT", cls:"fmt" }, k("exe","EXE","cmd:exe","≈","cmd:approx")]
+      ]
     }
   };
-  const BASE_LETTER = { "580":{ neg:"hA", dms:"hB", abs:"hC", sin:"hD", cos:"hE", tan:"hF" }, "880":{ neg:"hA", inv:"hB", loga:"hC", sin:"hD", cos:"hE", tan:"hF" } };
+  /* biểu tượng trên mặt phím (vẽ đơn giản) */
+  const KICON = {
+    home:'<svg viewBox="0 0 24 24"><path d="M4 11.5L12 5l8 6.5M6.5 10v8.5h11V10"/></svg>',
+    set:'<svg viewBox="0 0 24 24"><path d="M4 7h16M4 12h16M4 17h16"/><circle cx="9" cy="7" r="1.8"/><circle cx="15" cy="12" r="1.8"/><circle cx="8" cy="17" r="1.8"/></svg>',
+    back:'<svg viewBox="0 0 24 24"><path d="M9 7L5 11l4 4"/><path d="M5 11h9a4 4 0 0 1 0 8h-3"/></svg>',
+    shift:'<svg viewBox="0 0 24 24"><path d="M12 4l7 8h-4v7H9v-7H5z"/></svg>',
+    var:'<svg viewBox="0 0 24 24"><path d="M3 8h8M8 5l3 3-3 3M11 16H3M6 13l-3 3 3 3"/><text x="14" y="17" font-size="10" font-style="italic" stroke="none" fill="currentColor">x</text></svg>',
+    book:'<svg viewBox="0 0 24 24"><path d="M12 7c-2-1.5-5-2-8-1.5v12c3-.5 6 0 8 1.5 2-1.5 5-2 8-1.5v-12c-3-.5-6 0-8 1.5zM12 7v12"/></svg>',
+    dots:'<svg viewBox="0 0 24 24"><circle cx="6" cy="12" r="2"/><circle cx="12" cy="12" r="2"/><circle cx="18" cy="12" r="2"/></svg>',
+    up:'<svg viewBox="0 0 24 24"><path d="M7 14l5-5 5 5"/></svg>', down:'<svg viewBox="0 0 24 24"><path d="M7 10l5 5 5-5"/></svg>',
+    left:'<svg viewBox="0 0 24 24"><path d="M14 7l-5 5 5 5"/></svg>', right:'<svg viewBox="0 0 24 24"><path d="M10 7l5 5-5 5"/></svg>',
+    pgup:'<svg viewBox="0 0 24 24"><path d="M7 12l5-5 5 5M7 17l5-5 5 5"/></svg>', pgdn:'<svg viewBox="0 0 24 24"><path d="M7 7l5 5 5-5M7 12l5 5 5-5"/></svg>',
+    del:'<svg viewBox="0 0 24 24"><path d="M9 6h11v12H9l-5-6z" fill="currentColor" stroke="none"/><path d="M12 9.5l5 5M17 9.5l-5 5" stroke="#2b2f36" stroke-width="2"/></svg>'
+  };
+  const BASE_LETTER = { "580":{ neg:"hA", dms:"hB", abs:"hC", sin:"hD", cos:"hE", tan:"hF" }, "880":{ "4":"hA", "5":"hB", "6":"hC", "1":"hD", "2":"hE", "3":"hF" } };
   const BASE_SET = { sq:10, pow:16, log:2, ln:8 };
   const BASE_NAME = { 10:"Dec", 16:"Hex", 2:"Bin", 8:"Oct" };
 
@@ -3305,9 +3338,9 @@ const CALC = (() => {
     const el = document.createElement("div");
     el.className = "cw cw-" + model; el.tabIndex = 0;
     el.setAttribute("role", "application"); el.setAttribute("aria-label", "Máy tính cầm tay mô phỏng kiểu " + (model === "580" ? "fx-580VN X" : "fx-880BTG"));
-    const keyHTML = kd => `<button type="button" class="ck ck-${kd.id}" data-k="${kd.id}" aria-label="${esc(kd.l)}">`
-      + `<span class="ck-tl">${kd.sl ? `<i class="s">${esc(kd.sl)}</i>` : ""}${kd.al ? `<i class="a">${esc(kd.al)}</i>` : ""}${kd.bn ? `<i class="b">${esc(kd.bn)}</i>` : ""}</span>`
-      + `<b>${esc(kd.l)}</b></button>`;
+    const keyHTML = kd => `<button type="button" class="ck ck-${kd.id}${kd.cls ? " " + kd.cls : ""}" data-k="${kd.id}" aria-label="${esc(kd.l)}"${kd.c ? ` style="grid-column:${kd.c};grid-row:${kd.r}"` : ""}>`
+      + `<span class="ck-tl">${kd.sl ? `<i class="s">${esc(kd.sl)}</i>` : ""}${kd.al ? `<i class="a">${esc(kd.al)}</i>` : ""}${kd.bn ? `<i class="b">${esc(kd.bn)}</i>` : ""}${kd.cap ? `<i class="cap">${esc(kd.cap)}</i>` : ""}</span>`
+      + (kd.icon ? `<span class="ki">${KICON[kd.icon]}</span>` : `<b>${esc(kd.face != null ? kd.face : kd.l)}</b>`) + `</button>`;
     const pad = `<div class="cpad"><button type="button" class="cp up" data-k="up" aria-label="Lên"></button><button type="button" class="cp dn" data-k="down" aria-label="Xuống"></button><button type="button" class="cp lf" data-k="left" aria-label="Trái"></button><button type="button" class="cp rt" data-k="right" aria-label="Phải"></button>${model === "880" ? `<button type="button" class="cp ok" data-k="ok" aria-label="OK">OK</button>` : `<span class="cp mid">REPLAY</span>`}</div>`;
     el.innerHTML = `<div class="cw-head"><span class="cw-name">${model === "580" ? "fx-580VN X" : "fx-880BTG"}</span><span class="cw-sub">${model === "580" ? "MÔ PHỎNG · NATURAL DISPLAY" : "MÔ PHỎNG · CLASSWIZ"}</span><span class="cw-sol" aria-hidden="true"><i></i><i></i><i></i><i></i></span></div>
       <div class="cw-lcd"><div class="lst" aria-hidden="true"></div><div class="lbody" aria-live="polite"></div></div>
@@ -3319,6 +3352,7 @@ const CALC = (() => {
     host.appendChild(el);
     const lst = el.querySelector(".lst"), lbody = el.querySelector(".lbody");
     const KD = {}; [...KEYDEF.top.filter(x => x !== "pad"), ...KEYDEF.fn.flat(), ...KEYDEF.big.flat()].forEach(x => { KD[x.id] = x; });
+    if(model === "880") el.querySelector(".cfn").insertAdjacentHTML("beforebegin", "");
 
     /* ---- môi trường tính ---- */
     const S = () => ({ ...c.S, mode:c.mode === "verif" ? "calc" : (c.mode === "stat" || c.mode === "table" || c.mode === "sprd" || c.mode === "eqn" || c.mode === "ineq" || c.mode === "dist" || c.mode === "ratio" || c.mode === "box") ? "calc" : c.mode, base:c.base });
@@ -3601,6 +3635,7 @@ const CALC = (() => {
       const m = c.mode, T = model === "580" ? "OPTN" : "TOOLS";
       if(m === "mat" || m === "vct") return matMenu(m);
       if(m === "cplx") return push(Menu(T, [["Argument arg(","arg("],["Liên hợp Conjg(","conj("],["Dạng cực ▶r∠θ","topol"],["Dạng đại số ▶a+bi","torect"],["Phần thực ReP(","rep("],["Phần ảo ImP(","imp("],["Đơn vị ảo 𝑖","i"],["Dấu góc ∠","ang"]].map(([t, tok]) => ({ t, f:insert(tok) }))));
+      if(m === "base" && model === "880") return push(Menu(T, [["Dec – hệ 10","base:10"],["Hex – hệ 16","base:16"],["Bin – hệ 2","base:2"],["Oct – hệ 8","base:8"],["and","and"],["or","or"],["xor","xor"],["xnor","xnor"],["Not(","not("],["Neg(","negb("],["d – số thập phân","bd"],["h – số thập lục phân","bh"],["b – số nhị phân","bb"],["o – số bát phân","bo"]].map(([t, tok]) => ({ t, f: tok.startsWith("base:") ? () => { c.base = +tok.slice(5); save(); c.stack.pop(); render(); } : insert(tok) })), { per:5 }));
       if(m === "base") return push(Menu(T, [["and","and"],["or","or"],["xor","xor"],["xnor","xnor"],["Not(","not("],["Neg(","negb("],["d – số thập phân","bd"],["h – số thập lục phân","bh"],["b – số nhị phân","bb"],["o – số bát phân","bo"]].map(([t, tok]) => ({ t, f:insert(tok) }))));
       if(m === "verif") return push(Menu(T, CMPS.map(([t, tok]) => ({ t, f:insert(tok) }))));
       if(m === "stat") return statMenu();
@@ -3612,7 +3647,7 @@ const CALC = (() => {
     }
     function catalog(){ // 880
       const all = [
-        ["Hàm hay dùng", [["√(","sqrt("],["∛(","cbrt("],["log(","log("],["ln(","ln("],["10^(","pow10("],["e^(","exp("],["Abs(","abs("],["d/dx(","deriv("],["∫(","integ("],["Σ(","sum("],["Π(","prod(" ]]],
+        ["Hàm hay dùng", [["x³","cube"],["∛(","cbrt("],["%","pct"],["√(","sqrt("],["log(","log("],["ln(","ln("],["10^(","pow10("],["e^(","exp("],["Abs(","abs("],["d/dx(","deriv("],["∫(","integ("],["Σ(","sum("],["Π(","prod(" ]]],
         ["Xác suất", PROB], ["Số học", NUMF], ["Góc, tọa độ", [...ANG, ["Pol(","pol("],["Rec(","rec("]]], ["Hyperbolic, lượng giác", [...HYP, ["sin⁻¹(","asin("],["cos⁻¹(","acos("],["tan⁻¹(","atan(" ]]],
         ["Biến, Ans", [["A","A"],["B","B"],["C","C"],["D","D"],["E","E_"],["F","F"],["x","x"],["y","y"],["z","z"],["M","M"],["Ans","ans"],["PreAns","preans"]]],
         ["So sánh (Kiểm tra)", CMPS]
@@ -4060,11 +4095,12 @@ const CALC = (() => {
     function actionFor(id){
       const kd = KD[id];
       if(!kd){ return "cmd:" + id; }
-      if(c.mode === "base" && !c.shift && !c.alpha){
+      if(c.mode === "base" && model === "580" && !c.shift && !c.alpha){
         if(BASE_SET[id] != null) return "base:" + BASE_SET[id];
         if(BASE_LETTER[model][id]) return "ins:" + BASE_LETTER[model][id];
       }
-      if(c.mode === "cplx" && !c.shift && !c.alpha && ((model === "580" && id === "eng") || (model === "880" && id === "pi"))) return "ins:i";
+      if(c.mode === "base" && model === "880" && c.shift && BASE_LETTER[model][id]) return "ins:" + BASE_LETTER[model][id];
+      if(c.mode === "cplx" && !c.shift && !c.alpha && model === "580" && id === "eng") return "ins:i";
       if(c.sto && model === "580" && kd.aa && /^ins:(A|B|C|D|E_|F|x|y|z|M)$/.test(kd.aa)) return kd.aa;
       if(c.shift && kd.sa) return kd.sa;
       if(c.alpha && kd.aa) return kd.aa;
@@ -4083,6 +4119,9 @@ const CALC = (() => {
       try{
         if(a === "cmd:on"){ c.sto = false; setMode(c.mode); return; }
         if(a === "cmd:off"){ c.off = true; render(); return; }
+        if(a === "cmd:pgup" || a === "cmd:pgdn"){ const sc = top(); for(let k2 = 0; k2 < 4; k2++) sc && sc.key && sc.key(a === "cmd:pgup" ? "cmd:up" : "cmd:down"); render(); return; }
+        if(a === "cmd:qr"){ push(Info("QR", "<p>Máy thật tạo mã QR để xem màn hình trên điện thoại. Bản mô phỏng chạy ngay trên web nên không cần mã QR.</p><small>[AC]</small>")); return; }
+        if(a === "cmd:ins"){ return; }
         if(a === "cmd:menu"){ if(top() && top().lhome) pop(); else { const h = Home(); h.lhome = true; push(h); } return; }
         if(a === "cmd:setup"){ setup(); return; }
         if(a === "cmd:reset"){ reset(); return; }
@@ -4118,14 +4157,15 @@ const CALC = (() => {
       let id = KB[e.key];
       if(e.key === "!"){ c.shift = true; id = "inv"; }
       if(e.key === "p" && model === "580"){ c.shift = true; id = "exp"; }
+      if(model === "880"){ if(e.key === "p"){ c.shift = true; id = "7"; } if(e.key === "l"){ c.shift = true; id = "loga"; } if(e.key === "!"){ c.shift = false; id = null; } }
       if(!id) return;
       e.preventDefault();
       if(["up","down","left","right"].includes(id)){ const sc = top(); try{ sc && sc.key && sc.key("cmd:" + id); }catch(err2){ showErr(err2); } render(); return; }
       press(id);
     });
     // nút mũi tên trên bàn phím mô phỏng
-    ["up","down","left","right"].forEach(d => { KD[d] = { id:d, a:"cmd:" + d }; });
-    KD.ok = { id:"ok", a:"cmd:ok" };
+    ["up","down","left","right"].forEach(d => { if(!KD[d]) KD[d] = { id:d, a:"cmd:" + d }; });
+    if(!KD.ok) KD.ok = { id:"ok", a:"cmd:ok" };
 
     setMode(c.mode);
     return { el, press, destroy(){ host.innerHTML = ""; }, model, get state(){ return c; } };
@@ -4136,7 +4176,6 @@ const CALC = (() => {
 .cw{--u:calc(100cqw/36);font-size:var(--u);width:100%;box-sizing:border-box;padding:1.1em 1.1em 1.4em;border-radius:2.2em 2.2em 3em 3em;position:relative;outline:none;user-select:none;-webkit-user-select:none;touch-action:manipulation;font-family:"Be Vietnam Pro",system-ui,sans-serif}
 .cw-wrap{container-type:inline-size;width:100%}
 .cw-580{background:linear-gradient(170deg,#3b4048,#23272e 40%,#1b1e24);color:#eef1f4;box-shadow:inset 0 .15em 0 rgba(255,255,255,.12),0 1.6em 3em rgba(0,0,0,.35)}
-.cw-880{background:linear-gradient(170deg,#f8fafb,#e7ecef 55%,#d9e0e4);color:#1f2a33;box-shadow:inset 0 .15em 0 #fff,0 1.6em 3em rgba(20,40,60,.25)}
 .cw:focus-visible{box-shadow:0 0 0 .3em #3DD68C,0 1.6em 3em rgba(0,0,0,.3)}
 .cw-head{display:flex;align-items:center;gap:.8em;padding:.2em .6em .8em}
 .cw-name{font-weight:800;font-size:1.25em;letter-spacing:.02em}
@@ -4211,7 +4250,6 @@ const CALC = (() => {
 .ck-tl{position:absolute;left:0;right:0;bottom:100%;display:flex;justify-content:space-between;font-style:normal;font-size:.6em;line-height:1.1;padding:0 .05em .12em;pointer-events:none;white-space:nowrap}
 .ck-tl i{font-style:normal;font-weight:700}
 .ck-tl .s{color:#E8B84A}.ck-tl .a{color:#ff7b7b;margin-left:auto}.ck-tl .b{color:#5fd0c4;margin-left:auto}
-.cw-880 .ck-tl .s{color:#2c6fbe}.cw-880 .ck-tl .b{color:#0f8a7a}
 .ck-tl .s+.b,.ck-tl .a+.b{display:none}
 .cw.bn .ck-tl .b{display:inline}.cw.bn .ck-tl .s+.b,.cw.bn .ck-tl .a+.b{display:inline}.cw.bn .ck-tl .a{display:none}
 .cw:not(.bn) .ck-tl .b{display:none}
@@ -4222,20 +4260,11 @@ const CALC = (() => {
 .cw-580 .ck-del,.cw-580 .ck-ac{background:linear-gradient(180deg,#d9822b,#b9651a)!important;color:#fff!important;box-shadow:0 .22em 0 #7a3f0c!important}
 .cw-580 .ck-shift{background:linear-gradient(180deg,#d9a93f,#b9892a);color:#1b1f24}
 .cw-580 .ck-alpha{background:linear-gradient(180deg,#c84b4b,#a03434)}
-.cw-880 .ck{background:linear-gradient(180deg,#fff,#e5eaee);box-shadow:0 .2em 0 #a9b4bc,inset 0 .1em 0 #fff;color:#1f2a33}
-.cw-880 .cbig .ck{background:linear-gradient(180deg,#3a4651,#26303a);color:#fff;height:2.9em;box-shadow:0 .22em 0 #10161b}
-.cw-880 .cbig .ck b{font-size:1.15em}
-.cw-880 .ck-del,.cw-880 .ck-ac{background:linear-gradient(180deg,#1d9a8a,#147568)!important;box-shadow:0 .22em 0 #0b4a42!important}
-.cw-880 .ck-exe{background:linear-gradient(180deg,#2c6fbe,#1f5596)!important}
-.cw-880 .ck-shift{background:linear-gradient(180deg,#2c6fbe,#1f5596);color:#fff}
-.cw-880 .ck-home{background:linear-gradient(180deg,#1d9a8a,#147568);color:#fff}
-.cw-880 .cfn .ck b{font-size:.74em}
 .ck-tools b,.ck-catalog b,.ck-format b,.ck-var b,.ck-func b,.ck-optn b,.ck-calc b,.ck-sto b,.ck-eng b,.ck-sd b{font-size:.62em!important}
 .ck.lit{filter:brightness(1.25);outline:.18em solid currentColor;outline-offset:.08em}
 .ck.down,.ck:active{transform:translateY(.16em);filter:brightness(.92)}
 .ck:focus-visible{outline:.2em solid #3DD68C;outline-offset:.1em}
 .cpad{position:relative;height:5em;border-radius:50%/50%;background:radial-gradient(circle at 50% 40%,#5a616b,#2d3138);box-shadow:0 .25em 0 #111,inset 0 .1em 0 rgba(255,255,255,.12)}
-.cw-880 .cpad{background:radial-gradient(circle at 50% 40%,#fff,#d7dee3);box-shadow:0 .25em 0 #a9b4bc}
 .cp{position:absolute;border:0;background:transparent;cursor:pointer;color:inherit;padding:0}
 .cp::after{content:"";position:absolute;left:50%;top:50%;border:.42em solid transparent;transform:translate(-50%,-50%)}
 .cp.up{left:30%;right:30%;top:0;height:34%}.cp.up::after{border-bottom-color:currentColor;margin-top:-.2em}
@@ -4245,6 +4274,40 @@ const CALC = (() => {
 .cp.ok{left:34%;right:34%;top:30%;bottom:30%;border-radius:50%;background:linear-gradient(180deg,#e9eef1,#cbd4da);font-weight:800;font-size:.75em;box-shadow:0 .15em 0 #9aa6ae}.cp.ok::after{display:none}
 .cp.mid{left:0;right:0;top:44%;text-align:center;font-size:.48em;font-weight:700;opacity:.6;letter-spacing:.1em;pointer-events:none}
 .cp:active{transform:scale(.94)}
+
+/* ===== fx-880BTG: bố cục phím tròn kiểu ClassWiz CW ===== */
+.cw-880{background:linear-gradient(170deg,#3b4048,#272a30 45%,#1c1e23);color:#eef1f4;box-shadow:inset 0 .15em 0 rgba(255,255,255,.1),0 1.6em 3em rgba(0,0,0,.35)}
+.cw-880 .cw-sol{display:none}
+.cw-880 .ctop{grid-template-columns:repeat(6,1fr);grid-template-rows:repeat(3,3.25em);gap:.35em .4em;align-items:end;justify-items:center;margin-top:.4em}
+.cw-880 .cfn{grid-template-columns:repeat(6,1fr);gap:1.25em .4em;justify-items:center;margin-top:1.4em}
+.cw-880 .cbig{grid-template-columns:repeat(5,1fr);gap:1.4em .6em;justify-items:center;margin-top:1.5em}
+.cw-880 .ck{width:2.75em;height:2.75em;border-radius:50%;background:radial-gradient(circle at 50% 30%,#50565f,#2e3239 70%);box-shadow:0 .18em 0 #0e0f12,inset 0 .1em 0 rgba(255,255,255,.14);color:#f3f5f7}
+.cw-880 .ck b{font-size:.92em;font-weight:600}
+.cw-880 .cfn .ck b{font-size:.95em}
+.cw-880 .cbig .ck{width:3.45em;height:3.45em;background:radial-gradient(circle at 50% 30%,#5d636c,#3a3f47 70%)}
+.cw-880 .cbig .ck b{font-size:1.45em;font-weight:500}
+.cw-880 .ck-ac b,.cw-880 .ck-exe b{font-size:1.15em!important;font-weight:700!important}
+.cw-880 .ck-exp b{font-size:1em!important}
+.cw-880 .fmt b{font-size:.62em!important;font-weight:800!important;letter-spacing:-.02em}
+.cw-880 .ck-shift{background:radial-gradient(circle at 50% 30%,#f1dc9c,#b8954a 75%);color:#3a2d10}
+.cw-880 .ck.pw{width:1.9em;height:1.9em;margin-bottom:.35em;background:radial-gradient(circle at 50% 30%,#3a3e45,#1f2227)}
+.cw-880 .ck.pw::after{content:"";width:.18em;height:.7em;border-radius:.1em;background:#cfd3d8;position:absolute;top:.2em;left:50%;transform:translateX(-50%)}
+.cw-880 .ck.pd{width:2.5em;height:2.5em}
+.cw-880 .ck.okk{width:2.6em;height:2.6em;background:radial-gradient(circle at 50% 30%,#3e434b,#25282e 70%)}
+.cw-880 .ck.okk b{font-weight:800;font-size:.85em}
+.cw-880 .ck.rk{width:2.4em;height:3.1em;border-radius:1.3em 1.3em .3em .3em}
+.cw-880 .ck.rk2{border-radius:.3em .3em 1.3em 1.3em;align-self:start}
+.cw-880 .ki{display:grid;place-items:center}
+.cw-880 .ki svg{width:1.35em;height:1.35em;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.cw-880 .ki svg circle{fill:currentColor;stroke:none}
+.cw-880 .ck-set .ki svg circle{fill:#2e3239;stroke:currentColor;stroke-width:1.6}
+.cw-880 .ck-del .ki svg{width:1.7em;height:1.7em}
+.cw-880 .ck-tl{justify-content:center;font-size:.58em}
+.cw-880 .ck-tl .s{color:#e2bd5d;margin-right:auto}
+.cw-880 .ck-tl .cap{color:#e9ecef;font-weight:800;letter-spacing:.02em}
+.cw-880 .ck-tl .s+.cap{display:none}
+.cw-880 .cbig .ck-tl{font-size:.52em}
+.cw-880 .ck.lit{outline-color:#e2bd5d}
 `;
   let cssDone = false;
   function ensureCSS(){ if(cssDone || typeof document === "undefined") return; cssDone = true; const st = document.createElement("style"); st.textContent = CSS; document.head.appendChild(st); }
@@ -5075,7 +5138,7 @@ const BW = (() => {
    Hai máy mô phỏng chức năng (kiểu fx-880BTG và kiểu fx-580VN X), mã nằm ở src/calc-core.js và src/calc.js. */
 const CALC_MODELS = {
   "880": { ten:"fx-880BTG", mo:"13 ứng dụng · có Bảng tính, Math Box (xúc xắc, đồng xu, trục số, đường tròn lượng giác) · phím HOME, TOOLS, CATALOG, FORMAT, VARIABLE",
-    meo:[["HOME","mở danh sách ứng dụng, dùng mũi tên rồi bấm OK"],["SHIFT + HOME","SETTINGS: đơn vị góc, định dạng số, phân số…"],["TOOLS","các lệnh riêng của ứng dụng đang dùng (ma trận, thống kê, kiểm tra…)"],["CATALOG","tất cả hàm theo nhóm, có hằng số khoa học và đổi đơn vị"],["FORMAT","đổi kết quả sang thập phân, phân số, hỗn số, ENG, độ phút giây, thừa số nguyên tố"],["VARIABLE","gọi lại, lưu Ans vào biến A–F, x, y, z, M"],["SHIFT + EXE","dấu = để giải phương trình, kiểm tra đúng sai"]] },
+    meo:[["HOME","(phím hình ngôi nhà) mở danh sách ứng dụng, dùng mũi tên rồi bấm OK"],["SETTINGS","(phím ba gạch, ngay dưới ON) đơn vị góc, định dạng số, phân số…"],["CATALOG","(phím hình quyển sách, bên phải phím ▼) mọi hàm: ∫, d/dx, Σ, nPr, nCr, Abs, Pol, hằng số, đổi đơn vị…"],["TOOLS","(phím ba chấm, góc phải) lệnh riêng của ứng dụng đang dùng, CALC, SOLVE, kiểm tra"],["FORMAT","(hàng cuối) đổi kết quả sang thập phân, phân số, hỗn số, ENG, độ phút giây, thừa số nguyên tố"],["VARIABLE","gọi lại biến, lưu Ans vào biến A–F, x, y, z"],["SHIFT + phím số","biến A–F (SHIFT 4,5,6,1,2,3), π (SHIFT 7), e (SHIFT 8), 𝑖 (SHIFT 9)"],["SHIFT + ( / −","dấu = để giải phương trình; dấu âm (−)"]] },
   "580": { ten:"fx-580VN X", mo:"12 chế độ · có Kiểm tra (Verify), SOLVE, CALC · phím SHIFT, ALPHA, MENU, OPTN, S⇔D, ENG, M+",
     meo:[["MENU","chọn chế độ: bấm số 1–9, hoặc (−) = A, °′″ = B, Abs = C"],["SHIFT + MENU","SETUP: đơn vị góc, Fix/Sci/Norm, phân số…"],["OPTN","các lệnh riêng của chế độ đang dùng"],["S⇔D","đổi kết quả giữa phân số/căn và số thập phân"],["SHIFT + RCL","STO: lưu kết quả vào biến (bấm phím có chữ đỏ)"],["ALPHA + CALC","dấu = ; SHIFT + CALC = SOLVE giải phương trình"],["SHIFT 7 / SHIFT 8","hằng số khoa học / đổi đơn vị"]] }
 };
@@ -5176,9 +5239,9 @@ const HELP = [
   { id:"sgk", g:"Tiện ích", t:"Đọc sách giáo khoa trong cửa sổ nhỏ", kw:"sach giao khoa sgk muc luc trang phong to",
     b:`<ol><li>Mở menu <b>Tiện ích</b> → <b>Sách giáo khoa</b>.</li><li>Bấm nút mục lục để chọn bài, hoặc gõ số trang vào ô số trang.</li><li>Dùng nút phóng to, thu nhỏ; nút phóng to khung để đọc toàn màn hình. Khi đang ở một bài giảng, sách tự mở đúng trang của bài đó.</li></ol>` },
   { id:"may-tinh", g:"Tiện ích", t:"Dùng máy tính cầm tay (kiểu fx-880BTG, fx-580VN X)", kw:"may tinh casio fx 880 580 bam may shift alpha menu home phim",
-    b:`<ol><li>Vào <b>Máy tính cầm tay</b> và chọn máy giống máy bạn đang dùng ở lớp. Muốn vừa học vừa bấm, mở <b>Máy tính</b> trong menu Tiện ích để có cửa sổ nhỏ.</li><li>Bấm <b>SHIFT</b> rồi một phím để dùng chữ vàng/xanh ghi phía trên phím. Máy 580 có thêm <b>ALPHA</b> cho chữ đỏ (biến A–F, x, y, M).</li><li>Đổi chế độ: máy 580 bấm <b>MENU</b> rồi chọn số; máy 880 bấm <b>HOME</b>, dùng mũi tên rồi <b>OK</b>.</li><li>Cài đặt (độ/radian, Fix/Sci/Norm, phân số, dấu thập phân): <b>SHIFT + MENU</b> (580) hoặc <b>SHIFT + HOME</b> (880).</li><li>Sau khi bấm vào máy, bạn có thể gõ bằng bàn phím máy tính: số, + − * /, ^, ( ), Enter, Backspace, Esc.</li><li>Đổi kết quả phân số ↔ thập phân: <b>S⇔D</b> (580) hoặc <b>FORMAT</b> (880).</li></ol><p class="tip">Bản mô phỏng có đầy đủ các chế độ chính của máy thật. Một vài tính năng như mã QR chưa có.</p>`, di:["#may-tinh","Mở Máy tính cầm tay"] },
+    b:`<ol><li>Vào <b>Máy tính cầm tay</b> và chọn máy giống máy bạn đang dùng ở lớp. Muốn vừa học vừa bấm, mở <b>Máy tính</b> trong menu Tiện ích để có cửa sổ nhỏ.</li><li>Bấm <b>SHIFT</b> rồi một phím để dùng chữ vàng ghi phía trên phím. Máy 580 có thêm <b>ALPHA</b> cho chữ đỏ (biến A–F, x, y, M).</li><li>Đổi chế độ: máy 580 bấm <b>MENU</b> rồi chọn số; máy 880 bấm <b>HOME</b> (hình ngôi nhà), dùng mũi tên rồi <b>OK</b>.</li><li>Cài đặt (độ/radian, Fix/Sci/Norm, phân số, dấu thập phân): <b>SHIFT + MENU</b> (580) hoặc phím <b>SETTINGS</b> (880).</li><li>Máy 880 không có phím ALPHA: các hàm như ∫, d/dx, Σ, nPr, nCr nằm trong <b>CATALOG</b> (phím quyển sách); biến A–F là <b>SHIFT</b> + phím số có chữ vàng.</li><li>Sau khi bấm vào máy, bạn có thể gõ bằng bàn phím máy tính: số, + − * /, ^, ( ), Enter, Backspace, Esc.</li><li>Đổi kết quả phân số ↔ thập phân: <b>S⇔D</b> (580) hoặc <b>FORMAT</b> (880).</li></ol><p class="tip">Bản mô phỏng có đầy đủ các chế độ chính của máy thật. Một vài tính năng như mã QR chưa có.</p>`, di:["#may-tinh","Mở Máy tính cầm tay"] },
   { id:"giai-pt", g:"Tiện ích", t:"Ví dụ: giải phương trình bậc hai bằng máy tính", kw:"giai phuong trinh bac hai nghiem may tinh eqn x2",
-    b:`<p>Ví dụ giải x² − 3x + 2 = 0:</p><ol><li>Máy 580: <b>MENU</b> → <b>9</b> (Phương trình) → <b>2</b> (đa thức) → <b>1</b> (bậc 2). Máy 880: <b>HOME</b> → chọn Phương trình → <b>2</b> → <b>1</b>.</li><li>Nhập hệ số: <b>1 =</b>, <b>(−)3 =</b>, <b>2 =</b> (máy 880 bấm EXE thay cho =).</li><li>Bấm <b>=</b> thêm lần nữa để giải: x₁ = 2, x₂ = 1. Bấm ▼ để xem tọa độ đỉnh của parabol.</li></ol>`, di:["#may-tinh","Thử ngay"] },
+    b:`<p>Ví dụ giải x² − 3x + 2 = 0:</p><ol><li>Máy 580: <b>MENU</b> → <b>9</b> (Phương trình) → <b>2</b> (đa thức) → <b>1</b> (bậc 2). Máy 880: <b>HOME</b> → chọn Phương trình → <b>OK</b> → chọn Phương trình đa thức → bậc 2.</li><li>Nhập hệ số: <b>1 =</b>, <b>(−)3 =</b>, <b>2 =</b> (máy 880 bấm <b>EXE</b> thay cho =, dấu âm là <b>SHIFT −</b>).</li><li>Bấm <b>=</b> thêm lần nữa để giải: x₁ = 2, x₂ = 1. Bấm ▼ để xem tọa độ đỉnh của parabol.</li></ol>`, di:["#may-tinh","Thử ngay"] },
   { id:"doi-mat-khau", g:"Tài khoản và góp ý", t:"Đổi mật khẩu", kw:"doi mat khau password bao mat",
     b:`<ol><li>Bấm vào <b>tên của bạn</b> ở góc trên bên phải.</li><li>Nhập <b>Mật khẩu hiện tại</b>, <b>Mật khẩu mới</b> (ít nhất 6 ký tự) và nhập lại mật khẩu mới.</li><li>Bấm <b>Lưu mật khẩu</b>. Đừng dùng mật khẩu chung của lớp.</li></ol>` },
   { id:"quen-mat-khau", g:"Tài khoản và góp ý", t:"Quên mật khẩu", kw:"quen mat khau khong dang nhap duoc",
