@@ -4,6 +4,52 @@ const LESSON_LIST = ["Bài 1. Mệnh đề", "Bài 2. Tập hợp và các phép
   "Bài 4. Hệ bất phương trình bậc nhất hai ẩn", "Bài 5. Giá trị lượng giác của một góc từ 0° đến 180°", "Bài 6. Hệ thức lượng trong tam giác",
   "Bài 7. Các khái niệm mở đầu (vectơ)", "Bài 8. Tổng và hiệu của hai vectơ", "Bài 9. Tích của một vectơ với một số"];
 
+// ---- Ảnh đề bài và hình vẽ trong câu trả lời ----
+const FIG_RULES = `
+
+Ảnh: người dùng có thể gửi ảnh chụp đề bài. Đọc kỹ đề trong ảnh (kể cả hình vẽ), chép lại đề ngắn gọn ở dòng đầu rồi giải từng bước. Nếu ảnh mờ hay thiếu chữ thì nói rõ chỗ không đọc được.
+
+Hình vẽ: khi đề có hình (tam giác, vectơ, đường tròn, góc) hoặc liên quan mặt phẳng tọa độ Oxy (điểm, đường thẳng, miền nghiệm của bất phương trình, đồ thị), hãy kèm MỘT hình minh họa ở cuối câu trả lời bằng khối mã đúng mẫu sau (trang web sẽ tự vẽ):
+\`\`\`hinh
+{"tieu_de":"Miền nghiệm của hệ","truc":true,"x":[-1,5],"y":[-1,5],
+ "diem":[{"ten":"A","x":0,"y":2},{"ten":"B","x":2,"y":0}],
+ "doan":[["A","B"]], "vecto":[["A","B"]],
+ "duong_thang":[{"a":1,"b":1,"c":-2,"ten":"d: x + y = 2"}],
+ "mien":[{"a":1,"b":1,"c":-2,"dau":"<="},{"a":-1,"b":0,"c":0,"dau":"<="}],
+ "duong_tron":[{"tam":"A","r":1}],
+ "goc":[{"dinh":"A","canh":["B","C"],"nhan":"60°"}],
+ "do_thi":[{"f":"x^2-2*x-3","ten":"y = x² − 2x − 3"}]}
+\`\`\`
+Quy tắc cho khối hinh: JSON hợp lệ (dấu ngoặc kép, không chú thích); chỉ ghi các mục cần dùng; "truc": true khi bài có hệ trục Oxy, false khi chỉ là hình học (khi đó tự đặt tọa độ hợp lý, đúng tỉ lệ độ dài và số đo góc của đề). "doan", "vecto", "goc", "duong_tron" dùng tên điểm đã khai báo trong "diem". "duong_thang" và "mien" theo dạng ax + by + c (dấu "dau" là <, <=, >, >=); nhiều "mien" thì trang tô phần chung (miền nghiệm của hệ). "f" chỉ dùng x, số, + − * / ^, ngoặc và sin cos tan sqrt abs ln. Không viết khối hinh khi không cần hình.`;
+
+// Chuẩn hóa tin nhắn: chữ, hoặc danh sách [{type:"text",text}|{type:"image",media_type,data}]
+const IMG_TYPES = ["image/jpeg", "image/png", "image/webp", "image/gif"];
+function normMsgs(list) {
+  let msgs = Array.isArray(list) ? list.slice(-16) : [], imgLeft = 2;
+  msgs = msgs.filter(m => m && (m.role === "user" || m.role === "assistant"));
+  for (let i = msgs.length - 1; i >= 0; i--) {     // giữ tối đa 2 ảnh gần nhất
+    const m = msgs[i];
+    if (typeof m.content === "string") { m.content = m.content.slice(0, m.role === "assistant" ? 8000 : 2000); continue; }
+    if (!Array.isArray(m.content) || m.role !== "user") { m.content = ""; continue; }
+    const out = [];
+    m.content.slice(0, 4).forEach(b => {
+      if (b && b.type === "text" && typeof b.text === "string" && b.text.trim()) out.push({ type: "text", text: b.text.slice(0, 2000) });
+      else if (b && b.type === "image" && IMG_TYPES.includes(b.media_type) && typeof b.data === "string" && b.data.length < 2.2e6 && /^[A-Za-z0-9+/=]+$/.test(b.data.slice(0, 200))) {
+        if (imgLeft > 0) { imgLeft--; out.push({ type: "image", media_type: b.media_type, data: b.data }); }
+        else out.push({ type: "text", text: "[ảnh đề bài đã gửi trước đó]" });
+      }
+    });
+    m.content = out.length ? out : "";
+  }
+  msgs = msgs.filter(m => (typeof m.content === "string" ? m.content.trim() : m.content.length)).map(m => ({ role: m.role, content: m.content }));
+  while (msgs.length && msgs[0].role !== "user") msgs.shift();
+  return msgs;
+}
+const toClaude = m => ({ role: m.role, content: typeof m.content === "string" ? m.content : m.content.map(b => b.type === "image"
+  ? { type: "image", source: { type: "base64", media_type: b.media_type, data: b.data } } : { type: "text", text: b.text }) });
+const toGemini = m => ({ role: m.role === "assistant" ? "model" : "user", parts: typeof m.content === "string" ? [{ text: m.content }] : m.content.map(b => b.type === "image"
+  ? { inlineData: { mimeType: b.media_type, data: b.data } } : { text: b.text }) });
+
 const SYSTEM_PROMPT = `Bạn là "Trợ lý học tập" của trang Học Liệu Toán 10 (Góc Toán 10) do học sinh trường THPT Lý Thường Kiệt làm. Người trò chuyện với bạn chủ yếu là học sinh lớp 10.
 
 Vai trò: một người bạn đồng hành trong việc học – thân thiện, kiên nhẫn, biết lắng nghe – không chỉ là máy giải toán.
@@ -22,7 +68,7 @@ Cách trò chuyện:
 
 Hình thức: chỉ dùng chữ thường; KHÔNG dùng LaTeX, KHÔNG dùng bảng, KHÔNG dùng tiêu đề Markdown. Viết công thức bằng ký hiệu như a² = b² + c² − 2bc·cosA, AB→, √2/2, ≤, ≥, ∈. Có thể in đậm ý quan trọng bằng **…** và dùng gạch đầu dòng "- " khi liệt kê.
 
-Danh sách bài trọng tâm: ${LESSON_LIST.join("; ")}.`;
+Danh sách bài trọng tâm: ${LESSON_LIST.join("; ")}.` + FIG_RULES;
 
 function config() {
   const e = process.env;
@@ -44,14 +90,14 @@ function allow(ip, perHour) {
 }
 
 async function callAI(cfg, messages) {
-  const ctl = new AbortController(); const timer = setTimeout(() => ctl.abort(), 55000);
+  const ctl = new AbortController(); const timer = setTimeout(() => ctl.abort(), 58000);
   try {
     if (cfg.provider === "gemini") {
       const r = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/${encodeURIComponent(cfg.model)}:generateContent`, {
         method: "POST", signal: ctl.signal, headers: { "Content-Type": "application/json", "x-goog-api-key": cfg.key },
         body: JSON.stringify({ systemInstruction: { parts: [{ text: SYSTEM_PROMPT }] },
-          contents: messages.map(m => ({ role: m.role === "assistant" ? "model" : "user", parts: [{ text: m.content }] })),
-          generationConfig: { maxOutputTokens: 1500, temperature: 0.4 } }) });
+          contents: messages.map(toGemini),
+          generationConfig: { maxOutputTokens: 3000, temperature: 0.4 } }) });
       const d = await r.json().catch(() => ({}));
       if (!r.ok) throw { status: r.status, detail: d.error && d.error.message };
       const text = (((d.candidates || [])[0] || {}).content || { parts: [] }).parts.map(p => p.text || "").join("").trim();
@@ -61,7 +107,7 @@ async function callAI(cfg, messages) {
     const r = await fetch("https://api.anthropic.com/v1/messages", {
       method: "POST", signal: ctl.signal,
       headers: { "Content-Type": "application/json", "x-api-key": cfg.key, "anthropic-version": "2023-06-01" },
-      body: JSON.stringify({ model: cfg.model, max_tokens: 1500, system: SYSTEM_PROMPT, messages }) });
+      body: JSON.stringify({ model: cfg.model, max_tokens: 3000, system: SYSTEM_PROMPT, messages: messages.map(toClaude) }) });
     const d = await r.json().catch(() => ({}));
     if (!r.ok) throw { status: r.status, detail: d.error && d.error.message };
     const text = (d.content || []).filter(b => b.type === "text").map(b => b.text).join("").trim();
@@ -76,10 +122,10 @@ function send(res, code, obj) {
   res.setHeader("Cache-Control", "no-store");
   res.end(JSON.stringify(obj));
 }
-async function readBody(req) {
+async function readBody(req, max = 60000) {
   if (req.body && typeof req.body === "object") return req.body;
   if (typeof req.body === "string") { try { return JSON.parse(req.body); } catch { return {}; } }
-  let data = ""; for await (const c of req) { data += c; if (data.length > 60000) return {}; }
+  let data = ""; for await (const c of req) { data += c; if (data.length > max) return {}; }
   try { return JSON.parse(data); } catch { return {}; }
 }
-module.exports = { config, allow, callAI, send, readBody };
+module.exports = { config, allow, callAI, send, readBody, normMsgs };

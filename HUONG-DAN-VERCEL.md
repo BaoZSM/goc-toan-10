@@ -157,7 +157,7 @@ Gói miễn phí của Upstash giới hạn số lệnh mỗi tháng. Một lớ
   }
 ```
    Các khối cách nhau bằng dấu phẩy, cả danh sách nằm trong `[ ]`. Thứ tự trong file là thứ tự hiện trên web.
-3. Muốn lời sáng lên theo nhạc (karaoke): mở trang Bài hát, bấm **⏱ Tạo mốc lời karaoke** dưới bài đó, bấm phím cách mỗi khi bắt đầu một câu. Xong bấm **Sao chép** và dán dòng `"moc": [...]` vào khối của bài (thêm dấu phẩy sau dòng `"loi"`).
+3. Thanh thời gian tự khớp với độ dài thật của file nhạc, không cần ghi thời lượng.
 4. Commit. Trang tự đọc danh sách mới, không cần sửa `index.html`.
 
 Nếu file JSON viết sai (thiếu dấu phẩy, ngoặc kép…), trang Bài hát báo lỗi màu đỏ và tạm dùng danh sách cũ. Có thể dán nội dung file vào jsonlint.com để tìm chỗ sai.
@@ -179,3 +179,10 @@ Nếu file JSON viết sai (thiếu dấu phẩy, ngoặc kép…), trang Bài h
 ```
    Chỉ `file` và `ten` là bắt buộc. Thêm `"noi_bat": true` nếu muốn tài liệu hiện to ở đầu trang.
 3. Commit. Tài liệu hiện trong mục Tài liệu PDF và trong khung Sách giáo khoa của Tiện ích.
+
+
+## Trợ lý AI: gửi ảnh đề bài và hình vẽ
+- Học sinh bấm nút hình ảnh cạnh ô nhập (hoặc dán Ctrl+V, kéo thả) để gửi ảnh đề bài. Ảnh được thu nhỏ còn khoảng 100–400 KB trước khi gửi.
+- Cần mô hình AI đọc được ảnh: Gemini (mặc định gemini-flash-lite-latest) và Claude đều đọc được.
+- Với bài có hình học hoặc hệ trục Oxy, trợ lý gửi kèm hình vẽ trong câu trả lời; học sinh bấm "Lưu hình PNG" để tải về.
+- Mỗi câu hỏi kèm ảnh vẫn tính là một lượt trong giới hạn AI_SO_CAU_MOI_GIO.

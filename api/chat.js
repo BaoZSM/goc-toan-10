@@ -1,5 +1,5 @@
 // POST /api/chat — nhận cuộc trò chuyện từ chatbox, hỏi AI, trả lời
-const { config, allow, callAI, send, readBody } = require("./_ai");
+const { config, allow, callAI, send, readBody, normMsgs } = require("./_ai");
 module.exports = async (req, res) => {
   if (req.method !== "POST") return send(res, 405, { loi: "Chỉ nhận POST" });
   // chỉ trả lời cho chính trang web này, không cho trang khác dùng ké khóa API
@@ -9,11 +9,8 @@ module.exports = async (req, res) => {
   if (!cfg.on) return send(res, 503, { ma: "no_ai", loi: "Trang chưa kết nối AI" });
   const ip = String(req.headers["x-forwarded-for"] || req.socket?.remoteAddress || "?").split(",")[0].trim();
   if (!allow(ip, cfg.perHour)) return send(res, 429, { ma: "rate_limited", loi: `Mỗi giờ được hỏi tối đa ${cfg.perHour} câu. Bạn quay lại sau ít phút nhé.` });
-  const b = await readBody(req);
-  let msgs = Array.isArray(b.messages) ? b.messages.slice(-16) : [];
-  msgs = msgs.filter(m => m && (m.role === "user" || m.role === "assistant") && typeof m.content === "string" && m.content.trim())
-             .map(m => ({ role: m.role, content: m.content.slice(0, 2000) }));
-  while (msgs.length && msgs[0].role !== "user") msgs.shift();
+  const b = await readBody(req, 4.2e6);     // đủ chỗ cho 2 ảnh đề bài đã nén
+  const msgs = normMsgs(b.messages);
   if (!msgs.length || msgs[msgs.length - 1].role !== "user") return send(res, 400, { loi: "Tin nhắn không hợp lệ" });
   try {
     return send(res, 200, { text: await callAI(cfg, msgs) });

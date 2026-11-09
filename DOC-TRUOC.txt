@@ -1,0 +1,17 @@
+CẬP NHẬT: Gửi ảnh cho trợ lý + hình vẽ trong câu trả lời + bài hát mới
+(vẫn giữ Máy tính cầm tay và Hướng dẫn sử dụng)
+
+Chép đè vào thư mục repo goc-toan-10, đúng vị trí:
+  index.html                 → index.html
+  api/_ai.js, api/chat.js    → thư mục api
+  nhac/*.mp3 (5 bài)         → thư mục nhac (thay file cũ cùng tên)
+  HUONG-DAN-VERCEL.md        → (không bắt buộc) hướng dẫn đã cập nhật
+
+KHÔNG có nhac/bai-hat.json và pdf/tai-lieu-them.json trong gói này,
+nên tên bài, lời bài hát và tài liệu PDF bạn đã tự sửa vẫn giữ nguyên.
+Nếu lời trong bản nhạc mới khác lời cũ: sửa phần "loi" trong nhac/bai-hat.json.
+Dòng "moc" (nếu có) giờ không còn dùng, để nguyên hay xóa đều được.
+
+Sau đó: GitHub Desktop → Commit → Push origin.
+Nếu Vercel không tự cập nhật: Vercel → Deployments → ⋯ → Create Deployment.
+Mở trang, bấm Ctrl + F5.
