@@ -192,10 +192,18 @@ Nếu file JSON viết sai (thiếu dấu phẩy, ngoặc kép…), trang Bài h
 Mục **Tài liệu giáo viên** (ngay dưới Tài liệu PDF) cho thầy cô gửi file cho từng lớp hoặc cả khối.
 
 1. Quản trị viên vào **Quản lý tài khoản**, bấm **Sửa** ở tài khoản của thầy cô và bật quyền **Giáo viên**.
-2. Thầy cô đăng nhập, vào **Tài liệu giáo viên**, chọn file, chọn lớp nhận, đặt tên, viết lời nhắn (nếu cần) rồi bấm **Gửi tài liệu**.
+2. Thầy cô đăng nhập, vào **Tài liệu giáo viên**, chọn **mục đăng**, chọn file, chọn lớp nhận, đặt tên, viết lời nhắn (nếu cần) rồi bấm **Gửi tài liệu**. Mục đăng gồm:
+   - **Tài liệu giáo viên (mục chung)**: hiện trong mục Tài liệu giáo viên.
+   - **Tài liệu PDF**: hiện cuối mục Tài liệu PDF (chỉ nhận file PDF).
+   - **Bài 1 … Bài 9**: hiện ở cuối trang bài giảng đó, ngay dưới phần ví dụ.
+   Ở trang bài giảng và trang Tài liệu PDF, giáo viên còn có nút **+ Thêm tài liệu** để mở khung gửi với mục chọn sẵn.
 3. Học sinh chỉ thấy tài liệu gửi cho lớp mình (theo ô **Lớp** của tài khoản) và tài liệu gửi cho tất cả các lớp. Tài liệu mới hiện số màu đỏ ở menu.
 
 - Nhận: PDF, Word, PowerPoint, Excel, ảnh, txt, zip, GeoGebra. Tối đa **20 MB** một file, tổng kho **150 MB**.
 - File được lưu trong cơ sở dữ liệu Upstash đã tạo ở phần trên, không cần cài thêm gì.
 - Chỉ người gửi hoặc quản trị viên xóa được tài liệu. Xóa tài liệu cũ để giải phóng dung lượng.
 - Trang hiện có 12 chức năng máy chủ (thư mục `api`), đúng bằng giới hạn của gói Vercel miễn phí. Đừng thêm file mới vào thư mục `api`.
+
+## File trong thư mục static
+
+Thư mục `static` chứa logo, ảnh bìa và máy tính cầm tay, tách khỏi `index.html` để trang tải nhanh hơn. Tên file có mã (ví dụ `calc.14cb4ce1.js`), trình duyệt nhớ lâu nên lần sau mở trang gần như không phải tải lại. Khi cập nhật, chép **cả thư mục `static`** cùng `index.html`; file cũ trong `static` có thể xóa.

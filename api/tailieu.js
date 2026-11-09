@@ -2,7 +2,8 @@
 // File được chia thành từng phần nhỏ và lưu trong cơ sở dữ liệu Upstash, không cần cài thêm gì.
 // GET    /api/tailieu                    → danh sách tài liệu mình được xem (+ danh sách lớp nếu là giáo viên)
 // GET    /api/tailieu?id=<id>&c=<i>      → tải phần thứ i của file (dữ liệu nhị phân)
-// POST   /api/tailieu { act:"tao", ten, nd, lop, file, size }   → giáo viên: bắt đầu gửi file, nhận id và số phần
+// POST   /api/tailieu { act:"tao", ten, nd, lop, muc, file, size } → giáo viên: bắt đầu gửi file, nhận id và số phần
+//        muc: "gv" (mục Tài liệu giáo viên) | "pdf" (mục Tài liệu PDF, chỉ nhận PDF) | "bai-1" … "bai-9" (trang bài giảng)
 // POST   /api/tailieu { act:"phan", id, i, data }               → giáo viên: gửi một phần (base64)
 // DELETE /api/tailieu?id=<id>            → người gửi hoặc quản trị viên xóa
 const T = require("./_tk");
@@ -20,6 +21,7 @@ const TYPES = {
   png: "image/png", jpg: "image/jpeg", jpeg: "image/jpeg", webp: "image/webp", gif: "image/gif",
   txt: "text/plain", zip: "application/zip", ggb: "application/octet-stream"
 };
+const MUC_RE = /^(gv|pdf|bai-[1-9])$/;
 const extOf = n => (String(n).toLowerCase().match(/\.([a-z0-9]{2,5})$/) || [])[1] || "";
 const parse = s => { try { return s ? JSON.parse(s) : null; } catch { return null; } };
 const isTeacher = me => me.quyen.includes("giao_vien") || me.quyen.includes("quan_tri");
@@ -42,7 +44,7 @@ async function drop(f) {
   await T.redis("HDEL", META, f.id);
 }
 const pub = (f, me, accs) => ({
-  id: f.id, ten: f.ten, nd: f.nd, lop: f.lop, file: f.file, ext: f.ext, type: TYPES[f.ext] || "application/octet-stream",
+  id: f.id, ten: f.ten, nd: f.nd, lop: f.lop, muc: f.muc || "gv", file: f.file, ext: f.ext, type: TYPES[f.ext] || "application/octet-stream",
   size: f.size, n: f.n, luc: f.luc, by: f.by, nguoi: (accs[f.by] && accs[f.by].ten) || f.by,
   xoa: f.by === me.user || me.quyen.includes("quan_tri")
 });
@@ -85,14 +87,15 @@ module.exports = T.guard(async (req, res, { me, accs }) => {
     if (b === null) return T.fail(res, 413, "Phần file quá lớn");
     if (b.act === "tao") {
       const ten = T.str(b.ten, 120), nd = T.str(b.nd, 600), lop = T.str(b.lop, 20), file = T.str(b.file, 120).replace(/[\\/:*?"<>|]/g, "_");
-      const ext = extOf(file), size = Math.floor(Number(b.size));
+      const ext = extOf(file), size = Math.floor(Number(b.size)), muc = MUC_RE.test(String(b.muc)) ? String(b.muc) : "gv";
       if (!ten) return T.fail(res, 400, "Cần nhập tên tài liệu");
       if (!TYPES[ext]) return T.fail(res, 400, "Chỉ nhận PDF, Word, PowerPoint, Excel, ảnh, txt, zip hoặc GeoGebra");
+      if (muc === "pdf" && ext !== "pdf") return T.fail(res, 400, "Mục Tài liệu PDF chỉ nhận file PDF");
       if (!(size > 0)) return T.fail(res, 400, "File trống");
       if (size > MAX_FILE) return T.fail(res, 413, "File lớn hơn 20 MB. Hãy nén hoặc chia nhỏ file.");
       const list = await all(), used = list.reduce((s, f) => s + (f.size || 0), 0);
       if (used + size > MAX_TOTAL) return T.fail(res, 413, "Kho tài liệu đã gần đầy. Hãy xóa bớt tài liệu cũ rồi gửi lại.");
-      const f = { id: crypto.randomBytes(6).toString("hex"), ten, nd, lop, file, ext, size, n: Math.ceil(size / CHUNK), by: me.user, luc: Date.now(), xong: false };
+      const f = { id: crypto.randomBytes(6).toString("hex"), ten, nd, lop, muc, file, ext, size, n: Math.ceil(size / CHUNK), by: me.user, luc: Date.now(), xong: false };
       await T.redis("HSET", META, f.id, JSON.stringify(f));
       return T.send(res, 200, { id: f.id, n: f.n, chunk: CHUNK });
     }

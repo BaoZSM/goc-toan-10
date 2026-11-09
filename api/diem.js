@@ -22,6 +22,7 @@ module.exports = T.guard(async (req, res, { me, accs }) => {
     return T.send(res, 200, { rec });
   }
   if (req.method === "GET") {
+    if (me.khach) return T.fail(res, 403, "Tài khoản khách không xem được bảng thi đua");
     const flat = await T.redis("HGETALL", T.DIEM) || [], data = {};
     for (let i = 0; i < flat.length; i += 2) { try { data[flat[i]] = JSON.parse(flat[i + 1]); } catch {} }
     const rows = Object.entries(accs).filter(([u, a]) => T.isStudent(a)).map(([u, a]) => {
