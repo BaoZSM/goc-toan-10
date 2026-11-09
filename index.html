@@ -851,6 +851,58 @@ kbd{font:600 12px ui-monospace,monospace;padding:2px 6px;border-radius:6px;borde
 .hgo{margin-top:12px;display:inline-flex}
 .hnone{text-align:center;padding:28px;border:1.5px dashed var(--line);border-radius:16px;margin-top:12px}
 .hnone p{margin:0 0 12px}
+
+/* ===== Thống kê học tập ===== */
+:root{--tk-ok:#2563EB;--tk-bad:#D46A10}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--tk-ok:#5B8DEF;--tk-bad:#D9742A}}
+:root[data-theme="dark"]{--tk-ok:#5B8DEF;--tk-bad:#D9742A}
+#v-thong-ke{position:relative}
+.tk-pick{display:flex;align-items:center;gap:10px;margin:14px 0 4px;flex-wrap:wrap}
+.tk-pick label{font-weight:700}
+.tk-pick select{padding:9px 12px;border-radius:10px;border:1.5px solid var(--line);background:var(--sheet);color:var(--ink);font:inherit;min-width:260px}
+.tk-who{margin:12px 0 0;color:var(--muted)}
+.tk-kpis{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px;margin:18px 0}
+@media (max-width:700px){.tk-kpis{grid-template-columns:repeat(2,minmax(0,1fr))}}
+.tk-kpi{background:var(--sheet);border:1px solid var(--line);border-radius:14px;padding:14px 16px;display:flex;flex-direction:column;gap:2px}
+.tk-kpi span{font-size:13px;color:var(--muted);font-weight:600}
+.tk-kpi b{font:800 26px var(--f-display);color:var(--ink);line-height:1.15}
+.tk-kpi small{font-size:12.5px;color:var(--muted)}
+.tk-grid2{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px;margin-bottom:14px}
+.tk-card{background:var(--sheet);border:1px solid var(--line);border-radius:16px;padding:16px 18px;min-width:0}
+.tk-card.wide{grid-column:1/-1}
+.tk-card h3{font:800 17px var(--f-display);margin:0;color:var(--ink)}
+.tk-sub{margin:3px 0 10px;font-size:13px;color:var(--muted)}
+.tk-svg{width:100%;height:auto;display:block;overflow:visible}
+.tk-grid{stroke:var(--line);stroke-width:1}
+.tk-ref{stroke:var(--muted);stroke-width:1.2;stroke-dasharray:5 4}
+.tk-ax{fill:var(--muted);font-size:12px}
+.tk-lab{fill:var(--ink);font-size:13px}
+.tk-line{fill:none;stroke:var(--pen);stroke-width:2.5;stroke-linejoin:round;stroke-linecap:round}
+.tk-area{fill:var(--pen);opacity:.12}
+.tk-dot{fill:var(--pen);stroke:var(--sheet);stroke-width:2}
+.tk-bar{fill:var(--pen)}
+.tk-ok{fill:var(--tk-ok)}.tk-bad{fill:var(--tk-bad)}
+.tk-hit{fill:transparent;cursor:default}
+.tk-hit:hover{fill:var(--ink);fill-opacity:.04}
+.tk-key{display:inline-block;width:11px;height:11px;border-radius:3px;margin:0 4px 0 2px;vertical-align:-1px}
+.tk-key.ok{background:var(--tk-ok)}.tk-key.bad{background:var(--tk-bad);margin-left:10px}
+.tk-tip{position:absolute;z-index:30;pointer-events:none;background:var(--ink);color:var(--sheet);font-size:13px;padding:6px 10px;border-radius:8px;max-width:300px;box-shadow:0 8px 24px rgba(0,0,0,.2)}
+.tk-empty{color:var(--muted);font-size:14px;padding:18px 0;margin:0}
+.tk-wq{margin:10px 0 0;padding-left:20px;display:grid;gap:10px}
+.tk-wq p{margin:0;font-weight:600;font-size:14.5px}
+.tk-wq span{font-size:13px;color:var(--muted)}
+.tk-wq a{color:var(--pen-d);font-weight:700}
+.tk-les{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-top:10px}
+.tk-l{display:flex;flex-direction:column;padding:9px 11px;border-radius:12px;border:1.5px dashed var(--line);color:var(--muted);text-decoration:none}
+.tk-l b{font:800 20px var(--f-display);color:var(--ink)}
+.tk-l span{font-size:12.5px;font-weight:600}.tk-l small{font-size:11.5px}
+.tk-l.on{border-style:solid;border-color:var(--pen);background:var(--pen-soft);color:var(--pen-d)}
+.tk-misc{margin:8px 0 0;padding-left:18px;display:grid;gap:5px;font-size:14px}
+.tk-tbl{overflow:auto;margin-top:10px}
+.tk-tbl table{width:100%;border-collapse:collapse;font-size:14px}
+.tk-tbl th{text-align:left;color:var(--muted);font-weight:700;font-size:12.5px;padding:6px 8px;border-bottom:1px solid var(--line)}
+.tk-tbl td{padding:7px 8px;border-bottom:1px solid var(--line)}
+@media (max-width:900px){.tk-grid2{grid-template-columns:1fr}.tk-les{grid-template-columns:repeat(3,1fr)}}
 </style>
 <script>
 /* Khôi phục giao diện sáng/tối và phiên đăng nhập khách (chỉ trong trình duyệt này) */
@@ -910,6 +962,7 @@ kbd{font:600 12px ui-monospace,monospace;padding:2px 6px;border-radius:6px;borde
         <a href="#may-tinh" data-v="may-tinh"><svg class="ico" viewBox="0 0 24 24"><rect x="5" y="2.5" width="14" height="19" rx="2.5"/><path d="M8 6h8v3.5H8z"/><path d="M8.5 13h.01M12 13h.01M15.5 13h.01M8.5 16.8h.01M12 16.8h.01M15.5 16.8h.01"/></svg>Máy tính cầm tay</a>
         <a href="#luyen-tap" data-v="luyen-tap"><svg class="ico" viewBox="0 0 24 24"><path d="M9 11l3 3 8-8"/><path d="M20 12v7a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h9"/></svg>Luyện tập</a>
         <a href="#thi-dua" data-v="thi-dua"><svg class="ico" viewBox="0 0 24 24"><path d="M8 21h8M12 17v4M7 4h10v5a5 5 0 0 1-10 0z"/><path d="M17 5h3v2a3 3 0 0 1-3 3M7 5H4v2a3 3 0 0 0 3 3"/></svg>Thi đua lớp</a>
+        <a href="#thong-ke" data-v="thong-ke"><svg class="ico" viewBox="0 0 24 24"><path d="M4 20V10M10 20V4M16 20v-7M22 20H2"/></svg>Thống kê học tập</a>
         <a href="#quan-tri" data-v="quan-tri" id="navAdmin" hidden><svg class="ico" viewBox="0 0 24 24"><circle cx="9" cy="8" r="3.5"/><path d="M2.5 20a6.5 6.5 0 0 1 13 0"/><path d="M17 11h5M19.5 8.5v5"/></svg>Quản lý tài khoản</a>
         <a href="#hoi-dap" data-v="hoi-dap"><svg class="ico" viewBox="0 0 24 24"><path d="M21 12a8 8 0 0 1-11.6 7.1L4 20l1-4.6A8 8 0 1 1 21 12z"/></svg>Hỏi đáp</a>
         <a href="#danh-gia" data-v="danh-gia"><svg class="ico" viewBox="0 0 24 24"><path d="M12 3l2.8 5.7 6.2.9-4.5 4.4 1 6.2L12 17.3 6.5 20.2l1-6.2L3 9.6l6.2-.9z"/></svg>Đánh giá web</a>
@@ -942,6 +995,7 @@ kbd{font:600 12px ui-monospace,monospace;padding:2px 6px;border-radius:6px;borde
       <section id="v-hoi-dap" data-view hidden></section>
       <section id="v-huong-dan" data-view hidden></section>
       <section id="v-thi-dua" data-view hidden></section>
+      <section id="v-thong-ke" data-view hidden></section>
       <section id="v-danh-gia" data-view hidden></section>
       <section id="v-quan-tri" data-view hidden></section>
       <footer class="sitefoot"><img src="data:image/webp;base64,UklGRsQ9AABXRUJQVlA4WAoAAAAQAAAA+QAA+QAAQUxQSMUBAAABgOS2kSRJ//+0r41Mhx2Ts0XEBLDq+nA3OrQNXdiBLs5OBkOTzbRkNydZjkjG05H5YDRiJhozD42ahcbNQSNnoLHn0+jDafjJFOBUCnEkxTiPohxGYY6iOOdQpEMo1BEUqz9Fa07hWlO8xhSwLUVsSiE7UtB2FLUZhW1FcRtR4DYUuQmFvjyK3YCCv07RX6bwr1L8F6nAhVGFl6jEK1TjqqjI41TlYSpzSVTnQSp0QVTpeqjUI1TraqjYxVC1a6Fyl0L1roQKXghV/BCo5GVQzY+Ail4EVf30qewvP9X97KnwR0+V/5ij0n+xUe3//vshhNb4xYbO+DGHxnj06Itnj7b48qMrnj6aYhHoiUeAllgGOuIhoCEWgn5YCdphKeiGtaAZFoNeWA1a4cxOWA8aYUHog5PbYEnogtOb4PweWBVa4M4OuLUBFob8uDk97s6O25Pj/txwmBrLQ2a4TAyfeeE0LbxmhdukMJwSnjPCdUL4zgfn6eA9G+znwoSpMGMmjJkHk6bBrFkwbg5MnAJDJ8Dg0zH7bIw/FxHORIzzEOUsxDkHkc5Aru4I1xkJeyJmP4Ttg8wdEP1NVHgDZZ5CtZ9i1QEAVlA4INg7AAAQqACdASr6APoAPjEWiUMiISEU+yX0IAMEtjdskln9u3rB1yA6IvTfyXT+bL7f+VX+A/aH5cq3/Vv7b/gf75/ZP+d/qPlV3ydbeYb5d+w/5/+5/5L/d/4j///+D7if7D/Zflp8t/0p/tv7h+9n0Bfp5/nv7x/l/91/kP//84H7Je+D9uvyA+A39c/uv+9/yn7v/Mv/jf95/pPcl/aP9b/0/10+QH+g/1r/ifnx82/+o9hD9pfYI/pn+E/53s4f7b/x/6r/lf/P6Nf6j/ov/F/lP3/+hT+cf2r/k/nx8gH/H9QD97fYA60j0k+WX3P8g/3g9b/Jt4r9gP7b/3f8r8g2c/sn/0fRj+Ufaf7b/Yv2X/v/7cffr7n/yZ/oHob6p/y4+AX8T/lP90/s/7U/4r9vfMl747ef9T/yvUC9nvoX+K/Kn/BfDh2D9CvtL/ovyA+gD+X/zz/Bf3D9uP7p/+vrb/leD7+O/4v+2/zH4zfYF/KP6R/qv7d+8H+G+m/+u/4H+R/yn/w/0vtu+iv99/kv8n/5f8d////r+hX8q/oH+f/uH+V/7v+N//v/l+672Ufr/9//0nfqx9/7cxb98iHSZIMvW0tC6P/6mFVfrcXU2REPJWTxGmVR4ZUxpGTottUCaEqV5qf8NHZk6+TBAHzpX+iCzh+VYflAjAMDQa9C/aLeV7Ccxc0sjOeV7ihrO5B5ov/hRPzzBtAHh97t0RMamziIs8A6l2w+aYVP/IUXRZHslI9keTfVWadNzNSCRJWax8Qonbct8Z+7KF92xq6AG8sDMa7j5zTUVwGDK9eLL2JCQyVQ8m4VucGEX95LE2yHqJ4fgrChXLDftKmXSu95J5m8u+/pBhVjeAvJ3S5ggnbn0b1FvKupoJZDQ/Ph/NzHw1U5Vpxhz+7mjlmRhr3IfQrbXGa20a9ib/o/uU2eRKsytSPF2OGKuKSoAjJVvs2NK3GXMIgwzj5ikBmpbBTbnWVSv7ynjkQKykTEX4ia06JQFhQgDsubeqB128F+NNj/YfX/vHn2zllZlAObitDuDIgpMVUOfiCsTRP1ra/jSQX/Bgad5j8JHGG4bXRez8gqHznkT5ou1TGW7Vjwnxhf7MqflhqQ21qfY3gjSh6XabG5C6fsDo8+kIY7/h5QCfV1iuK4Ii2aLwArVD4iuaoQtBLSzzk20rKEERsUHIsNtl0JdcDt3zeIn8DK/p84URi6JPGHR5iPbX8YDMgecqKN7kpvEmsZrTOEJao6BjJqn3tkj/3byXkuUKVw/7gUV7J2Kp9Loc7wkiudbZpMSms2oUgzEHgthlRLus+3CMmiWLXBlz78QC1N1f1reIwJAGDRIHNlNSdGHL/PsmfFDZsvsu2QAp3ycULlqT7BVuIVkcg36Tn3OhsH4lSAJstYQqZBGV/X8wK8/6zt6U/HIcCSUk3eABeutrlwx/dSUmBb4KGz77UgKsXQ+/C4JYc63zCuprzoJJZefc+5AaIdisAW5lyvEGzfhJvVcktpG3Mu7QiaIMh/PKr/wIiNASyRN8kGRUg9qOJDEOQ/LthV60nuQzB3cC9LjfxglFMBbU1y6xdY9SkAdO7daEnrxcgoNgEOyh36V3LvXWz1Z39PIiazxKQ997YtH1S2kBhMYC07UX0pg3IKqMKCmv01Y1Rily8yrlCzX3k4KINjRCSCWsGSYSL6QbGaGZ57yj7uz18/Z4jHBHmLdZ4hH58FycjHFAban/pXz7j+vfMxTPP/8FIuOAKxciGr4ttulnnhZ4iDjhwgpcE6k47+zPQ4qyTtP+4E57+tOF2ZIAAA/veQ4IH06pBhLE0l395L/JaMlU6zhtXHp0nt7J0RUJaiPeTR6np9pJo7ZnxnKBo0rF9y5TG0Vuya+IHkZckRebIgFnUQXcmQUix63GtWU+8F1NlVcmtIrnCR4xPHR9ZGJROrX63ymebk9f2B3h0z2ilmmCr510dlZaMe/RrGchNn5gm9VyKGitngbfDKvPX4x1MidAFGKA7/YdBpV6gEw14e+7IVzljj/IltEBzq3Uf4hQ6VdXKa2Fs2O6/TJY/QBQIOPdFeOmmhDQ1zlVnz+iQIoATvnGJUKedY25FLTHJKf1iUrI0+fR+qwMyj+zXFxvjCTQH9lOqrsRtEIWa72A5YAsWFtMFienozz+WBDMcw8zPC7W+uFVIRpiS6w1uHAKNa5wUD95ss7MP/tK600n/Ujfp0y7PhunhSXVuGS8lwJzyac283XlskxOmESnECeaPmCROIW8vYsUVyvTCL47N0aetjo7pC6bxgAlnHVX5QvGXXEAhybCJkMDUtE0HTI/8gj3WwQB2D0UDNv79RrwiuqWE2LubkkMgguGRNo9NoYZFlwdMgfdivrx0E4A7eJfUTzymWtOHoGDezdNzp0a3dq6pUmQBQk72Di/hq2BkdFFZispe/Dvj3ip6KKytzAxBlG283guBidA5G4E1kqxCef9tZkWxxT9bXlKTv8le7qmrYg5VeC9hF0SRhg0SAo4epDwlfYrg9c7OqeGx6VmtfNLXMV2qG1CRvVYwIUZFGVS3pvGhIuuVgPXaNWenEwanyu5LkAvaVtc+pMDpRyKhWDVEHIAy/0cj6qePbQPYhUXI/c95Er/+Lqtc3s6Kc5AAAwvZcrLUgA3WtubxhE2mekeCldptq5YPO2LGX+nf+JBsz6MVacro0Nibyt5uwbW0dFSxoJG9DbJZaBLq5bvWIwTc/ltUIEsZaM6ymZHZwm3uA7rUaPU8PayDdEq9L/bfOUqA3xTw+1zCE2phQNlAhWSBa2BfifYUUoXZRhqXd3BJL3TIwjL+Vuj7Zz7sxY6CNQTcKfYHIsvAyx/zmaHpCgUVJi8UrJMz3ZFE45ZARhlnAvB0HkytFHIoez11A6J0b10PxGDOrc12KZ44JzKKqoOa21XjEtND6Rj/xgO0ZQSY5LodGgwSUqWQ4+1MYlPmf/iV/5MmOnhOT1Ab64IXRrBepwGyCl4S7Cy2NtF9/EWgzYdbhoVUCA23ywYknoar/nkyUIj37ts/IghNDC7Jnrprh1PX6yJDGGyscht+KAsQSmHBNgRwv7a3O7uPeAeVqYlP2Jro5/LRy9VAPv7JlTDHSQbpGO6k2z+t2EJQpmfNrJiHV6949M0bq+OJM1uk+qlMf3wfB/JpY6/eJf3/+dhO9akSOUXV+Ykn9Z1GnNruVfVEg2wK6m81eCcFLyeScMOf88sqR4aSjoLPMZDqAeKrYvgaxaBY7OfjDXQX8X0e/spEJmxr2/QvJWEKI6XCDZQ0iXDykp0ukZdWdJu/Rh3AbxGvX+v4DVOKZ2IDNlj1OWHRFeFXIyZlxODUkDW8p3RywlVmIa+cp0xYohjbLRj/F6JtDjUhnyrdZLbzRbBedb0Az6YIx1WRmyKFBU1Qyl7KdhH+3cLwf2on2TqIt3BUTg8LMqudm/gU839BngHdHihUqiFErvM7PVFs1Fhgv+Qz4DbqtgVy/NUYZU7/xBkbbRAeJFIl844tMwWoAyf2lIg1FpGWrsy9HdJ4cpe6YLOLqf4jv+hFtTz7MSkLUYvgXsGMHwt7+Yx9HEYDS6omU4W7HFhLnDFYm3Dwo41Sqb1W34KCivzkDqE4evae0EER/TuDWJMAzEx3dluoQ1Cy66uhT1XCQra78rJ4jzmFS9nstcGoBh4g9lsGADq8J1fB6SbswXS9uG/CWgwlzHjvNHe2f9WI9FBtsArtwtt6UQo34oF4risA087Novcsgh00lSnYG43cFEu4gZ5GrkzHvMNk2E/3PiH0oAw1WglKtDa5fDTbA+Ei+OK6Jz+BUqIIhSRJ6WNY8Xp6/g0Jt4BidStZBjYsZJSvL/O+bFktBPDY3TqH1EQ9+11KXxx4uHi+7anw3FQh1LLJhBy8v4peWYmd/a6OTumrFNMYWEAuGVZ2PWF3eqEKHHhSNUUS4qeBQsGV5ZQ8uCB+XNmqgAXzEHdacR2cNUeRtfT6TL6n2roWwB6gdqDbKKSskvGMjm1c138fU57C0M9IvKTHaQxMcCxvfWMWX1AQK+L+9X6qXxr0YKbQv78Vsf4VIUj0552DBOB7p3QVfHArD6a1yQQHAQ9SCnh/sop7pfkc63WQrc3VyFBFTVxFm05xJ17oVkNxvy9Ns28inlbTc1uoU9RgYoak/tEz/msp7NeW/yAxLXzdYNISRWI4SL7pJvPZvk3TBAJ1WTYP9Xcx7FEJB87dN5aRVMLCmKpxf2PZDgCWf41lbp+W2/raI3PEk0ouUO6EwvFB6nAMnGnq3WQqKzhuhwJtkh16gd49K9DCbCRsm7AF3BV3uIzK63wGzrzpyqXyDneGgd/dNjk1SwiP45Pe9HFaI3qIXKPLA7qDWtvC9R1D+7WEqQlBg7zpfSsXW8qweUVmPDC8usYzHBB62F20wsbZ8VZLzNfitNCxfnhiOtjAULXkvSAy+/ZH1+InUdB0gxcCFYT2ALa/BtLf3Cy7d9dZG/hA7bbffSuQzog4GAEmMNKpephPas62NNLy9pz4+8Hi/+7/5OrhqOt2r+TqtGZ7fE/GBAePnpbtpeXQj/tGlvJUwbjj76PyzvqBR2RKpKx9eLKGzXhyp8kKS3Z0xRIY/mXQ2LKsjyGOkOmttYY6LVBTMgFo6qIwm98e7zf6mXZAmoya0iHXdaUqzuIxhpq1/a5XxJ3ISVFYWKc/35fmvVabMiLuW3T4QvxkNcrzeD9mIsaLfqFntnqUYaADF0Jhu4EBuWXd+PXwdN+QbMuxYnUBSeXjnU38zZWpqfHYTmkfH9emuKoSHQresLpB1tr/Ibz0TaO2CoxRHCvC2224fRtL2hkJ7nNuDEsyiFG6eYSD4ymH8QIVsXUlqFYiW0G4oNvi6u24ZeDi9sCl9D4Zf9BBkD+K/17jcBH/916gm5erZmmexKGculUv/aUaNi6G7eBSPhcIkWScM3LTX3M0hkah9q1+HL7B6yTVMBZE4G/zW8ksEdK3ayh48WbsPJa17C+1suM09UFHZhZvsJlmtTSkhwuPfIqYXRa0Gf+rO+4ScV8r/xeHtrS43sH+GPzxf08qlYl3sPhurR4t8j6s5Ms2kOXPL1XSbKW2J0iHHYSE79PsVPOJjM2x5VkTcIqM2HsDEv5Ud7xDnpQCfIQqmJFbDZ8t1GtU2PtryagOTf9FnkrTjsTWqlV1pBaVQ9uK+coD8yULlecLuTbnBsEtLVq5fFGrvkWpfbRk/3IM73tgMg2vFnX31kDGtWkh0HHqWEyVktPSh/DsTM04Xid/iYDAK48Bd/zpsIb4EG03B7GS4RCY2cJ0J951jLoiTUaHYetvUSYhwSksJmdriTjxki2BloBIqKE0T0rVwI8yFXLOoBanyoykUfbRvdWU/RcEGmdDyd8QKJZ/N9fopEll67RKmfM5X43knPuqUzS7VcFMmIkV7bDvg6/tv6qZyGk5yL3S+IX9ystkLu1VeBTfGOWu7UsixtITvZtsK5tSWQtcTSSgeYgRC+Dnlq4k4hnkJUlcr9IgGF5dDqn2Y5IbUDhbYpPdrND+pD3a84O3LLR6f/xjLh3sHeLjoIu+2YdcsrrjHjKJvsxtWet+nEyx4vb+5cocjSo/6OXMHhhqdJVlui2SMnuN+t+YAn6oHJcXMAGkvMchETG3Xrg9jQX4AoHT9BdcyanyHwPcU1z0v4Ar3199LWwJttafnII44bxDWecpjSO8OS6GM0LAumptv6eBtQzahLa0HClGPgKdzD8uwU6n/3FWgj/XZMJuSne1/MvaKa8oqLUb55xZ5ztsUK3qBFuAwePZW7VWuRJ06IVMP7f3WJxwsMgdUTUG2whBxDwbefR22DrgQzwBewjL6Yf9fzN60WTe25FRx4VcCAryEsFbalfYVDwyT0y+Zqi4IXM2D4sa+K0d7ugGSqhzc9S1biScgHZFL1N9Rg76R8/eu/659uzFn3D+LM5a4MIlL8ggTf452GYx/kUoKMOuq1abZRBm/qlDCCuBD1KSJPVU3+l/2nhD32BWOPOLdHqz9WwesX+oEvKtOy548Qj2y+R2Meo0CCgcPJAWlQDBRiqvoJwIyRyNAdQ7xaaQELJUG++Icbl4lcj8wdoYiBK7X1G0PfF0mL2vHBroDRBH8ZumW1n0zJShY7rB8d4GT4O3+0L4JQrK3NEfRNh8fDP6OAFdEzMziFyKhan/79eX8MRWJmZLfbSSOfUH7HvVoxZBlz/HD4sjLbTncbxA/jqSG7JQgHz6HsdeIUhaL7ivqqyg2SwDedBBJQLclFCGrKSthjjnEd8Oc6/H2yU+GCthaniynC7O0JJod/jG0/VsVyvMbWrTX1A85GYKH8UTLQ1R49jL8Ii0EcIonQomzsDtBuJdTTTdiv1jSk9JOvZ/N66BxwaoKj5TOZEfvVXP0UV1lTPNaS8w8u2Z50BAiwt6Io/abcL56mZUy7szJZGcm7iflO+gNUv/aUm6Be1EbTXVzpSBXRKsidC2kqNm0uhIFpl0tlCFeYyBVZp44LR96cAPgVhglZs+lQqcqZCeAZnALJxtiC3SPCdJIHmy7Msp3uKpzhLwL1F71h6ZOYH0gBvV/M7slcX8yyVxZNpyjXgE2eX1wfiDuWIpeoINMprEYm3LIEC7/0uxJYTq3n/LOnnjHMBGHpstKrfReGlTFKo2hoDodG1tth9N6OF+qAO2XjphbcaA2kTFvIU1SFBMOtzR23REv/c4YCQZpn2e2fAtmPZtYTGnEE/p3nbjvQ9OvqvYy8AmyAyiXCaIwf18Q1J9ZJcRul89l5DNCA4AdQbermeSKuaBEc3LDFIWzCLmo+9FvQw6Iy0y5bs5YrP0wZxtOXkwPanT3a4+W7zrdBHV43/lvGApg9AFqYGIiC/oBDQZbBx+KC4/uoGrKvEsIp0h7/S3Qm+qX/2gUF9L2NZ4V0NfzQwF+y4idIPCM5QVRIW3XXn5Vz660pyTU7rUZouGgC/FSMJDg7jO3leeITwSHvfdpTFbOHvsuXqfeuuwXDxxOI/Q9vdwhsrqFZ//2/BjQiBT5o4mHIkwmh9bQUopqBlnuzo2LX1urkAS5ZRqiv3Kmt2MAN5MguCzX/hQo3h78Wp2o202QjJps+Ntmum3hSSQEKVBli7ftQr+/YFdok1x3ZUim5N1lusk5B7AmWsEIH1pCawQxM0saeicU3utnutdRrDYhUBLIqK8m9bWRHrIvZaAU/tbC7yuAa3CCh6NU1aSf07OxxTbW9eaOcg54PWHAIKtg+Yg3hDuiNR6lTK1668FOfciSzPrIcfKXA5aeuqsJWmOyZKFcInGBBoEQlKlUlTavVU2+v9MXCTohPnNwNafgPexf/MErDL59Izegqk3TpRRWxLTiURNlJcdZ/uwduJyMT7YJCZuIRTD/CikydXpfIjQa9U3dSlRf8qmQxl73eEjs3Z/+MBeDV1y9MG/HBeguHklHDY8vVrDAfYhOYaDb15i63j3YFa0IRHetHZyNn7+YV0T39jQ/W7vkqpCxDAsOmm6i0t3eFRQjdICABSMsgxQ2PBIXd6GlO5bkNKKkmH4Z1KIv2RjkfxWOAOQczvAQ97pdrMzkUjUO3rE9lzg26hAPDxh7iHSn92x8wRE84RwxYNrrE/ZUvCUkjtYPGjOA1/VXT7R3oIuVEPu/jZJROSZCehKfsejChnQeiUUT8THcQBfxHwZJZCjrWw2cbABMZuik1v15YpOwyaCB7Hm9Kp7/2ZX0Q/ZriqkYcEZPbBN4ZNNXyf7UV85m105DuopNx9pM0pKSJE4e+7tKcRTVNcrBfDW8Y+QlJ1+PhrkZtgTDqJs8X7ok7x67ATb77miQ/AS465VMSC8nrm9IQ9MV8YfsKCfn40bDnRRDdr3sFLtsN3NY9yv7DkwVzdCHOjsQiPiRr7E3GMbloLIhHIJ0gWweLx3V7YMU1w3Rzv+w1ZjFz2so0hH7h+X+Tx88wJBUZqWlMq7dpHciXBKI4oNnd2n7zM7amnG+jvaTTenoGIJvpMhhl3Z96MB+FCEywOlgKJBtYAUcqsdkTaztatNacFJQfVxNnbuI4WgiLbwiEcnnJ7VIfdPkMC9a8E+oOFyrgFN/G90xSV4t0J6km1SyuUCK1owx9FB93W9j0qzl0bL2xwpCYDBT18luddg9RNeWrk8r1K/8Ic8PjvuJZFGD/UYMIkKsC6xjcJqqZeykBhn8Nr6vh1D7/jyCLHnZSM3D1GZ1O/gxIPQJ+pDV4Qrpzo+AhVIFANgHokrIHr01dnERlxAyYHVsvfF5BhrahnRKAnowBgC7J93q5oepKvDp2bxGRcy/bOXUMNJ0YAuwy8tzdQCXpL2mBt/4UlUhFV2B2GItnjKAW1WtPWFvL+DsQMMvOXaCfUUQKBAgJANnx2fmXsTgcT34x5Nq1ZUAeevFCSFS19DLzZy07O9B1baR9FdTCWDjXNKGdOXxK1oyoGjPrlZmoAqJVSORC7E9RxyFuy1tBmV3R6Pzqn55TR13WBh6bZAL6hFrxT5i7ijnn8NmnxS8uPwTNuPpOzkn9mHooEyjnRjyGQxT+389liOvJbUMtctaWF4IPMPSmSRXzrcEwBgleuxSrPu30urClBGJ14tbZLVra8/q2a5N8XokQSX/wf+rsWmMbcXDeEoWtT1sYwO2A769Te3QPc4T2MkxT3wh7KIlhynw8kCjUe4AuW1YeIa7S+ILQEiKvJJ74hb0eCoKms829NU3tZOFsajXMs7LoFFe2tP0EwfKA1kusmySnpO2GKola6a838GewsViOq7E9EQhJQc3g4dECFZkUoleB/01lyHHbOP8cFF3gGrNGOiMZUTGlqzb8vbRtSOdFLpM7/cwDYRa+fEvikrssBTPht2kNJ8YpeGGjj6qg52g6IntFrjovaISGnWYGyPw55VLGOFPXOeMz2FeAaV4paVP1YopT0cvHvF+zPKFeK7vXnsxOMs7nN1KeYN/6yspoLc38IF8gjUHHFKgLCTonbHbiSQpJvROm1KgnvT69b64ai/wMDRD0OJWCAe4NUgjEpMmkhmZLg8UnSJXyrRUtyhbCP5iL7rD8mCr/xe2F/kXgVC7nTk4YJw1YrwyHAjYTVndni/iEPiDuskeqvy0f9x4l2IX+RqfFNS/+jDXfi+MapeUg2rA4C1x+HbkRbemx6iREZoTzBv9uJkykaKhmMw9TSdgAf65U943U3EkVKxk2TEZMrrEvHyp+2rgDpME0HvR4MyW2futdbHP+uVVhZr8hNtFmO6e/gVWcNtTpqyywCZMy0iRe1kYzFjYf6AcUcOh8y4Q6vYDGZIFYsM7Sf7eK6Mf6DYKGfMqeMBospJa4jJ+pJlxem7v9SY432UMsCqZux10Az0isQrf7QtyC8jNHvpFllSDZ1QusN23DP2TYeuLELBIbognyoVN96J9Lg39rtBWyJkqpA4bH7i5jnIUGX4EJcHcUk9NJevudqeztLbtXuwcQDGl5BSeAS1JfME82J3/trLO7ZrE9trZiKhHzZ4SgV0ixgEv3n3QwpUfgSwTErM+Es8frKHH0iaOpRy/CeY8LHhHPh4Hw011dWW/uX1ZO0RR020UjUML2WuNqXYLMe+h0PaZEAr9CVgx7S3RRB3mjDOt+aS4UWsKK4jMyM4Y8Ds4YhA7kobORslhJUoI5wNBNAT6Onxk1DhJlMQlkJ9DyEzgFDmwUcV/MUEGKsyCaBAGMXDgYIE0jFyUjtgbQt5YA/BjhAjM13u+2/vA8Snfch58DXLjh/bHMgxsE3xgx9YcKsa6ve3cqvUCkztGv+dAh6ToF4rD1uyR4Ux+d8KMqgKX/V5l2LQicc+QhWQdneIz8OKQn11Uwow+ATJ6uzgtLbCD6s9L5C4pKOGgkJT07jVzF1YjutXbHgvjxfEx1E1De6ZuhJtKpksE46e8gq//0isBJE6wnqrhzUbA3K7+ffwWRhO2tPNH+94j+ieM3AAOaXQrdpmK5S0CF2A2EZgiKEhzGzPmwUCBHujGn6xLH+nW6W9z7lOBI3dqT7JPPa6T/JANZw6awuS/I1OtMVQ8p18l2p7iyJ0mVBiCG019MWEDQBykenykUCLw6ayoiv3yR1WDqtE80igYTmU0i1zMjzst2uPLvdCjD+Qriy+i/60reMp2KY0A3spQTUIPpIu3R0W/SJ+8w/nnnhI28pQASpkPL49QQ84KlWMyZ4fAsouSEUQePYNPnJskO9mxydHmjLQ955ICORa4yaBigVMCjo3gFdtgd73ybZtPn5CWSq14a2esuhCC04uneTEnmbSS6mnG1GTQXUSfhYz+/gNLBF2x2CkoYyWwJmBnTWv/4hJb5L34VhlmWU6hYqrt5XgN2f/LsOfKjc1AL+ZZ1jnFdhVYffQ330Wel0sarR2FZ9UtpGjF+WuJg3TJ+Pwn3KgFWPYk7vyrtZxhxBpmz3JCW6dLy4AC1kh4NS6bbwgOwZml8iRJsNtpAGF9zIhvM9EwBJP67bhuOF5Hx+8sD/dvgWoRi6ubyAawXkUdYa8jxatfRAxkKNQ8X7aSKWdrVLYEQMlVC4dQC8fWhfpHlCMKXgaC9nmWOrWcHlEEEJa7z61ZX4iJ6K+qAK81HWdNIVZTHVyMCJASloVkUsyVHP67Y2p3LvbhIVOvWZUbnc4XRCeA0jmxcb24xV4fKjLQRu4VX4fNZDYfyEsfsVwRUrnZkVrynjzetg6XRYLUSoIYNNSo9+1xZFR4Ayi6piNFPJdUjxOsEXoQ01kHAJBVqpya1fQ/9sn4ZTsL1ly7uNWXMMfWWkQCN1/PZAA1ubUMKQKzqFOSqKl8b7JevLcCDZCu8ivkhBIet1KuwT4Oe7oPBPRqKfc5k/vlKqFP77+JzsmuISMSSuI3FkGNHkZqBkiS835bywHTVJ35KHmdwvBLhuRIU6cPiA8+tFs1S70Y0mplZcFe9mJfTNzISJ9KLwRQRe2QMLb2eYLM8qh5Q+Y5571f8XJRMsvMQx0THKg1EyqlqCzYh6ZF0rnGDm8M148WK6gGZgVVEpFVv328yuoLRFdUPRw+B9lvr+dUc3wkWaa5/U4Mrbm4xbVH+/nzOtuG4ooReeLu61RNoxaiSciZwzFdSDIxZpKS2rGk8sVeCDYQMlrwDWaxGOpVx7aVWa4i4qXT97ya5/ondVuL6808nMriKL2dLnA8GQEw/2rxl/+Y063Kmo/fwRnfiQow6uFqcb8cF9Mm0t3GMQXuWaTQ0BWTKHuuDrIT+crRj1YYo9BUsiKifWUi4sfy1VWhkAjwKOnCRqERGRY8qCBnDGQyZbk/LGJYX5oAIFlRRKeKftgCXj4N010S6MA4Vx7fStNCV67Wos5thcK7rd8EDB4FHnckIiwwEbpG1w8ffxnm/qQLM8LSaUMDMqsD+2RE3bDuFxcbG6QlFMy+TCVVMUJKNBV9iVz2pRb2burfnPOI+SeFHhirYHoxWf341/UQF0YkvIhdaw0rP9ZrKBe9kcQtKP2ol+YOEmTTcWvxMn/dqtqdzhZDs8UxtGJuTCTDEbSFlWKstv2BNCybsDGDA/10cG4ZoEEVYTkmsyyJoLDiB2V4+ceBtGI80lC021UkZHPT43/C5CFe7uTTW96rSulagZIqVUA4g/eghwYl4U2V5U65Jzj7VFulK4sXCm0jXP/Vf9XM7RhSEvaRk6fRko3pIBpyj8mqmCtKpIdoYBaO2UTH+Z8pB+tM0U+PjY8BG9bFGdZOVcsXBjRh9VUiL6jgpf7OY22eoa1gNhJPAa22iBzvM899595uNZEQkt26K9rnBZmNi94pXiGTclYCJTZVpFhQS9lGz3ishEq4VV+FZySz4NJCiXrK0TxiZKkLJfE8NDwdvjgVbHQiSljM47bLTgOuxJxUKFduxsLF5KtbynvDdAZiUPZGKKjmTecHY9jjZi6XJGBs2CL+n6toZKR/MRCGjQ8Pzbl9VjvnT3SoZJJ1E1dDX02KAF4UXFgSWSILLg/2brDH8vFjlrPpWIVarXjCCCbfZ+5u4+LGzWk5Y9zaRrVgay3nzHCRd5bcHLfjI9LApwwjMMmN9ryDwLj5U4tz3mQ198IxqYcD8bqU1+XGoAt4FHxuGFK/4jxaTV0w8LQfcnSd/aD/RiNCb2UMN8hqQZMxM7n/RptuXVin78tu5FiQPoXPUz833LbuauokuheI+uzgT6jyin9XgoNRqETloNgBoE3q4IB9EhIpBARPKeax8YUL206n36WeCbh7J4+GcywIvrqJTV06cfhok+c28e6YPNbxxNpAZSmBVz0EYz22RHttHRblAGJJPM/fJlvNMyn46Mo9tiSvmUxoheXxS82/Wc8CwRVywel1AgEyGBT949td0H8WWtOZrz8OC3OHKJIvXNp2Ue/QumzVXhqlIjCCyIR9t4e3ywdwoct+vezhTot9cg9UBFlo6Gkgzdw5MDSW/Su+GP9jRQqxDz8JvsXS4pkBjDe/d9plNBc+SerIjbUt/WCSFG10MGVVerpgxEFf8Dfqa9VhdFoJYnuQyzI7cmLt1QNQamrVE9Pnu0Bt3j+9JBtNaomY2hcsdfpuzhkhOpjcOzYTbUuZ703GUh5ClVXGAiUgCalutuoPzHWiID3d9yg7deCah9wTcvDquxd5LuntUMgSvFIYx5DKOj77LZv6N2R4NaR6aykL/x9DaBD0L1sgd79PqaGqF/6uPytZOeOu6192h2SkBKHe9ZLE7NEK8sN2sKUyBnUT1shDfwnnEzRdxgeyyLi+OVGlUtF4qpz1s+PPjlb0XF40bWuoNwWKdvfUZy64/Ck7xVWpHpm08h/XEPVtxSYeZqqo/s2RSQhnF+a+87vaomsnhMKm9vBMRmoCSQ38Njjn78/ls7VZvmqFTzRuiMY/ffqhzjnTc0W2Vv/FWZm6e5Kuf8WuQTZtokEy3TYBBL2jWxZLnUSYOc5FrIM49kkGoRGmUKM2VMCQYKx+itKMuuHlFfqeF/ejadw9aOsOlXPM0kVRdM/2Kg+EZj4Q/l3vXSTvYT2a01VmNk0K+N7QdnqQkezpde4xH77hFeYNiWBgj6lr4eYX4YQ/SkjAyIGdUnd0B5jkmoywieRI52npBleCHZ7yNY16FGOYz0Of4nVJX6aGCGu//opdAjogzNuvmZ1PGgA+041p8yXRAdMVnl0GyBtAaXk3AZYmI4LNMhABS8A4cjO8XBTkw8arRMHgVvbAZJn7atQXG5QSMTNRsTg7jEa8HtmoTmtWEHQFOVZozcYkCgIp6BeJE24ZjuAsF1+Z6sQ539PKKscmyTalYVkAUaixQnNpg3NaihaHz0m13jQBSo4lAnZvh4WQr8UJEYoEOHTqF4necCyHQ2ONadPw+FB3JJQDtE7HKWdPvgWbjvFK2cdK+Xh1pFa6I4L7Wef2lM7u1OufR/RoOXP/nkEYrkioSdQJyQn8QlvSnGgsAqppRFHtgNhoYvFs1v+seIWBJ4ke6mB0Fg6fO/fpvOCMb+joqdheTkrLECHMrSTHIn/NRIcD2v+DW0aLVjHx+hfMN+4Zn5rMfUhwYcFowRFEYIbWhWJ55ZMR/76W1j2BRJp8vPM8k52KLV920rhaFe3UeFWEkWW7zYaSKwKbdfkp6lufeJZxNw9NLKDyrcPKxzFJiXJ5HEVOCe42yWNjGA5RojhyjXr02aDvh27zkeMQVdqk2C4Pegwd3dNxO/MrZ+5YXaE/3W9npGrWRIW/Y2GvURfgqKpZmDArxBFW/Ba65mFLPUDEwoleMqcU7ZUKnO15p00viyvTqI91ghTAxCsZ3P1s1TLgm7eZO5PkFt86xXymzFRbj9SYUoEx7aMpAFKjy4R5HwZCSkvYugCl3n1FO3PyZxIAoZcui9VLDIE1yYW/gE/f4ZocNI3xySK9GyDI1UrsdAeD+MnJPMcdOu5UmiEfrnKoME410gtJh9Usac0ZAcm5Z44eJlIpKV0ttQ07sZ2H2yCjVph4CoR4UNuYcCmiR6ClyvZhZmk66GcXWxRNEQ2ZCvuUsM9fPlIa6Y/0KPTWcWUDsM2cYr1KLbGPlsGvKElrttz3QHrddvUIPfMbQicC6Wn5MWeGkrKcQEnqoicVo60g01uZdw4qgtUxPaGBvMNPqmEcFj1TZqcxTcCuUwnWK6an1fUsniYSACrXZJbzTJkCA3c+iQVQlbIjWnhzUoSYg8RpSMDqlEnUBsnnj8wYTPtl/pUVaE4MKxb1IB2djyQcd2blL2oA8fL6QdAAlWLQWPElvMeg2vC6CvbxchRyYhgvgR5CXteMp0TX932JJ9QVpnm46gjExnYA9bQ4gKC/3HQ56egGTwYax0gd2k/0tVZ8Px9FgGRgwfkfFxEinI1A3Us8/umQkKlG1tnKnKe+N5gmXY8zi5gfacl6cMbvLPLMrqtBkIklQeD0ihijBIcAeF+j3FejkcnfE5aZj5E5abu0+s5c9oDB4L3QQ8RlixywLlVnXDfkQTFzm7HPoBoIC9MDtiUBzX84v6+THhHRYNjoWF10VfoIqvpJGvlxmdpkYvZUhTY4PePXGzok9mQenaC4eRjeL0uJAk5EKWBkh/CTitLoXNZRTOpRsrFDojwb1GZn0RHrkWEiU6A/xZArpkW8ELVgRgaH2nNUBs1b27IvW3GQ0YXKSgSgQ7txnxVbFpbd9PJ85+cUURrOogoo4M/0VMhDeAn5R+Ns+AXuG6qpJa/MKitKtyxwrUtRoyfgtdzz7yDA1UASGIaKjbXSnsprEaQh59XrEZu6GqQfjPnD0u+vaTR4gr4yi0v3HubhdkOzY0gv6cjiBMk6qRp8o3NenkCIxBRpXTrEExHMNg00dqQ/Z3fKnOQqtxyI16LZ1olcxivqBiOgdwfEAPeZ3KAPJfaT3WXwGv4d8bl1bTUoEyWoTapWx8iM7u4PfnIrXgUQVj9VJ6jSACCbWkPWDyIBnS3Wv2nQKDZRPohG/NZRYfS+E5NjXHapjMPvIMAn31rzKPnU4hz9QjKT+VV8u7Nv1zFvs5ogWMT6DKyPAJ/dAAGZLqk+Z4CZViv84iU6vOTMMGhhz0G+2qV002ffisJZvR0v48xu3Vlwh51ERmPVqVCZieyBUaHb0Ey/UyUWPLCb2cUxiAR4SMTAutjv/AfPotGS7w6MeXoaNNhJvagp3cpWQ01oerUTSKIUHvjpi85SIiUND/U2xInlfmp24zvq+8vMHxWmcvXPH4vno25WJW2hcR5xUKuupABt3r2sdOimrF5U4GPQZhsiOZGEsSKc7J+gvH5obLWZF2jgrx91ydT9KXgBP6FWql8oiY9pnMKl+6AYenODOj67LivTvImXTB3zJBI/IEPeMORPUybaKV1fX0Kw8ScvSJ0FUqypmuuWXh4/olI5BzoGJzav3HCetAM/W//5LkLepDVNfONffgpWAMJKCkE/ccuaDHR+2g6KW+dtHwo8uxLHlM9IBitxLwnc7hU9mLIZnyULlZ2fKFOAAcCUI3WuCP54gtZn1VTLvRmQoivuh4vZXQgcAWZvSxKUrPmm4YZ/GP95toNzeein+hq9sBmHl0Jj8y+Vwji+eC8HV0TuRDjzcaFYbY9w1SUZSOsCiFoZZV7dllXDOHap2dtiGALPLAcQdloolU9CJWEFxlAJxK38OC2y+Qp1XfQRKAgrmBmfPi7WZrwYEfnCqsiIkwt6BpvFzu0T0PZZrDAs2OZPaJ68EZsdlXFUhpHvckCmaY5jra/bTBozSCrScqDe0AIBUXQBhMj1qDmbuTRvobF3805HceDqmLw1ZpPuqi/iBEN1VkNKJJI2YCh5p4Pnqg3SiIUDgCgwKD5ddZErhZEC/el6YJ3qaW2buT+RWey/X0LVH+XwwTQihHQHif3YipwreIrIcLThV/hrCp7JAvjoIZZQClsEwQqnetzgYZQidAjNIFQHuIDlFarfoawnOU7f5t8Xw4zDfOGa2/C48HiLFAGGdaWJ9A80Q+RKlINVmVxxYooVAXJ9eznEqp9XomO5OKdHhn4fEvvw6NxvDiU0icoPOO8dD1pKV5gWcNDMBEAPmuWSjAKCyRokra1pRH2UMtOBMROLaIlT/23JcsHHkD3j1Sl/+5TUOJZQd6zWHKdA/5Vjg/04Y4Oo2l/G5XF9x9mmBw1AGTuLCSbuNwMGDDPUPWnsBhb9WITmupGedLHe48GeP6in/xiOK+vdKnhqiPM1BvWrWSTqAr1qojhko/K0Wsb1zzY9/Wa7UVQvia14CIBdyE1rErNGcWSlTNj546yg+S+5ql+Evuzg3yTde5f4C4B66/OoOv3GsEIkQdYMBL+wP93fmn2MxJUo7FXp+io4KqxGG8BEbobV8RDMY9iHFPKTwJSB/XNffz5MygoeFuedNabpz29xCCw6sm+EYQeWX/JbwW8MnfJm3sfnmT1FbvJpoND3PiCjMhJ/NYDyj5Yb44xy/lLc73f5WNaIgGMk/cRJ9CVW90LKR4lotXxdPn6iZGRc1QsY5J1n/Xohlpq59EPGv1gD5GJC84Kx4YkoqoCcV5z/8uFfKLzRUnSBi8LnBEuyixRzn36tioto04K1IwrHsQYUVcBctWyqy8IlBGFkq7l5ioQh0rPu4K0iqZabtnLQQpzGdN2JtgpJGiioi6fh/jDwnmjM0pUq6hADJA+n8287YU00DibY5Nx/pR0NkOJTdB4rw7ir2Sv7Krzzhe7Plkp3gfx+XarBlkpYCi3mCuUFZflQxKu0hQhET8jtdVOPTo/4wDl7voZdVqU5ROz6RjveEqhtj/vXNMx+Q87PIyV8tjSM2VPG4y/uDJ5uKup5dNvX66GEEjph4cylU+h1a6YjnpxQYO7goEuSXKXxgTVAheO98ZnbdcvLo1ZIqz7lkQ7XTfHYN6nZPGO8rjcjdM2osYdAlnbXGG0pDr1VTnNokJh1XPHSqTbX7omelgkf6fZ9TPiESq8z+6B0BDb6hc0iMzmpwk/0HuOdb8xGHstamLn8wJST4uUrSxstsYvNc1HkUvKgLtmejeiyJgrSsmAWPKcB4iZy55II/XBQulqoeBFKnLS595zOzcDJL11Qcfp5DJ/WFC5WiqP9risNOiUst+kCsyijH/5XjBdCrU/wFmezbbNamOVAvnmW/RoAH7hYn18kGZ6FthWJMEQOqH87NSQHrNMh+b2WKtnNM3iBJQiI3QwmKCDvKvrEONZ3xoXKxkkGkXDc8aVsg8kZSaZq/XwwGlaWLRiIs4cuzaU8jFlwWe7rMUQc5N+5QRyeNAaHhN82riOI4UQV5gS+veton1sHvN/rSZA7/0znVy9boVme9bKZSNupbcY6GYZyD9gPFwL8p3FTPLmGyUKUVjfE5etTgydsyLd2LjRxUR/laj4zsT142AlDGOSYiSnK69DfTBppE0JqcPqj1vJIHXWHZpOSV9On8wEJpAHsRCBH//MSuLb9F3qwO2QjR1gzrc0ciZ1WG8kT1rbagnBMTje6qNLmh8xK1ySpQ63CqBG1aabfT+qzp7RZrmQa0Z1jx6412rPfEdVrVMeykA3yUn6q8jOWvh0yzk+eGVJyEFuIHaV15rBqyuZXMdnerE6gPTbMxBtxnQDlRyWBxqWncMtq/Gxy3oCQfIPYSV+xPyKAX4TCG4+diNMDO9YnC6GTfit7cxPtNR2v50Ox7riFx/L9kVAUSPzzMyFnJflYskrvRQXUwF4LHvD/c4soVazQWZprshzqr1T2nR226sTwvBz+DmIJdWkWLNFUUbV0LseaSSSw3drK+f5B6KW14OYK44KZVQujTFZeC4tysPz/R5aBoaVClLPVF9mbcjBdoBo2lNLapsqt7EATkqoyZ5JiGzlIs5/2iLun/j/npw3lpN9u0Ft8FvTFjpauS9s1sz1KAETUCYHLwTbt4pfgfeh9TqN2CknWaH5G2N3DzkuPfTVCINxNvQPoR0qPG1WZBuz33FFuFXyk84vY37Xmv50d44jmPo0pCOaelV+5tYO+/3lWoAqesoFRMxHL28bKasjQDE3qB4VC1Uqd1W6rN/nhK62f/gVA1kmvI80rDdWlG+ldQSjqcWTQaqmrQzp/fKaEXtwiViRbj/83z8e6tuqU9GQK2rVkVaUNXc/1v3+0R0DzpS/TTAXayP0xrVlUxcnT1o3apvl4hU/s0DClzjqW7AWxrQBOnYc6xZZTgCHO+omQqTPg/vR7oJlqvCLKcEK4zFV9U7QiN+m8o6zJro7YMKhULJ018Hi6jQvmN2MPcRUNxg0aeFVd99efcJ9sYHxTxJhw3To7y3GW/la3hQcNstEEo8lN6vMqxRwkcmAWCAuqwOEbMcQu9IIdS60xvhPPZtg5W3DQmnxcHX/0Cf6Dg05iJ5QQia1xKn3o12ufQqJR/WxCavKTHcueZPxInISF8Kec2Hq0BDfoAihMhIkP60681Vtm9NLfzLYTAGxOrO9krXDDyctL4qiaSgXVyMLTe2IE8KPFJ+6hhyqJ/zoKSM0g5Blkan8VEhSoIm8/jAX02vVx9v89ETMPTIwb8t1XecASqaeTf1brjfl9NK3uSSPXTwOhP+eWO6B0KUdbrsWYahiqW6dkAAATSjdzx6bFOX1ZfolNx+ZJ/tcDp0pnipM4ksFZ5jg9ikAjvppl8h1v31z7kdsdvt3vkMGctEmGK4d7+9/SxbZAK/gg0OrEOOzTP+fBvR8+3IfxXDLBd6iWRfyQfFmwK8koyxnxiDQK4Hwi/brggIF5RxDzvFKIvAmVgRY+1R4ifVzE1LTzNtf+4xiz/hPB9lc1daPHTuogWA31Kowzj3QUFT/dL2IgdY6BALv9PxRpheV/ttwvrw/Cs7CBeQZRJ7o4VIAMriJMHxDv+lRhdNzalZb3PKkN5ISK9nn2BhjZDul7X8nrnrnrl7iXU+5Uof5KoeEpB7kJ/V4gpBe2/bo5LXC0LfzcaMeot4UJFnAZas5emh5mOg2xxS/8DrKv+/bxehiJfA4rBtUw3xmOKkoY2NqmDiJcQJZAZYfZbtF6/bWdx/38kmR21A3SR6TJ/eTPNBQg4ttGpqazbf4u/SHOaXzOL+xPXGqqcTEs9vHQmk3uQ8toB5d9jjYrvKaqXivJNEXjeBcQjwp7Vj/y+1f/OpPQaBKBiS1WqFSCkjdkJDaewCyuS3sh9GKsexsHi5Ca2ZwCxhVT4jsqTE1X+me17uitifnJzZvN5mimYNe78aN0lKM6Hqi5jb8I0BO4rv8zkAr8FnFb7w6CDNF94VQ/avhwpe3Z95p19vTI7MpFjgadU6KJZek6bk/E8XipwAABXxLVcS9HT07V7vpgGPOqKiQ3SCcluSQm1ReWOW6in+okKB2VDDdf4CDMhTKC/UHcOttsTtb+sscyoAfdNSP7N+hKuybjVUo5rqRwWBUyzClS4wNEV6OsMaf7i4YmzBY5bfxgAiKlzlteLru2Afz0L6XNsEfCo2pnsVLSPwE2a+h0LcIF7T2d4vM6M1VON6LHpI3rOMpWQuXWJuCV2KR16llD/ntQ2WMKoANawBWgZ1p8QgK2bRKG224YzJ4z5zw2toLF3/OcTmX1Bw5au8h2QwVgnoKdzYVAvz9tbbMUMvtWYNK04VaCe/loxKh4DQKmz/bcR5qalyBfNtdo1QcN7UrB6asJqaEm+nUr2NGSbIhCIrPY83vDmTsWN3hMxyrXJq8nNmK8696kxBrF7sIFItDIb6Le1E5D9jwTy4/mLD0NIJOMsTmc4Ejjp1sfsdBbTPNpS3HhZ06JeMEsYTwYkpCxdbYX2imnyslHbgd+83qA4I4GuNZOry9jdvyk2sruiz7U1vpwMjDxuVm9vor7FPuMTcN15RluuV+vZh8XYwP3b6kMWAxjoTOrlLIQyGxsExyS1lP4e1uhzZeqJz6lnJmtskaKOH/Hc2yG/C57BK2hZS/HfafZQ/0nCyjLmA4c45zH5GG4utQHx+UyUfjLIIZpuxdEfVvxBo1N4+h8zEh1KkmXFHTr/T+Ukdd6BVZT6tZi/AHQbcc2BNd0ZrsOQdjAs5/17Qkz6iw6CJAAAAAARqkIPnYWiKczZgFUZ5268yZT9OFktmBgXKJSSU4RgPFQsDxtOwoO+ncTCZx7WiGtm77iI9rw9o/k2DLoO//qrwnGEpNcNmZw56RFKidSfdy8PZvESVRj2yUb9AmrMoFJxOjvGdNPRE95oThg1TcxUw/qn8y7aRe9q1J77OQxcD+MM1OE34R0pzax2Z1YfhmfNrWqNaz9UJKcrEH1gkyhR9HwZxmlXXN5/vO3wObq/PArj7QyoBwkilhbbGFNn08lf4HiFvHOAEmN1m5PsT6FFM+P5MsnxThkyA5dE4YCCm0NOMPsRKH3uGwJm7PkWHmYKVveY/Lm56vir0KWtmccQkfs8zEReczEXAxraC2DU4y4dgnJiXJLv0Ax/cvxUsgW38vlqUd8RT1GnMj34AyCfoshWGy4fzyyISf1Wpu7ewAcWS/FWQQVMtCpFAC1bEWP8QPg2e8Zz/02+FbwAAAAAA==" alt=""><span>© 2026 Học Liệu Toán 10 · Sản phẩm của <b>học sinh trường THPT Lý Thường Kiệt</b></span></footer>
@@ -1376,7 +1430,7 @@ $("#loginForm").addEventListener("submit", async e => {
 });
 
 // Sau khi đăng nhập: lấy tiến độ, lịch sử trò chuyện, bảng nháp của đúng tài khoản này
-function afterLogin(){ RV_SAO = 0; RV_OPEN = new Set(); LB_LOP = ""; PROG.pull().then(() => { if(["trang-chu","bai-giang","luyen-tap"].includes((location.hash||"#trang-chu").slice(1))) route(); }); CHATS.load(); BOARD.reload(); }
+function afterLogin(){ STATS.load(); RV_SAO = 0; RV_OPEN = new Set(); LB_LOP = ""; PROG.pull().then(() => { if(["trang-chu","bai-giang","luyen-tap"].includes((location.hash||"#trang-chu").slice(1))) route(); }); CHATS.load(); BOARD.reload(); }
 function signIn(user, name){
   root.dataset.user = user; root.dataset.name = name || user;
   $("#password").value = ""; lmsg.hidden = true;
@@ -1401,7 +1455,7 @@ $("#logout").onclick = async () => {
 /* ================= Tiến độ học ================= */
 const doneKey = () => "toan10-done-" + (root.dataset.user || "");
 const getDone = () => store.get(doneKey(), []);
-function toggleDone(n){ let d = getDone(); d = d.includes(n) ? d.filter(x=>x!==n) : d.concat(n); store.set(doneKey(), d); PROG.push(); }
+function toggleDone(n){ let d = getDone(); const on = !d.includes(n); d = on ? d.concat(n) : d.filter(x=>x!==n); store.set(doneKey(), d); PROG.push(); STATS.lesson(n, on); }
 function nextLesson(){ const d=getDone(); return LESSONS.find(l=>!d.includes(l.n)) || null; }
 
 /* ================= Trang chủ ================= */
@@ -1425,9 +1479,11 @@ const TILES = [
   ["luyen-tap","Luyện tập", BANK_N+" câu · theo bài, theo chương"],
   ["hoi-dap","Hỏi đáp", "Trợ lý Toán 10"],
   ["thi-dua","Thi đua lớp", "Bảng xếp hạng điểm học tập"],
+  ["thong-ke","Thống kê học tập", "Điểm, câu sai, thời gian học"],
   ["danh-gia","Đánh giá website", "Góp ý cho Học Liệu Toán 10"],
   ["huong-dan","Hướng dẫn sử dụng", "Tìm cách dùng từng mục"]
 ];
+ICONS["thong-ke"] = '<path d="M4 20V10M10 20V4M16 20v-7M22 20H2"/>'; TCOL["thong-ke"] = "t-blue";
 ICONS["may-tinh"] = '<rect x="5" y="2.5" width="14" height="19" rx="2.5"/><path d="M8 6h8v3.5H8z"/><path d="M8.5 13h.01M12 13h.01M15.5 13h.01M8.5 16.8h.01M12 16.8h.01M15.5 16.8h.01"/>'; TCOL["may-tinh"] = "t-blue";
 ICONS["huong-dan"] = '<circle cx="12" cy="12" r="9"/><path d="M9.6 9.3a2.5 2.5 0 0 1 4.8 1c0 1.7-2.4 2.1-2.4 3.7"/><path d="M12 17.2h.01"/>'; TCOL["huong-dan"] = "t-green";
 ICONS["thi-dua"] = '<path d="M8 21h8M12 17v4M7 4h10v5a5 5 0 0 1-10 0z"/><path d="M17 5h3v2a3 3 0 0 1-3 3M7 5H4v2a3 3 0 0 0 3 3"/>';
@@ -1463,6 +1519,7 @@ function renderLessons(){
       c.lessons.map(n => { const l = LESSONS[n-1]; return `<a class="lrow" href="#bai-${n}"><span class="no">Bài ${n}</span><span>${esc(l.t)}</span><span class="chip${d.includes(n)?" done":""}">${d.includes(n)?"Đã học":"Chưa học"}</span></a>`; }).join("") + `</div>`).join("");
 }
 function renderLesson(n){
+  STATS.view(n);
   const l = LESSONS[n-1], d = getDone().includes(n), prev = LESSONS[n-2], next = LESSONS[n];
   $("#v-bai").innerHTML = `<div class="crumb"><a href="#trang-chu">Trang chủ</a><span>›</span><a href="#bai-giang">Bài giảng</a><span>›</span><span>Bài ${n}</span></div>
   <article class="lesson">
@@ -1626,7 +1683,7 @@ function renderVideos(){
 }
 function renderPlayer(k, n){
   const t = TEACHERS[k], l = LESSONS[n-1], id = t.ids[n-1], url = t.link(id, n-1), other = k==="nguyen" ? "dat" : "nguyen";
-  store.set(lastKey(k), n);
+  store.set(lastKey(k), n); STATS.ev("video");
   const player = CAN_EMBED
     ? `<div class="player"><iframe src="https://www.youtube-nocookie.com/embed/${id}?rel=0" title="${esc(t.name)} – Bài ${n}. ${esc(l.t)}" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe></div>`
     : `<div class="player off"><div class="off-in"><span class="bigplay"></span><b>Bài ${n}. ${esc(l.t)}</b><p>Trang xem trước trên Claude không cho phát video YouTube. Khi chạy trên máy chủ của trường, video phát ngay tại khung này.</p><a class="btn" href="${url}" target="_blank" rel="noopener">Xem video trên YouTube</a></div></div>`;
@@ -1704,7 +1761,7 @@ function stopSong(){ timers.forEach(clearTimeout); timers=[]; cancelAnimationFra
   document.querySelectorAll(".eqbars").forEach(e => e.remove()); document.querySelectorAll(".playbtn.on").forEach(e => e.classList.remove("on"));
   if(playing!==null){ const b=document.querySelector(`[data-song="${playing}"]`); if(b) b.innerHTML=PLAY; paintSong(playing, 0); } playing=null; }
 function playSong(i, from){
-  if(playing !== i) stopSong();
+  if(playing !== i){ stopSong(); if(!from) STATS.ev("song"); }
   const S = SL[i];
   if(!songAudio){ songAudio = new Audio(); songAudio.preload = "auto"; }
   const src = new URL(S.file, location.href).href;
@@ -1735,7 +1792,7 @@ function playBeat(i){
 const shuffle = a => { a = a.slice(); for(let i=a.length-1;i>0;i--){ const j=Math.floor(Math.random()*(i+1)); [a[i],a[j]]=[a[j],a[i]]; } return a; };
 const bestKey = () => "toan10-diem-" + (root.dataset.user || "");
 const getBest = () => store.get(bestKey(), {});
-function prepQ(q){ const order = shuffle([0,1,2,3]); return { q:q.q, o:order.map(i=>q.o[i]), a:order.indexOf(q.a), e:q.e }; }
+function prepQ(q){ const order = shuffle([0,1,2,3]); return { id:qidOf(q), q:q.q, o:order.map(i=>q.o[i]), a:order.indexOf(q.a), e:q.e }; }
 function setFor(key){
   if(key.startsWith("b-")){ const L = KTL[+key.slice(2)]; return { key, title:`Bài ${L.n}. ${L.t}`, ch:L.ch, qs:L.quiz }; }
   if(key.startsWith("c-")){ const C = KT.chapters.find(c=>c.n===key.slice(2)); return { key, title:`Ôn tập Chương ${C.n}. ${C.t}`, ch:C.n, qs:C.lessons.flatMap(n=>KTL[n].quiz).concat(C.extra) }; }
@@ -1766,6 +1823,7 @@ function renderRunner(){
   const top = `<div class="crumb"><a href="#trang-chu">Trang chủ</a><span>›</span><a href="#luyen-tap" data-back="1">Luyện tập</a><span>›</span><span>${esc(PQ.title)}</span></div>`;
   if(PQ.i >= n){
     setTimeout(() => { const r = $("#v-luyen-tap .ring"); if(!r) return; const b = r.querySelector("b"); ANIM.count(b, PQ.score, 900, x => x + "/" + n); if(PQ.score/n >= .8) ANIM.burstFrom(r, 110); }, 60);
+    if(!PQ.logged){ PQ.logged = true; STATS.attempt(PQ); }
     const best = getBest(), old = best[PQ.key]; if(old===undefined || PQ.score > old){ best[PQ.key] = PQ.score; store.set(bestKey(), best); PROG.push(true); }
     const pct = PQ.score / n, wrong = PQ.qs.map((q,i)=>({q, pick:PQ.picks[i]})).filter(x=>x.pick!==x.q.a);
     const msg = pct>=.9 ? "Xuất sắc! Bạn nắm rất chắc phần này." : pct>=.7 ? "Khá tốt. Xem lại các câu sai bên dưới nhé." : pct>=.5 ? "Đạt yêu cầu. Nên đọc lại phần Tổng hợp công thức rồi làm lại." : "Cần ôn thêm. Đọc lại bài giảng và Tổng hợp công thức rồi thử lại nhé.";
@@ -4512,7 +4570,7 @@ async function renderDanhGia(quiet){
 }
 
 /* ================= Điều hướng: mỗi lần chỉ hiện một mục ================= */
-const VIEWS = { "thi-dua":renderThiDua, "danh-gia":renderDanhGia, "cong-thuc":renderKT, "bang-nhap":()=>BOARD.show(), "quan-tri":renderAdmin, "trang-chu":renderHome, "bai-giang":renderLessons, "tai-lieu":renderDocs, "video":renderVideos, "bai-hat":renderSongs, "luyen-tap":renderQuizView, "hoi-dap":renderAsk, "may-tinh":renderMayTinh, "huong-dan":renderHelp };
+const VIEWS = { "thi-dua":renderThiDua, "danh-gia":renderDanhGia, "cong-thuc":renderKT, "bang-nhap":()=>BOARD.show(), "quan-tri":renderAdmin, "trang-chu":renderHome, "bai-giang":renderLessons, "tai-lieu":renderDocs, "video":renderVideos, "bai-hat":renderSongs, "luyen-tap":renderQuizView, "hoi-dap":renderAsk, "may-tinh":renderMayTinh, "huong-dan":renderHelp, "thong-ke":renderThongKe };
 const rendered = {};
 let pendingAsk = null;
 function route(){
@@ -4527,7 +4585,7 @@ function route(){
   document.querySelectorAll("[data-view]").forEach(s => s.hidden = s.id !== "v-"+view);
   if(m) renderLesson(+m[1]);
   else if(mv) renderPlayer(mv[1], +mv[2]);
-  else if(["trang-chu","bai-giang","quan-tri","video","bang-nhap","luyen-tap","thi-dua","danh-gia","huong-dan"].includes(view)) VIEWS[view]();
+  else if(["trang-chu","bai-giang","quan-tri","video","bang-nhap","luyen-tap","thi-dua","danh-gia","huong-dan","thong-ke"].includes(view)) VIEWS[view]();
   else if(view==="cong-thuc"){ if(!rendered[view]){ renderKT(); rendered[view]=true; } if(pendingKT){ const n = pendingKT; pendingKT = null; setTimeout(()=>{ const el = document.getElementById("kt-"+n); if(el) el.scrollIntoView({block:"start"}); }, 30); } }
   else if(!rendered[view]){ VIEWS[view](); rendered[view]=true; }
   if(view!=="bang-nhap") BOARD.hide();
@@ -4990,7 +5048,7 @@ const CHATS = (() => {
   $("#histClose").onclick = () => { hist.hidden = true; };
   $("#histNew").onclick = () => { if(AI.busy) return; startNew(); closeOverlay(); $("#chatIn").focus(); };
   SYNC.on(() => { $("#histSt").textContent = saveBadge(); });
-  return { load, startNew, record, paint, has: () => !!conv };
+  return { load, startNew, record, paint, has: () => !!conv, summary: () => ({ n:index.length, msgs:index.reduce((t, x) => t + (x.n || 0), 0) }) };
 })();
 function newChat(){ if(AI.busy && AI.ctl) AI.ctl.abort(); CHATS.startNew(); }
 $("#newChat").onclick = newChat;
@@ -5134,6 +5192,204 @@ const BW = (() => {
   return { open, close, isOpen: () => !win.hidden };
 })();
 
+/* ================= Thống kê học tập =================
+   Ghi lại cho mỗi tài khoản: từng lần làm bài (đúng/sai từng câu), ngày đánh dấu học xong bài,
+   thời gian học mỗi ngày và theo mục, số lần xem bài giảng, nghe bài hát, mở video.
+   Lưu cùng chỗ với lịch sử trò chuyện (khóa "stats"), tự đồng bộ lên máy chủ. */
+let QIDM = null;
+function qidOf(q){
+  if(!QIDM){ QIDM = new Map(); KT.lessons.forEach(L => L.quiz.forEach((x, i) => QIDM.set(x, "L" + L.n + "." + i))); KT.chapters.forEach(C => C.extra.forEach((x, i) => QIDM.set(x, "C" + C.n + "." + i))); }
+  return QIDM.get(q) || "";
+}
+function qById(id){
+  const m = /^([LC])([^.]+)\.(\d+)$/.exec(id || ""); if(!m) return null;
+  if(m[1] === "L"){ const L = KTL[+m[2]]; const q = L && L.quiz[+m[3]]; return q ? { q, les:+m[2], ch:L.ch } : null; }
+  const C = KT.chapters.find(c => c.n === m[2]); const q = C && C.extra[+m[3]]; return q ? { q, les:0, ch:m[2] } : null;
+}
+const STATS = (() => {
+  const empty = () => ({ v:1, at:[], ld:{}, days:{}, sec:{}, ev:{}, lv:{} });
+  let S = null, user = null, waiting = [], dirty = false, saveT = 0, lastAct = Date.now();
+  const today = () => { const d = new Date(); return d.getFullYear() + "-" + String(d.getMonth()+1).padStart(2,"0") + "-" + String(d.getDate()).padStart(2,"0"); };
+  function norm(v){ const o = { ...empty(), ...(v && typeof v === "object" ? v : {}) }; if(!Array.isArray(o.at)) o.at = []; ["ld","days","sec","ev","lv"].forEach(k => { if(!o[k] || typeof o[k] !== "object") o[k] = {}; }); return o; }
+  async function load(){
+    user = root.dataset.user || null; S = null; dirty = false; clearTimeout(saveT);
+    if(!user) return;
+    const u = user, v = await SYNC.get("stats"); if(u !== root.dataset.user) return;
+    S = norm(v); const q = waiting; waiting = []; q.forEach(f => f(S));
+    if(q.length) save(true);
+    if(location.hash === "#thong-ke" && !TK_WHO) tkLoad();
+  }
+  function edit(f, force){ if(!root.dataset.user) return; if(!S || user !== root.dataset.user){ waiting.push(f); return; } f(S); save(force); }
+  function save(force){ dirty = true; clearTimeout(saveT); saveT = setTimeout(flush, force ? 400 : 10*60e3); }   // thời gian học: gom 10 phút mới gửi một lần
+  function flush(){ clearTimeout(saveT); if(!dirty || !S) return; dirty = false; SYNC.set("stats", S); }
+  addEventListener("pagehide", () => { flush(); SYNC.flush(true); });
+  document.addEventListener("visibilitychange", () => { if(document.visibilityState === "hidden"){ flush(); SYNC.flush(true); } });
+  ["pointerdown","keydown","scroll","touchstart"].forEach(ev => addEventListener(ev, () => { lastAct = Date.now(); }, { passive:true, capture:true }));
+  // mỗi phút: nếu trang đang mở và người dùng có thao tác trong 2 phút gần nhất → cộng 1 phút học
+  setInterval(() => {
+    if(document.visibilityState !== "visible" || Date.now() - lastAct > 120e3 || !root.dataset.user || root.hidden) return;
+    const sec = document.querySelector("[data-view]:not([hidden])"); const view = sec ? sec.id.replace(/^v-/, "") : "khac";
+    edit(s => { const d = today(); s.days[d] = (s.days[d] || 0) + 1; s.sec[view] = (s.sec[view] || 0) + 1;
+      const ks = Object.keys(s.days).sort(); if(ks.length > 400) ks.slice(0, ks.length - 400).forEach(k => delete s.days[k]); });
+  }, 60e3);
+  return {
+    load, flush,
+    data: () => S || norm(null),
+    attempt(P){ const n = P.qs.length; if(!n) return;
+      const rec = { t:Date.now(), k:P.key, n, s:P.score, q:P.qs.map((q, i) => (q.id || "?") + (P.picks[i] === q.a ? "" : "!")) };
+      edit(s => { s.at.push(rec); if(s.at.length > 400) s.at = s.at.slice(-400); }, true); },
+    lesson(n, on){ edit(s => { if(on){ if(!s.ld[n]) s.ld[n] = Date.now(); } else delete s.ld[n]; }, true); },
+    view(n){ edit(s => { s.lv[n] = (s.lv[n] || 0) + 1; }); },
+    ev(name){ edit(s => { s.ev[name] = (s.ev[name] || 0) + 1; }); }
+  };
+})();
+
+/* ---------- tính các chỉ số ---------- */
+const SEC_NAME = { "trang-chu":"Trang chủ", "bai-giang":"Bài giảng", "bai":"Bài giảng", "cong-thuc":"Tổng hợp công thức", "tai-lieu":"Tài liệu PDF", "video":"Video bài giảng", "xem-video":"Video bài giảng",
+  "bai-hat":"Bài hát", "bang-nhap":"Bảng nháp", "may-tinh":"Máy tính cầm tay", "luyen-tap":"Luyện tập", "thi-dua":"Thi đua lớp", "thong-ke":"Thống kê", "hoi-dap":"Hỏi đáp", "danh-gia":"Đánh giá web", "huong-dan":"Hướng dẫn", "quan-tri":"Quản lý tài khoản" };
+function statPoints(done, best){ let p = done.length*10; for(const k in best) p += best[k]*(k.startsWith("b-") ? 10 : 5); return p; }
+const dkey = t => { const d = new Date(t); return d.getFullYear() + "-" + String(d.getMonth()+1).padStart(2,"0") + "-" + String(d.getDate()).padStart(2,"0"); };
+const dshort = k => { const [y, m, d] = k.split("-"); return +d + "/" + +m; };
+const fmtMin = m => m < 60 ? m + " phút" : Math.floor(m/60) + " giờ " + (m % 60 ? (m % 60) + " phút" : "");
+function setTitle(k){ if(k === "mix") return "Đề tổng hợp"; if(k.startsWith("b-")){ const L = KTL[+k.slice(2)]; return L ? "Bài " + L.n + ". " + L.t : k; } if(k.startsWith("c-")) return "Ôn tập Chương " + k.slice(2); return k; }
+function statDerive(D){
+  const S = D.stats || {}, at = (Array.isArray(S.at) ? S.at : []).slice().sort((a, b) => a.t - b.t), done = D.done || [], best = D.best || {};
+  const qn = at.reduce((s, a) => s + a.n, 0), right = at.reduce((s, a) => s + a.s, 0);
+  const days = S.days || {}, mins = Object.values(days).reduce((s, x) => s + x, 0);
+  // chuỗi ngày học liên tiếp (có thời gian học hoặc có làm bài) tính đến hôm nay/hôm qua
+  const act = new Set(Object.keys(days).filter(k => days[k] > 0)); at.forEach(a => act.add(dkey(a.t)));
+  let streak = 0; { const d = new Date(); if(!act.has(dkey(d))) d.setDate(d.getDate() - 1); while(act.has(dkey(d))){ streak++; d.setDate(d.getDate() - 1); } }
+  // đúng/sai theo bài + câu hay sai
+  const byL = {}, wrongQ = {};
+  at.forEach(a => (a.q || []).forEach(x => { const bad = x.endsWith("!"), id = x.replace(/!$/, ""), info = qById(id);
+    const key = info ? (info.les ? "Bài " + info.les : "Ôn chương " + info.ch) : "Khác";
+    byL[key] = byL[key] || { r:0, w:0, les:info ? info.les : 0 }; byL[key][bad ? "w" : "r"]++;
+    if(bad && info){ wrongQ[id] = (wrongQ[id] || 0) + 1; } }));
+  // điểm thi đua theo thời gian: lần đầu học xong bài + mỗi lần vượt điểm cao nhất
+  const ev = [], bestSoFar = {};
+  Object.entries(S.ld || {}).forEach(([n, t]) => { if(done.includes(+n)) ev.push({ t:+t, d:10 }); });
+  at.forEach(a => { const old = bestSoFar[a.k] || 0; if(a.s > old){ ev.push({ t:a.t, d:(a.s - old)*(a.k.startsWith("b-") ? 10 : 5) }); bestSoFar[a.k] = a.s; } });
+  ev.sort((a, b) => a.t - b.t);
+  const pts = statPoints(done, best), tracked = ev.reduce((s, e) => s + e.d, 0), base = Math.max(0, pts - tracked);
+  const series = []; let run = base; const byDay = new Map();
+  ev.forEach(e => { run += e.d; byDay.set(dkey(e.t), Math.min(run, pts)); });
+  byDay.forEach((v, k) => series.push({ k, v }));
+  if(series.length && series[series.length - 1].v !== pts) series.push({ k:dkey(Date.now()), v:pts });
+  return { at, qn, right, wrong:qn - right, acc:qn ? Math.round(right/qn*100) : null, mins, streak, byL, wrongQ, pts, base, series, days, sec:S.sec || {}, evc:S.ev || {}, lv:S.lv || {}, ld:S.ld || {}, done, best };
+}
+
+/* ---------- biểu đồ SVG (vẽ tay, theo màu của giao diện) ---------- */
+const svgEsc = s => esc(String(s));
+function chartLine(series, base){
+  if(!series.length) return `<p class="tk-empty">Chưa có dữ liệu. Học xong một bài hoặc làm một đề luyện tập để bắt đầu.</p>`;
+  const pts = [{ k:"", v:base, start:true }].concat(series), W = 1000, H = 240, L = 44, R = 16, T = 16, B = 34;
+  const mx = Math.max(10, ...pts.map(p => p.v)), step = mx <= 50 ? 10 : mx <= 200 ? 50 : mx <= 500 ? 100 : 200, top = Math.ceil(mx/step)*step;
+  const X = i => L + (W - L - R)*(pts.length === 1 ? .5 : i/(pts.length - 1)), Y = v => T + (H - T - B)*(1 - v/top);
+  let g = ""; for(let v = 0; v <= top; v += step) g += `<line x1="${L}" x2="${W - R}" y1="${Y(v)}" y2="${Y(v)}" class="tk-grid"/><text x="${L - 8}" y="${Y(v) + 4}" class="tk-ax" text-anchor="end">${v}</text>`;
+  const d = pts.map((p, i) => (i ? "L" : "M") + X(i).toFixed(1) + " " + Y(p.v).toFixed(1)).join("");
+  const area = d + `L${X(pts.length - 1).toFixed(1)} ${Y(0)}L${X(0).toFixed(1)} ${Y(0)}Z`;
+  const every = Math.ceil(pts.length/8);
+  const lab = pts.map((p, i) => i && (i % every === 0 || i === pts.length - 1) ? `<text x="${X(i)}" y="${H - 12}" class="tk-ax" text-anchor="middle">${dshort(p.k)}</text>` : "").join("") + `<text x="${X(0)}" y="${H - 12}" class="tk-ax" text-anchor="start">Bắt đầu</text>`;
+  const dots = pts.map((p, i) => `<circle cx="${X(i)}" cy="${Y(p.v)}" r="4.5" class="tk-dot" data-tip="${p.start ? "Trước khi có thống kê" : "Ngày " + dshort(p.k)}: ${p.v} điểm"/><circle cx="${X(i)}" cy="${Y(p.v)}" r="14" class="tk-hit" data-tip="${p.start ? "Trước khi có thống kê" : "Ngày " + dshort(p.k)}: ${p.v} điểm"/>`).join("");
+  return `<svg viewBox="0 0 ${W} ${H}" class="tk-svg" role="img" aria-label="Điểm thi đua theo thời gian">${g}<path d="${area}" class="tk-area"/><path d="${d}" class="tk-line"/>${dots}${lab}</svg>`;
+}
+function chartBars(items, opt){ // items: [{label, v, tip}] – cột dọc một màu
+  if(!items.length) return `<p class="tk-empty">${opt.empty}</p>`;
+  const W = 440, H = 220, L = 40, R = 10, T = 14, B = 30, n = items.length, top = opt.max || Math.max(5, ...items.map(x => x.v));
+  const bw = Math.min(34, (W - L - R)/n*.62), X = i => L + (W - L - R)*(i + .5)/n, Y = v => T + (H - T - B)*(1 - v/top);
+  const ticks = opt.ticks || [0, Math.round(top/2), top];
+  let g = ticks.map(v => `<line x1="${L}" x2="${W - R}" y1="${Y(v)}" y2="${Y(v)}" class="tk-grid"/><text x="${L - 6}" y="${Y(v) + 4}" class="tk-ax" text-anchor="end">${v}${opt.unit || ""}</text>`).join("");
+  if(opt.ref != null) g += `<line x1="${L}" x2="${W - R}" y1="${Y(opt.ref)}" y2="${Y(opt.ref)}" class="tk-ref"/><text x="${W - R}" y="${Y(opt.ref) - 5}" class="tk-ax" text-anchor="end">${opt.refLabel}</text>`;
+  const every = Math.ceil(n/8);
+  const bars = items.map((x, i) => { const h = Math.max(x.v ? 3 : 0, Y(0) - Y(x.v)), y = Y(0) - h, r = Math.min(4, bw/2, h);
+    const path = h ? `M${X(i) - bw/2} ${Y(0)}V${y + r}Q${X(i) - bw/2} ${y} ${X(i) - bw/2 + r} ${y}H${X(i) + bw/2 - r}Q${X(i) + bw/2} ${y} ${X(i) + bw/2} ${y + r}V${Y(0)}Z` : "";
+    return `${path ? `<path d="${path}" class="tk-bar"/>` : ""}<rect x="${X(i) - (W - L - R)/n/2}" y="${T}" width="${(W - L - R)/n}" height="${H - T - B}" class="tk-hit" data-tip="${svgEsc(x.tip)}"/>${(n - 1 - i) % every === 0 ? `<text x="${X(i)}" y="${H - 12}" class="tk-ax" text-anchor="middle">${svgEsc(x.label)}</text>` : ""}`; }).join("");
+  return `<svg viewBox="0 0 ${W} ${H}" class="tk-svg" role="img" aria-label="${svgEsc(opt.aria)}">${g}${bars}</svg>`;
+}
+function chartStack(rows){ // đúng / sai theo bài – thanh ngang xếp chồng
+  if(!rows.length) return `<p class="tk-empty">Chưa có câu trả lời nào. Làm thử một đề ở mục Luyện tập nhé.</p>`;
+  const W = 440, rowH = 30, L = 92, R = 52, T = 6, H = T + rows.length*rowH + 8, mx = Math.max(...rows.map(r => r.r + r.w)), X = v => (W - L - R)*v/mx;
+  return `<svg viewBox="0 0 ${W} ${H}" class="tk-svg" role="img" aria-label="Số câu đúng và sai theo bài">` + rows.map((r, i) => { const y = T + i*rowH + 6, h = 18, wr = X(r.r), ww = X(r.w), gap = wr && ww ? 2 : 0;
+    const tip = `${r.name}: ${r.r} đúng, ${r.w} sai (${Math.round(r.r/(r.r + r.w)*100)}% đúng)`;
+    return `<text x="${L - 10}" y="${y + 13}" class="tk-lab" text-anchor="end">${svgEsc(r.name)}</text>`
+      + (wr ? `<rect x="${L}" y="${y}" width="${wr}" height="${h}" rx="3" class="tk-ok"/>` : "") + (ww ? `<rect x="${L + wr + gap}" y="${y}" width="${Math.max(0, ww - gap)}" height="${h}" rx="3" class="tk-bad"/>` : "")
+      + `<text x="${L + wr + ww + 8}" y="${y + 13}" class="tk-lab">${r.r}/${r.r + r.w}</text><rect x="0" y="${y - 6}" width="${W}" height="${rowH}" class="tk-hit" data-tip="${svgEsc(tip)}"/>`; }).join("") + `</svg>`;
+}
+
+function chartHBars(items, empty){
+  if(!items.length) return `<p class="tk-empty">${empty}</p>`;
+  const W = 440, rowH = 28, L = 132, R = 64, T = 4, H = T + items.length*rowH + 6, mx = Math.max(...items.map(x => x.v)), X = v => (W - L - R)*v/mx;
+  return `<svg viewBox="0 0 ${W} ${H}" class="tk-svg" role="img" aria-label="Thời gian theo mục">` + items.map((x, i) => { const y = T + i*rowH + 5, h = 16, w = Math.max(3, X(x.v));
+    return `<text x="${L - 10}" y="${y + 12}" class="tk-lab" text-anchor="end">${svgEsc(x.label)}</text><path d="M${L} ${y}H${L + w - 3}Q${L + w} ${y} ${L + w} ${y + 3}V${y + h - 3}Q${L + w} ${y + h} ${L + w - 3} ${y + h}H${L}Z" class="tk-bar"/><text x="${L + w + 8}" y="${y + 12}" class="tk-lab">${svgEsc(x.val)}</text><rect x="0" y="${y - 5}" width="${W}" height="${rowH}" class="tk-hit" data-tip="${svgEsc(x.tip)}"/>`; }).join("") + `</svg>`;
+}
+/* ---------- trang Thống kê học tập ---------- */
+let TK_WHO = "";
+async function renderThongKe(){
+  const v = $("#v-thong-ke"), teacher = can("quan_tri") || can("giao_vien");
+  v.innerHTML = head("Thống kê học tập", "Số bài đã học, điểm, số câu đúng sai, thời gian học… của tài khoản, vẽ thành biểu đồ. Di chuột (hoặc chạm) vào biểu đồ để xem số liệu chi tiết.")
+    + (teacher && HOSTED ? `<div class="tk-pick"><label for="tkWho">Xem thống kê của</label><select id="tkWho"><option value="">Tài khoản của tôi</option></select></div>` : "")
+    + `<div id="tkBody"><p class="tk-empty">Đang tải số liệu…</p></div><div class="tk-tip" id="tkTip" hidden></div>`;
+  if(teacher && HOSTED){
+    api("GET", "/api/thongke?ds=1").then(d => { const s = $("#tkWho"); if(!s) return; const groups = {};
+      (d.rows || []).forEach(r => { (groups[r.lop || "Chưa ghi lớp"] = groups[r.lop || "Chưa ghi lớp"] || []).push(r); });
+      s.innerHTML = `<option value="">Tài khoản của tôi</option>` + Object.entries(groups).map(([g, rs]) => `<optgroup label="Lớp ${esc(g)}">${rs.map(r => `<option value="${esc(r.user)}">${esc(r.ten)} (${esc(r.user)})</option>`).join("")}</optgroup>`).join("");
+      s.value = TK_WHO; }).catch(() => {});
+    v.querySelector("#tkWho").onchange = e => { TK_WHO = e.target.value; tkLoad(); };
+  }
+  tkLoad();
+  // chú thích nổi khi di chuột
+  const tip = $("#tkTip");
+  v.onpointermove = e => { const t = e.target.closest("[data-tip]"); if(!t){ tip.hidden = true; return; } tip.textContent = t.dataset.tip; tip.hidden = false;
+    const r = v.getBoundingClientRect(); tip.style.left = Math.min(e.clientX - r.left + 14, r.width - tip.offsetWidth - 4) + "px"; tip.style.top = (e.clientY - r.top + 16) + "px"; };
+  v.onpointerleave = () => { tip.hidden = true; };
+}
+async function tkLoad(){
+  const body = $("#tkBody"); if(!body) return;
+  let D;
+  try{
+    if(TK_WHO){ D = await api("GET", "/api/thongke?u=" + encodeURIComponent(TK_WHO)); }
+    else {
+      STATS.flush();
+      const bi = await SYNC.get("board-index").catch(() => null);
+      D = { ten:root.dataset.name || "", stats:STATS.data(), done:getDone(), best:getBest(), chats:CHATS.summary(), boards:bi && Array.isArray(bi.list) ? bi.list.length : 0, me:true };
+    }
+  }catch(e){ body.innerHTML = `<p class="tk-empty">${esc(e.message || "Không tải được số liệu")}</p>`; return; }
+  if(D.khach){ body.innerHTML = `<p class="tk-empty">Tài khoản khách không được lưu thống kê. Đăng nhập bằng tài khoản của bạn để xem.</p>`; return; }
+  const X = statDerive(D);
+  const kpi = (lab, val, sub) => `<div class="tk-kpi"><span>${lab}</span><b>${val}</b>${sub ? `<small>${sub}</small>` : ""}</div>`;
+  const last14 = []; for(let i = 13; i >= 0; i--){ const d = new Date(); d.setDate(d.getDate() - i); const k = dkey(d); last14.push({ label:dshort(k), v:X.days[k] || 0, tip:`${dshort(k)}: ${X.days[k] || 0} phút học` }); }
+  const recent = X.at.slice(-20).map((a, i) => ({ label:"#" + (X.at.length - Math.min(20, X.at.length) + i + 1), v:Math.round(a.s/a.n*100), tip:`${setTitle(a.k)} · ${new Date(a.t).toLocaleString("vi-VN")}: ${a.s}/${a.n} câu đúng (${Math.round(a.s/a.n*100)}%)` }));
+  const lrows = Object.entries(X.byL).map(([name, r]) => ({ name, ...r })).sort((a, b) => (a.les || 99) - (b.les || 99) || a.name.localeCompare(b.name));
+  const secRows = Object.entries(X.sec).filter(([, m]) => m > 0).sort((a, b) => b[1] - a[1]).slice(0, 8).map(([k, m]) => ({ label:(SEC_NAME[k] || SEC_NAME[k.split("-")[0]] || k), v:m, val:m + "’", tip:`${SEC_NAME[k] || SEC_NAME[k.split("-")[0]] || k}: ${fmtMin(m)}` }));
+  const wq = Object.entries(X.wrongQ).sort((a, b) => b[1] - a[1]).slice(0, 5);
+  const ten = TK_WHO ? `<p class="tk-who">Đang xem: <b>${esc(D.ten)}</b>${D.lop ? " · Lớp " + esc(D.lop) : ""} (${esc(D.user)})</p>` : "";
+  body.innerHTML = ten + `
+  <div class="tk-kpis">
+    ${kpi("Bài đã học", `${X.done.length}/9`, X.done.length ? "Bài " + X.done.slice().sort((a, b) => a - b).join(", ") : "Chưa đánh dấu bài nào")}
+    ${kpi("Điểm thi đua", X.pts, `Học ${X.done.length*10} · Luyện tập ${X.pts - X.done.length*10}`)}
+    ${kpi("Lần làm bài", X.at.length, X.at.length ? "Gần nhất " + ago(X.at[X.at.length - 1].t) : "")}
+    ${kpi("Câu đã trả lời", X.qn, X.qn ? `${X.right} câu đúng` : "")}
+    ${kpi("Tỉ lệ đúng", X.acc == null ? "–" : X.acc + "%", X.acc == null ? "" : X.acc >= 80 ? "Rất tốt" : X.acc >= 50 ? "Khá, cố thêm chút nữa" : "Cần ôn lại")}
+    ${kpi("Câu sai", X.wrong, X.wrong ? "Xem các câu hay sai bên dưới" : "")}
+    ${kpi("Thời gian học", X.mins ? fmtMin(X.mins) : "0 phút", "Tính khi đang mở trang và thao tác")}
+    ${kpi("Chuỗi ngày học", X.streak + " ngày", X.streak ? "Liên tiếp đến nay" : "Học hôm nay để bắt đầu chuỗi")}
+  </div>
+  <div class="tk-grid2">
+    <section class="tk-card wide"><h3>Điểm thi đua theo thời gian</h3><p class="tk-sub">Tăng khi đánh dấu học xong một bài hoặc vượt điểm cao nhất của một đề.</p>${chartLine(X.series, X.base)}</section>
+    <section class="tk-card"><h3>Kết quả các lần làm bài</h3><p class="tk-sub">Tỉ lệ câu đúng của 20 lần gần nhất · đường gạch là mức 80%.</p>${chartBars(recent, { max:100, ticks:[0, 50, 100], unit:"%", ref:80, refLabel:"80%", aria:"Tỉ lệ đúng các lần làm bài", empty:"Chưa làm đề nào." })}</section>
+    <section class="tk-card"><h3>Câu đúng và câu sai theo bài</h3><p class="tk-sub"><span class="tk-key ok"></span>Đúng <span class="tk-key bad"></span>Sai · tính trên mọi lần làm bài.</p>${chartStack(lrows)}</section>
+    <section class="tk-card"><h3>Thời gian học 14 ngày gần nhất</h3><p class="tk-sub">Số phút mỗi ngày.</p>${chartBars(last14, { aria:"Số phút học mỗi ngày", empty:"Chưa có thời gian học." })}</section>
+    <section class="tk-card"><h3>Thời gian theo mục</h3><p class="tk-sub">Bạn học nhiều nhất ở đâu.</p>${chartHBars(secRows, "Chưa có thời gian học.")}</section>
+  </div>
+  <div class="tk-grid2">
+    <section class="tk-card"><h3>Câu hay sai nhất</h3>${wq.length ? `<ol class="tk-wq">${wq.map(([id, c]) => { const I = qById(id); return `<li><p>${esc(I.q.q)}</p><span>Sai ${c} lần · ${I.les ? `<a href="#luyen-${I.les}">Luyện lại Bài ${I.les}</a>` : "Ôn tập Chương " + esc(I.ch)} · Đáp án đúng: <b>${esc(I.q.o[I.q.a])}</b></span></li>`; }).join("")}</ol>` : `<p class="tk-empty">Chưa có câu sai nào. Tuyệt!</p>`}</section>
+    <section class="tk-card"><h3>Tiến độ 9 bài học</h3><div class="tk-les">${LESSONS.map(l => { const d = X.done.includes(l.n), t = X.ld[l.n]; return `<a class="tk-l${d ? " on" : ""}" href="#bai-${l.n}" title="${esc(l.t)}"><b>${l.n}</b><span>${d ? (t ? "Xong " + dshort(dkey(+t)) : "Đã học") : "Chưa học"}</span><small>${X.lv[l.n] || 0} lượt xem</small></a>`; }).join("")}</div>
+      <h3 style="margin-top:18px">Hoạt động khác</h3><ul class="tk-misc"><li><b>${(D.chats || {}).n || 0}</b> cuộc trò chuyện với trợ lý (${(D.chats || {}).msgs || 0} tin nhắn)</li><li><b>${D.boards || 0}</b> bảng nháp</li><li><b>${X.evc.song || 0}</b> lần nghe bài hát</li><li><b>${X.evc.video || 0}</b> lần mở video bài giảng</li></ul></section>
+  </div>
+  <section class="tk-card"><h3>Lịch sử làm bài</h3>${X.at.length ? `<div class="tk-tbl"><table><thead><tr><th>Thời gian</th><th>Đề</th><th>Đúng</th><th>Tỉ lệ</th></tr></thead><tbody>${X.at.slice(-15).reverse().map(a => `<tr><td>${new Date(a.t).toLocaleString("vi-VN", { hour:"2-digit", minute:"2-digit", day:"2-digit", month:"2-digit" })}</td><td>${esc(setTitle(a.k))}</td><td>${a.s}/${a.n}</td><td>${Math.round(a.s/a.n*100)}%</td></tr>`).join("")}</tbody></table></div>` : `<p class="tk-empty">Chưa có lần làm bài nào.</p>`}
+    <p class="role-note" style="margin-top:10px">Thống kê bắt đầu được ghi từ khi có tính năng này; điểm và bài đã học từ trước vẫn được tính vào tổng điểm.</p></section>`;
+}
+
 /* ================= Máy tính cầm tay: trang đầy đủ + cửa sổ nổi =================
    Hai máy mô phỏng chức năng (kiểu fx-880BTG và kiểu fx-580VN X), mã nằm ở src/calc-core.js và src/calc.js. */
 const CALC_MODELS = {
@@ -5230,6 +5486,8 @@ const HELP = [
     b:`<ol><li>Vào <b>Luyện tập</b>, chọn luyện theo bài, ôn theo chương hoặc đề tổng hợp.</li><li>Chọn đáp án, trang cho biết ngay đúng hay sai kèm lời giải.</li><li>Làm lại bao nhiêu lần cũng được; lần có nhiều câu đúng nhất được tính vào Bảng thi đua.</li></ol>`, di:["#luyen-tap","Mở Luyện tập"] },
   { id:"thi-dua", g:"Học tập", t:"Bảng thi đua lớp tính điểm thế nào?", kw:"thi dua xep hang diem bang xep hang",
     b:`<ul><li>Mỗi bài đã học (đã bấm Đánh dấu đã học): <b>10 điểm</b>.</li><li>Mỗi câu đúng ở lần làm tốt nhất: <b>10 điểm</b> khi luyện theo bài, <b>5 điểm</b> khi ôn chương hoặc làm đề tổng hợp.</li><li>Chỉ tài khoản học sinh được xếp hạng; khách, giáo viên và quản trị viên không tính.</li></ul>`, di:["#thi-dua","Mở Thi đua lớp"] },
+  { id:"thong-ke", g:"Học tập", t:"Xem thống kê học tập của mình", kw:"thong ke bieu do diem cau sai ti le dung thoi gian hoc tien do",
+    b:`<ol><li>Vào <b>Thống kê học tập</b> ở cột bên trái (ngay dưới Thi đua lớp).</li><li>Phía trên là các con số chính: bài đã học, điểm thi đua, số lần làm bài, số câu đúng/sai, tỉ lệ đúng, thời gian học và chuỗi ngày học liên tiếp.</li><li>Các biểu đồ cho thấy điểm tăng theo thời gian, kết quả từng lần làm bài, câu đúng/sai theo từng bài và thời gian học mỗi ngày. Di chuột hoặc chạm vào biểu đồ để xem số liệu.</li><li>Mục <b>Câu hay sai nhất</b> có đáp án đúng và nút luyện lại bài đó.</li><li>Giáo viên và quản trị viên chọn tên học sinh ở ô <b>Xem thống kê của</b> để xem số liệu của từng bạn.</li></ol><p class="tip">Thời gian học chỉ được tính khi trang đang mở và bạn có thao tác. Tài khoản khách không có thống kê.</p>`, di:["#thong-ke","Mở Thống kê"] },
   { id:"bang-nhap", g:"Tiện ích", t:"Dùng bảng nháp", kw:"bang nhap ve hinh but thuoc compa thuoc do goc tam giac tay hoan tac luu anh png nhieu bang",
     b:`<ol><li>Mở <b>Bảng nháp</b> ở cột bên trái, hoặc chọn Bảng nháp trong menu Tiện ích để mở cửa sổ nhỏ ngay trên bài đang học.</li><li>Chọn công cụ trên thanh công cụ (chữ trong ngoặc là phím tắt): Chọn (V), Kéo bảng (H), Bút (B), Bút dạ quang (D), Tẩy (E), Thước kẻ (L), Vectơ (K), Compa (O), Đa giác (G), Điểm có tên (P), Thước đo góc (A), Viết chữ (T).</li><li>Thước kẻ, compa và đa giác tự hút vào điểm có sẵn và giao điểm ô li. Bật “Số đo” để hiện độ dài, bán kính, số đo góc.</li><li>Lăn chuột hoặc chụm hai ngón để phóng to, thu nhỏ. Lỡ tay thì bấm <b>Hoàn tác</b> (Ctrl+Z).</li><li>Bấm <b>+ Bảng mới</b> để có thêm bảng, <b>Đổi tên</b> để đặt tên, <b>Xóa bảng này</b> khi không cần nữa. Bảng tự lưu theo tài khoản của bạn.</li><li>Bấm <b>Lưu ảnh PNG</b> để tải hình vẽ về máy.</li></ol>`, di:["#bang-nhap","Mở Bảng nháp"] },
   { id:"tro-ly", g:"Tiện ích", t:"Dùng trợ lý học tập (khung trò chuyện)", kw:"tro ly chatbot chatbox ai hoi dap hoi bai lich su tro chuyen moi",
