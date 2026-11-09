@@ -1,0 +1,12 @@
+CẬP NHẬT: TÀI LIỆU GIÁO VIÊN GỬI CHO HỌC SINH
+
+Cách cập nhật (GitHub Desktop):
+1. Mở thư mục repo goc-toan-10 trên máy.
+2. Chép đè file index.html vào thư mục gốc của repo (cùng chỗ với index.html cũ).
+3. Chép file api/tailieu.js vào thư mục api của repo (file mới, các file khác trong api giữ nguyên).
+4. Chép đè HUONG-DAN-VERCEL.md (không bắt buộc, chỉ là hướng dẫn).
+5. Trong GitHub Desktop: ghi "Them tai lieu giao vien" vào ô Summary, bấm Commit rồi Push origin.
+6. Đợi Vercel cập nhật khoảng 1 phút rồi tải lại trang.
+
+Không cần cài thêm gì: file được lưu vào cơ sở dữ liệu Upstash đang dùng.
+Để một tài khoản gửi được tài liệu: Quản lý tài khoản → Sửa → bật quyền "Giáo viên".

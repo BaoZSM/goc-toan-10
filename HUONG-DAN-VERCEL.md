@@ -186,3 +186,16 @@ Nếu file JSON viết sai (thiếu dấu phẩy, ngoặc kép…), trang Bài h
 - Cần mô hình AI đọc được ảnh: Gemini (mặc định gemini-flash-lite-latest) và Claude đều đọc được.
 - Với bài có hình học hoặc hệ trục Oxy, trợ lý gửi kèm hình vẽ trong câu trả lời; học sinh bấm "Lưu hình PNG" để tải về.
 - Mỗi câu hỏi kèm ảnh vẫn tính là một lượt trong giới hạn AI_SO_CAU_MOI_GIO.
+
+## Giáo viên gửi tài liệu cho học sinh
+
+Mục **Tài liệu giáo viên** (ngay dưới Tài liệu PDF) cho thầy cô gửi file cho từng lớp hoặc cả khối.
+
+1. Quản trị viên vào **Quản lý tài khoản**, bấm **Sửa** ở tài khoản của thầy cô và bật quyền **Giáo viên**.
+2. Thầy cô đăng nhập, vào **Tài liệu giáo viên**, chọn file, chọn lớp nhận, đặt tên, viết lời nhắn (nếu cần) rồi bấm **Gửi tài liệu**.
+3. Học sinh chỉ thấy tài liệu gửi cho lớp mình (theo ô **Lớp** của tài khoản) và tài liệu gửi cho tất cả các lớp. Tài liệu mới hiện số màu đỏ ở menu.
+
+- Nhận: PDF, Word, PowerPoint, Excel, ảnh, txt, zip, GeoGebra. Tối đa **20 MB** một file, tổng kho **150 MB**.
+- File được lưu trong cơ sở dữ liệu Upstash đã tạo ở phần trên, không cần cài thêm gì.
+- Chỉ người gửi hoặc quản trị viên xóa được tài liệu. Xóa tài liệu cũ để giải phóng dung lượng.
+- Trang hiện có 12 chức năng máy chủ (thư mục `api`), đúng bằng giới hạn của gói Vercel miễn phí. Đừng thêm file mới vào thư mục `api`.

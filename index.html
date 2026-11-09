@@ -544,6 +544,36 @@ dialog::backdrop{background:rgba(10,20,15,.6)}
 .tl-form textarea{width:100%;padding:9px 12px;border-radius:10px;border:1.5px solid var(--line);background:var(--paper);color:var(--ink);font:500 14.5px/1.5 var(--f-body);resize:vertical}
 .tl-form textarea:focus{outline:none;border-color:var(--pen)}
 .tl-form .acts{display:flex;gap:6px;margin-top:6px}
+.nb{margin-left:auto;min-width:20px;height:20px;padding:0 6px;border-radius:999px;background:var(--bad);color:#fff;font:800 11.5px/20px var(--f-body);text-align:center}
+.gv-form{margin-bottom:18px}
+.gv-grid{display:grid;grid-template-columns:2fr 1fr;gap:12px}
+@media (max-width:640px){.gv-grid{grid-template-columns:1fr}}
+.gv-form textarea{resize:vertical}
+.gv-form .muted,.gv-send .muted{color:var(--muted);font-size:13px}
+.gv-send{display:flex;align-items:center;gap:12px;flex-wrap:wrap}
+.gv-cap{display:block;height:6px;border-radius:99px;background:var(--paper);border:1px solid var(--line);margin-top:6px;max-width:320px;overflow:hidden}
+.gv-cap i{display:block;height:100%;background:var(--pen)}
+.gv-filter{margin:0 0 14px}
+.gv-filter button.on{background:var(--pen);border-color:var(--pen);color:var(--on-pen)}
+.gv-list{display:flex;flex-direction:column;gap:12px}
+.gv-card{display:flex;gap:16px;align-items:flex-start;background:var(--sheet);border:1px solid var(--line);border-radius:var(--r);padding:16px 18px}
+.gv-ic{flex:none;width:54px;height:62px;border-radius:10px;display:grid;place-items:center;font:800 11.5px var(--f-body);letter-spacing:.3px;color:#fff;position:relative}
+.gv-ic::after{content:"";position:absolute;right:0;top:0;border-style:solid;border-width:0 14px 14px 0;border-color:transparent var(--sheet) rgba(0,0,0,.18) transparent;border-radius:0 10px 0 0}
+.k-red{background:#C8372D}.k-blue{background:#2B5CC2}.k-orange{background:#C4561C}.k-green{background:#1E7A45}.k-purple{background:#7A45B8}.k-gray{background:#5B6670}
+.gv-main{flex:1;min-width:0;display:flex;flex-direction:column;gap:6px}
+.gv-main h3{font:800 17px/1.3 var(--f-display);margin:0;overflow-wrap:anywhere}
+.gv-main p{margin:0;color:var(--ink);font-size:14.5px;line-height:1.5}
+.gv-main small{color:var(--muted);font-size:13px}
+.gv-new{display:inline-block;vertical-align:2px;font:800 11px var(--f-body);padding:2px 8px;border-radius:99px;background:var(--bad);color:#fff}
+.gv-acts{display:flex;gap:8px;flex-wrap:wrap;justify-content:flex-end;align-items:center}
+@media (max-width:640px){.gv-card{flex-wrap:wrap}.gv-acts{width:100%;justify-content:flex-start}}
+.gv-bar{height:6px;border-radius:99px;background:var(--paper);border:1px solid var(--line);overflow:hidden;max-width:360px}
+.gv-bar.big{flex:1;min-width:160px;height:10px}
+.gv-bar i{display:block;height:100%;width:0;background:var(--pen);transition:width .2s}
+.gv-img{border:none;border-radius:16px;padding:0;max-width:min(94vw,1200px);max-height:92vh;background:var(--sheet);color:var(--ink)}
+.gv-img::backdrop{background:rgba(0,0,0,.6)}
+.gv-imgbar{display:flex;justify-content:space-between;align-items:center;gap:12px;padding:10px 14px;border-bottom:1px solid var(--line)}
+.gv-img img{display:block;max-width:100%;max-height:calc(92vh - 60px);margin:auto;object-fit:contain}
 .note-box{padding:16px 18px;border-radius:14px;background:var(--paper);border:1px dashed var(--line);color:var(--muted)}
 
 /* ================= Hiệu ứng chuyển động ================= */
@@ -956,6 +986,7 @@ kbd{font:600 12px ui-monospace,monospace;padding:2px 6px;border-radius:6px;borde
         <a href="#bai-giang" data-v="bai-giang"><svg class="ico" viewBox="0 0 24 24"><path d="M4 5a2 2 0 0 1 2-2h13v16H6a2 2 0 0 0-2 2z"/><path d="M4 21V5M8 7h7M8 11h5"/></svg>Bài giảng</a>
         <a href="#cong-thuc" data-v="cong-thuc"><svg class="ico" viewBox="0 0 24 24"><path d="M5 4h14v16H5z"/><path d="M8 8h3M9.5 6.5v3M13 8h3M8 14.5l3 3M11 14.5l-3 3M13 15h3M13 17h3"/></svg>Tổng hợp công thức</a>
         <a href="#tai-lieu" data-v="tai-lieu"><svg class="ico" viewBox="0 0 24 24"><path d="M14 3H6a1 1 0 0 0-1 1v16a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V8z"/><path d="M14 3v5h5M9 13h6M9 17h6"/></svg>Tài liệu PDF</a>
+        <a href="#tai-lieu-gv" data-v="tai-lieu-gv" id="navGv" hidden><svg class="ico" viewBox="0 0 24 24"><path d="M4 7a2 2 0 0 1 2-2h4l2 2h6a2 2 0 0 1 2 2v9a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2z"/><path d="M12 11v6M9.5 13.5 12 11l2.5 2.5"/></svg>Tài liệu giáo viên<b class="nb" id="gvNew" hidden></b></a>
         <a href="#video" data-v="video"><svg class="ico" viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M10 9l5 3-5 3z"/></svg>Video bài giảng</a>
         <a href="#bai-hat" data-v="bai-hat"><svg class="ico" viewBox="0 0 24 24"><path d="M9 18V5l11-2v13"/><circle cx="6" cy="18" r="3"/><circle cx="17" cy="16" r="3"/></svg>Bài hát</a>
         <a href="#bang-nhap" data-v="bang-nhap"><svg class="ico" viewBox="0 0 24 24"><path d="M4 20l3.5-1L18 8.5 15.5 6 5 16.5z"/><path d="M14 20h6M3 4h7M6.5 4v4"/></svg>Bảng nháp</a>
@@ -986,6 +1017,7 @@ kbd{font:600 12px ui-monospace,monospace;padding:2px 6px;border-radius:6px;borde
       <section id="v-bai" data-view hidden></section>
       <section id="v-cong-thuc" data-view hidden></section>
       <section id="v-tai-lieu" data-view hidden></section>
+      <section id="v-tai-lieu-gv" data-view hidden></section>
       <section id="v-video" data-view hidden></section>
       <section id="v-xem-video" data-view hidden></section>
       <section id="v-bai-hat" data-view hidden></section>
@@ -1216,7 +1248,7 @@ const store = {
 /* ================= Hiệu ứng chuyển động ================= */
 const ANIM = (() => {
   const reduce = () => matchMedia("(prefers-reduced-motion: reduce)").matches;
-  const ITEMS = ".tile,.lrow,.lesson,.chap,.teacher,.pcard,.pitem,.doc,.feature,.song,.kt,.lbt tbody tr,.rv,.urow,.box,.lb-me,.rv-sum,.rv-form,.qres,.kt-tools,.vhead";
+  const ITEMS = ".tile,.lrow,.lesson,.chap,.teacher,.pcard,.pitem,.doc,.feature,.song,.kt,.lbt tbody tr,.rv,.urow,.box,.lb-me,.rv-sum,.rv-form,.qres,.kt-tools,.vhead,.gv-card,.gv-form";
   // các khối trong trang hiện lần lượt
   function stagger(scope){ if(!scope || reduce()) return; let i = 0;
     scope.querySelectorAll(ITEMS).forEach(el => { if(el.closest(".hist") || el.offsetParent === null) return; el.classList.remove("st-in"); el.style.setProperty("--i", Math.min(i++, 14)); void el.offsetWidth; el.classList.add("st-in"); }); }
@@ -1280,7 +1312,7 @@ paintThemeBtns();
 
 /* ================= Quyền và máy chủ ================= */
 const PERM_LABEL = { sua_bai:"Sửa bài giảng", sua_tai_lieu:"Quản lý tài liệu PDF", giao_vien:"Giáo viên", quan_tri:"Quản lý tài khoản" };
-const PERM_HELP = { sua_bai:"Sửa lý thuyết, công thức, ví dụ của từng bài", sua_tai_lieu:"Tải lên và xóa file PDF", giao_vien:"Không tính vào bảng thi đua lớp", quan_tri:"Tạo, sửa, xóa tài khoản, cấp quyền, ẩn/xóa đánh giá" };
+const PERM_HELP = { sua_bai:"Sửa lý thuyết, công thức, ví dụ của từng bài", sua_tai_lieu:"Tải lên và xóa file PDF", giao_vien:"Gửi tài liệu cho học sinh, xem thống kê của học sinh; không tính vào bảng thi đua lớp", quan_tri:"Tạo, sửa, xóa tài khoản, cấp quyền, ẩn/xóa đánh giá" };
 const PERM_KEYS = () => HOSTED ? ["giao_vien","quan_tri"] : ["sua_bai","sua_tai_lieu","quan_tri"];   // trên Vercel chỉ có quyền quản lý tài khoản
 const can = p => (root.dataset.quyen || "").split(",").includes(p);
 function roleLabel(){ if(root.dataset.user===DEMO.user) return "Tài khoản khách"; if(can("quan_tri")) return "Quản trị"; if(can("giao_vien")) return "Giáo viên"; if(can("sua_bai")||can("sua_tai_lieu")) return "Biên tập"; return "Học sinh"; }
@@ -1430,7 +1462,7 @@ $("#loginForm").addEventListener("submit", async e => {
 });
 
 // Sau khi đăng nhập: lấy tiến độ, lịch sử trò chuyện, bảng nháp của đúng tài khoản này
-function afterLogin(){ STATS.load(); RV_SAO = 0; RV_OPEN = new Set(); LB_LOP = ""; PROG.pull().then(() => { if(["trang-chu","bai-giang","luyen-tap"].includes((location.hash||"#trang-chu").slice(1))) route(); }); CHATS.load(); BOARD.reload(); }
+function afterLogin(){ STATS.load(); GV.reset(); RV_SAO = 0; RV_OPEN = new Set(); LB_LOP = ""; PROG.pull().then(() => { if(["trang-chu","bai-giang","luyen-tap"].includes((location.hash||"#trang-chu").slice(1))) route(); }); CHATS.load(); BOARD.reload(); }
 function signIn(user, name){
   root.dataset.user = user; root.dataset.name = name || user;
   $("#password").value = ""; lmsg.hidden = true;
@@ -1472,6 +1504,7 @@ const TILES = [
   ["bai-giang","Bài giảng", LESSONS.length+" bài · 4 chương"],
   ["cong-thuc","Tổng hợp công thức", "Kiến thức đầy đủ từng bài"],
   ["tai-lieu","Tài liệu PDF", DOCS.length+" tài liệu"],
+  ["tai-lieu-gv","Tài liệu giáo viên", "Thầy cô gửi cho lớp"],
   ["video","Video bài giảng", "2 thầy cô · 18 video"],
   ["bai-hat","Bài hát ghi nhớ", SONGS.length+" bài hát"],
   ["bang-nhap","Bảng nháp", "Bút · thước · compa"],
@@ -1495,9 +1528,12 @@ ICONS["bang-nhap"] = '<path d="M4 20l3.5-1L18 8.5 15.5 6 5 16.5z"/><path d="M14 
 TCOL["bang-nhap"] = "t-gold";
 ICONS["quan-tri"] = '<circle cx="9" cy="8" r="3.5"/><path d="M2.5 20a6.5 6.5 0 0 1 13 0"/><path d="M17 11h5M19.5 8.5v5"/>';
 TCOL["quan-tri"] = "t-gold";
+ICONS["tai-lieu-gv"] = '<path d="M4 7a2 2 0 0 1 2-2h4l2 2h6a2 2 0 0 1 2 2v9a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2z"/><path d="M12 11v6M9.5 13.5 12 11l2.5 2.5"/>'; TCOL["tai-lieu-gv"] = "t-gold";
 function renderTiles(){
   const list = TILES.map(t => t.slice());
   list.find(t=>t[0]==="tai-lieu")[2] = DOCS.length + " tài liệu";
+  if(!HOSTED) list.splice(list.findIndex(t=>t[0]==="tai-lieu-gv"), 1);
+  else { const g = list.find(t=>t[0]==="tai-lieu-gv"); if(can("giao_vien")||can("quan_tri")) g[2] = "Gửi file cho học sinh"; else if(GV.unseen()) g[2] = GV.unseen() + " tài liệu mới"; }
   if(can("quan_tri")) list.splice(list.length - 2, 0, ["quan-tri","Quản lý tài khoản","Tạo tài khoản, cấp quyền"]);
   $("#tiles").innerHTML = list.map(([id,t,m]) => `<a class="tile ${TCOL[id]}" href="#${id}"><span class="ic"><svg class="ico" viewBox="0 0 24 24">${ICONS[id]}</svg></span><h3>${t}</h3><span class="meta">${m}</span><span class="go">Mở mục →</span></a>`).join("");
 }
@@ -1619,10 +1655,10 @@ function loadPdfLib(){
 const rBody = $("#rBody");
 function pdfMsg(html){ rBody.innerHTML = `<div class="pdf-msg">${html}</div>`; }
 async function openDoc(id){
-  const d = DOCS.find(x => x.id===id); if(!d) return;
+  const d = typeof id === "object" ? id : DOCS.find(x => x.id===id); if(!d) return;
   $("#rTag").textContent = d.tag + (d.chapter ? " · " + d.chapter : ""); $("#rTitle").textContent = d.title;
   $("#rPage").textContent = ""; pdfZoom = 1; $("#zVal").textContent = "100%";
-  const down = $("#rDown"); down.hidden = !SERVER; if(SERVER){ down.href = d.file; down.setAttribute("download",""); }
+  const down = $("#rDown"); down.hidden = !SERVER && !d.name; if(SERVER || d.name){ down.href = d.file; down.setAttribute("download", d.name || ""); }
   pdfMsg(`<span class="spin"></span><span>Đang mở tài liệu…</span>`);
   if(!$("#reader").open) $("#reader").showModal();
   const token = ++pdfToken;
@@ -1634,7 +1670,7 @@ async function openDoc(id){
     pdfDoc = await pdfTask.promise;
     if(token !== pdfToken) return;
     layoutPdf();
-  }catch(err){ if(token===pdfToken) pdfMsg(`<b>Chưa mở được tài liệu</b><span>${esc(err.message||err)}</span><button class="btn" onclick="openDoc('${esc(id)}')">Thử lại</button>`); }
+  }catch(err){ if(token===pdfToken) pdfMsg(`<b>Chưa mở được tài liệu</b><span>${esc(err.message||err)}</span>${typeof id === "object" ? "" : `<button class="btn" onclick="openDoc('${esc(id)}')">Thử lại</button>`}`); }
 }
 async function layoutPdf(){
   if(!pdfDoc) return;
@@ -4569,8 +4605,147 @@ async function renderDanhGia(quiet){
   });
 }
 
+/* ================= Tài liệu giáo viên gửi cho học sinh =================
+   Giáo viên (quyền giao_vien hoặc quan_tri) chọn file và lớp nhận; học sinh lớp đó thấy ngay trong mục này.
+   File được chia thành từng phần ~700 KB khi gửi và ghép lại khi tải về. */
+const GV = (() => {
+  let list = [], gv = false, lops = [], dung = 0, toiDa = 0, maxFile = 20*1024*1024, loaded = 0, busy = null, filter = "", sending = false;
+  const blobs = new Map();
+  const KIND = { pdf:["PDF","k-red"], doc:["Word","k-blue"], docx:["Word","k-blue"], ppt:["PowerPoint","k-orange"], pptx:["PowerPoint","k-orange"],
+    xls:["Excel","k-green"], xlsx:["Excel","k-green"], png:["Ảnh","k-purple"], jpg:["Ảnh","k-purple"], jpeg:["Ảnh","k-purple"], webp:["Ảnh","k-purple"], gif:["Ảnh","k-purple"],
+    txt:["Văn bản","k-gray"], zip:["Nén ZIP","k-gray"], ggb:["GeoGebra","k-blue"] };
+  const ACCEPT = ".pdf,.doc,.docx,.ppt,.pptx,.xls,.xlsx,.png,.jpg,.jpeg,.webp,.gif,.txt,.zip,.ggb";
+  const isGv = () => can("giao_vien") || can("quan_tri");
+  const seenKey = () => "toan10-gv-seen-" + (root.dataset.user || "_");
+  const seen = () => new Set(store.get(seenKey(), []));
+  const size = b => b >= 1048576 ? (b/1048576).toFixed(1).replace(".", ",") + " MB" : Math.max(1, Math.round(b/1024)) + " KB";
+  const day = t => new Date(t).toLocaleDateString("vi-VN", { day:"2-digit", month:"2-digit", year:"numeric" });
+  const unseen = () => { if(!HOSTED || isGv()) return 0; const s = seen(); return list.filter(f => !s.has(f.id)).length; };
+  function badge(){
+    const b = $("#gvNew"); if(!b) return;
+    if(HOSTED && root.dataset.user && Date.now() - loaded > 5*60e3 && !busy) load().then(badge).catch(() => {});
+    const n = unseen(); b.hidden = !n; b.textContent = n > 9 ? "9+" : n;
+  }
+  function load(){
+    busy = api("GET", "/api/tailieu").then(d => { list = d.list || []; gv = !!d.gv; lops = d.lops || []; dung = d.dung || 0; toiDa = d.toiDa || 0; maxFile = d.maxFile || maxFile; loaded = Date.now(); })
+      .finally(() => { busy = null; });
+    return busy;
+  }
+  async function fetchBlob(f, prog){
+    if(blobs.has(f.id)) return blobs.get(f.id);
+    const parts = new Array(f.n); let done = 0, next = 0;
+    async function worker(){ while(next < f.n){ const i = next++;
+      let r, tries = 0;
+      while(true){ try{ r = await fetch(`/api/tailieu?id=${encodeURIComponent(f.id)}&c=${i}`); if(r.ok) break; if(r.status === 401) throw new Error("Phiên đăng nhập đã hết. Hãy đăng nhập lại."); if(r.status === 404 || r.status === 410) throw new Error("Tài liệu không còn trên trang."); }catch(e){ if(e.message.startsWith("Phiên") || e.message.startsWith("Tài liệu")) throw e; }
+        if(++tries >= 3) throw new Error("Mạng chập chờn, chưa tải được file. Thử lại nhé."); await new Promise(q => setTimeout(q, 600*tries)); }
+      parts[i] = await r.arrayBuffer(); done++; if(prog) prog(done / f.n); } }
+    await Promise.all(Array.from({ length: Math.min(4, f.n) }, worker));
+    const blob = new Blob(parts, { type: f.type }); blobs.set(f.id, blob); return blob;
+  }
+  function saveBlob(blob, name){ const a = document.createElement("a"), u = URL.createObjectURL(blob); a.href = u; a.download = name; document.body.appendChild(a); a.click(); a.remove(); setTimeout(() => URL.revokeObjectURL(u), 60e3); }
+  function showImg(blob, f){
+    let d = $("#gvImg");
+    if(!d){ d = document.createElement("dialog"); d.id = "gvImg"; d.className = "gv-img";
+      d.innerHTML = `<div class="gv-imgbar"><b></b><button class="sbtn" data-x>Đóng</button></div><img alt="">`;
+      d.addEventListener("click", e => { if(e.target === d || e.target.closest("[data-x]")) d.close(); }); document.body.appendChild(d); }
+    const u = URL.createObjectURL(blob), im = d.querySelector("img"); im.onload = () => setTimeout(() => URL.revokeObjectURL(u), 1000);
+    im.src = u; im.alt = f.ten; d.querySelector("b").textContent = f.ten; d.showModal();
+  }
+  const canView = f => f.ext === "pdf" || ["png","jpg","jpeg","webp","gif"].includes(f.ext);
+  function card(f, fresh){
+    const [k, c] = KIND[f.ext] || ["File","k-gray"];
+    return `<article class="gv-card" data-id="${esc(f.id)}"><span class="gv-ic ${c}">${esc(f.ext.toUpperCase())}</span>
+      <div class="gv-main"><h3>${esc(f.ten)}${fresh ? ` <span class="gv-new">Mới</span>` : ""}</h3>${f.nd ? `<p>${esc(f.nd).replace(/\n/g,"<br>")}</p>` : ""}
+      <small>${esc(k)} · ${size(f.size)} · Gửi cho <b>${f.lop ? "lớp " + esc(f.lop) : "tất cả các lớp"}</b> · ${esc(f.nguoi)} · ${day(f.luc)}</small>
+      <div class="gv-bar" hidden><i></i></div></div>
+      <div class="gv-acts">${canView(f) ? `<button class="btn" data-view>Xem</button>` : ""}<button class="btn ghost" data-get>Tải về</button>${f.xoa ? `<button class="sbtn danger" data-del>Xóa</button>` : ""}</div></article>`;
+  }
+  function form(){
+    const pct = toiDa ? Math.min(100, dung / toiDa * 100) : 0;
+    return `<form class="box editor stack gv-form" id="gvForm"><h3 class="big">Gửi tài liệu cho học sinh</h3>
+      <div class="gv-grid"><div class="field"><label for="gv-file">Chọn file</label><input id="gv-file" type="file" accept="${ACCEPT}" required>
+        <small class="muted">PDF, Word, PowerPoint, Excel, ảnh, zip, GeoGebra · tối đa ${size(maxFile)}</small></div>
+      <div class="field"><label for="gv-lop">Gửi cho</label><select id="gv-lop"><option value="">Tất cả các lớp</option>${lops.map(l => `<option value="${esc(l)}">Lớp ${esc(l)}</option>`).join("")}</select></div></div>
+      <div class="field"><label for="gv-ten">Tên tài liệu</label><input id="gv-ten" maxlength="120" required placeholder="Ví dụ: Phiếu bài tập Bài 5 – Hệ bất phương trình"></div>
+      <div class="field"><label for="gv-nd">Lời nhắn cho học sinh (không bắt buộc)</label><textarea id="gv-nd" maxlength="600" rows="2" placeholder="Ví dụ: Các em làm câu 1–5, nộp vào tiết sau."></textarea></div>
+      <div class="gv-send"><button class="btn" id="gvSend">Gửi tài liệu</button><div class="gv-bar big" id="gvProg" hidden><i></i></div><span class="muted" id="gvMsg"></span></div>
+      <small class="muted">Đã dùng ${size(dung)} / ${size(toiDa)} của kho tài liệu.<span class="gv-cap"><i style="width:${pct.toFixed(1)}%"></i></span></small></form>`;
+  }
+  async function render(){
+    const v = $("#v-tai-lieu-gv");
+    if(!HOSTED){ v.innerHTML = head("Tài liệu giáo viên", "Mục này dùng trên trang web chính thức (Vercel).") + `<div class="note-box">Trên máy chủ của trường, thầy cô hãy dùng mục <a href="#tai-lieu">Tài liệu PDF</a> để tải tài liệu lên.</div>`; return; }
+    const sub = isGv() ? "Thầy cô chọn file, chọn lớp nhận rồi bấm Gửi. Học sinh lớp đó sẽ thấy ngay trong mục này." : "Tài liệu, phiếu bài tập thầy cô gửi cho lớp. Bấm Xem để đọc ngay hoặc Tải về máy.";
+    if(!loaded) v.innerHTML = head("Tài liệu giáo viên", sub) + `<div class="note-box"><span class="spin"></span> Đang tải danh sách…</div>`;
+    try{ if(!loaded || Date.now() - loaded > 20e3) await (busy || load()); }
+    catch(e){ v.innerHTML = head("Tài liệu giáo viên", sub) + `<div class="note-box" style="color:var(--bad)">${esc(e.message)}</div>`; return; }
+    if(location.hash !== "#tai-lieu-gv") return;
+    const s = seen(), show = filter && gv ? list.filter(f => (f.lop || "") === (filter === "*" ? "" : filter)) : list;
+    const chips = gv && list.length ? `<div class="presets gv-filter"><button type="button" data-f="" ${!filter ? 'class="on"' : ""}>Tất cả (${list.length})</button><button type="button" data-f="*" ${filter==="*" ? 'class="on"' : ""}>Gửi cả khối</button>${[...new Set(list.map(f => f.lop).filter(Boolean))].sort().map(l => `<button type="button" data-f="${esc(l)}" ${filter===l ? 'class="on"' : ""}>Lớp ${esc(l)}</button>`).join("")}</div>` : "";
+    v.innerHTML = head("Tài liệu giáo viên", sub) + (gv ? form() : "") + chips +
+      (show.length ? `<div class="gv-list">${show.map(f => card(f, !gv && !s.has(f.id))).join("")}</div>`
+        : `<div class="note-box">${gv ? "Chưa có tài liệu nào. Gửi tài liệu đầu tiên ở khung phía trên." : "Thầy cô chưa gửi tài liệu nào cho lớp bạn. Khi có tài liệu mới, mục này sẽ hiện số ở menu bên trái."}</div>`);
+    if(!gv){ store.set(seenKey(), [...new Set([...s, ...list.map(f => f.id)])].slice(-300)); badge(); }
+    wire(v);
+    ANIM.stagger(v);
+  }
+  function wire(v){
+    v.onclick = async e => {
+      const fb = e.target.closest("[data-f]"); if(fb){ filter = fb.dataset.f; render(); return; }
+      const c = e.target.closest(".gv-card"); if(!c) return;
+      const f = list.find(x => x.id === c.dataset.id); if(!f) return;
+      const del = e.target.closest("[data-del]");
+      if(del){
+        if(!del.classList.contains("confirm")){ del.classList.add("confirm"); del.textContent = "Bấm lần nữa để xóa"; setTimeout(() => { del.classList.remove("confirm"); del.textContent = "Xóa"; }, 3000); return; }
+        try{ await api("DELETE", "/api/tailieu?id=" + encodeURIComponent(f.id)); list = list.filter(x => x !== f); blobs.delete(f.id); dung -= f.size; toast("Đã xóa tài liệu"); render(); }catch(err){ toast(err.message, true); }
+        return;
+      }
+      const b = e.target.closest("[data-view],[data-get]"); if(!b || b.disabled) return;
+      const bar = c.querySelector(".gv-bar"), old = b.textContent;
+      b.disabled = true; b.textContent = "Đang tải…"; if(f.n > 1 && !blobs.has(f.id)){ bar.hidden = false; bar.firstElementChild.style.width = "0%"; }
+      try{
+        const blob = await fetchBlob(f, p => bar.firstElementChild.style.width = (p*100).toFixed(0) + "%");
+        if(b.hasAttribute("data-get")) saveBlob(blob, f.file);
+        else if(f.ext === "pdf") openDoc({ id:"gv-"+f.id, file:URL.createObjectURL(blob), title:f.ten, tag:"Tài liệu giáo viên", chapter:f.lop ? "Lớp " + f.lop : "", name:f.file });
+        else showImg(blob, f);
+        try{ STATS.ev("tai-lieu-gv"); }catch(_){}
+      }catch(err){ toast(err.message, true); }
+      b.disabled = false; b.textContent = old; bar.hidden = true;
+    };
+    const fm = $("#gvForm"); if(!fm) return;
+    const inp = $("#gv-file");
+    inp.onchange = () => { const f = inp.files[0]; if(f && !$("#gv-ten").value.trim()) $("#gv-ten").value = f.name.replace(/\.[^.]+$/, "").replace(/[_-]+/g, " ").slice(0, 120); };
+    fm.onsubmit = e => { e.preventDefault(); send(); };
+  }
+  const b64 = blob => new Promise((ok, no) => { const r = new FileReader(); r.onload = () => ok(String(r.result).split(",")[1] || ""); r.onerror = () => no(new Error("Không đọc được file trên máy")); r.readAsDataURL(blob); });
+  async function send(){
+    if(sending) return;
+    const file = $("#gv-file").files[0], ten = $("#gv-ten").value.trim(), btn = $("#gvSend"), prog = $("#gvProg"), msg = $("#gvMsg");
+    if(!file) return toast("Chọn một file trước nhé", true);
+    if(!ten) return toast("Nhập tên tài liệu", true);
+    if(file.size > maxFile) return toast("File lớn hơn " + size(maxFile) + ". Hãy nén hoặc chia nhỏ file.", true);
+    sending = true; btn.disabled = true; btn.textContent = "Đang gửi…"; prog.hidden = false; prog.firstElementChild.style.width = "0%"; msg.textContent = "";
+    try{
+      const t = await api("POST", "/api/tailieu", { act:"tao", ten, nd:$("#gv-nd").value.trim(), lop:$("#gv-lop").value, file:file.name, size:file.size });
+      let doc = null;
+      for(let i = 0; i < t.n; i++){
+        const data = await b64(file.slice(i*t.chunk, (i+1)*t.chunk));
+        for(let tries = 0; ; tries++){
+          try{ const r = await api("POST", "/api/tailieu", { act:"phan", id:t.id, i, data }); if(r.doc) doc = r.doc; break; }
+          catch(err){ if(tries >= 2) throw err; await new Promise(q => setTimeout(q, 800*(tries+1))); }
+        }
+        prog.firstElementChild.style.width = ((i+1)/t.n*100).toFixed(0) + "%"; msg.textContent = `${size(Math.min(file.size, (i+1)*t.chunk))} / ${size(file.size)}`;
+      }
+      if(doc){ list.unshift(doc); dung += doc.size; }
+      toast("Đã gửi tài liệu cho " + ($("#gv-lop").value ? "lớp " + $("#gv-lop").value : "tất cả các lớp"));
+      sending = false; filter = ""; render(); return;
+    }catch(err){ toast(err.message, true); msg.textContent = "Chưa gửi xong. Bấm Gửi để thử lại."; }
+    sending = false; btn.disabled = false; btn.textContent = "Gửi tài liệu"; prog.hidden = true;
+  }
+  return { render, badge, unseen, load, reset(){ list = []; loaded = 0; blobs.clear(); filter = ""; } };
+})();
+
 /* ================= Điều hướng: mỗi lần chỉ hiện một mục ================= */
-const VIEWS = { "thi-dua":renderThiDua, "danh-gia":renderDanhGia, "cong-thuc":renderKT, "bang-nhap":()=>BOARD.show(), "quan-tri":renderAdmin, "trang-chu":renderHome, "bai-giang":renderLessons, "tai-lieu":renderDocs, "video":renderVideos, "bai-hat":renderSongs, "luyen-tap":renderQuizView, "hoi-dap":renderAsk, "may-tinh":renderMayTinh, "huong-dan":renderHelp, "thong-ke":renderThongKe };
+const VIEWS = { "thi-dua":renderThiDua, "danh-gia":renderDanhGia, "cong-thuc":renderKT, "bang-nhap":()=>BOARD.show(), "quan-tri":renderAdmin, "trang-chu":renderHome, "bai-giang":renderLessons, "tai-lieu":renderDocs, "video":renderVideos, "bai-hat":renderSongs, "luyen-tap":renderQuizView, "hoi-dap":renderAsk, "may-tinh":renderMayTinh, "huong-dan":renderHelp, "thong-ke":renderThongKe, "tai-lieu-gv":()=>GV.render() };
 const rendered = {};
 let pendingAsk = null;
 function route(){
@@ -4585,13 +4760,14 @@ function route(){
   document.querySelectorAll("[data-view]").forEach(s => s.hidden = s.id !== "v-"+view);
   if(m) renderLesson(+m[1]);
   else if(mv) renderPlayer(mv[1], +mv[2]);
-  else if(["trang-chu","bai-giang","quan-tri","video","bang-nhap","luyen-tap","thi-dua","danh-gia","huong-dan","thong-ke"].includes(view)) VIEWS[view]();
+  else if(["trang-chu","bai-giang","quan-tri","video","bang-nhap","luyen-tap","thi-dua","danh-gia","huong-dan","thong-ke","tai-lieu-gv"].includes(view)) VIEWS[view]();
   else if(view==="cong-thuc"){ if(!rendered[view]){ renderKT(); rendered[view]=true; } if(pendingKT){ const n = pendingKT; pendingKT = null; setTimeout(()=>{ const el = document.getElementById("kt-"+n); if(el) el.scrollIntoView({block:"start"}); }, 30); } }
   else if(!rendered[view]){ VIEWS[view](); rendered[view]=true; }
   if(view!=="bang-nhap") BOARD.hide();
   if(view==="bang-nhap" && typeof BW !== "undefined" && BW.isOpen()) BW.close();
   if(view==="may-tinh" && typeof CW !== "undefined" && CW.isOpen()) CW.close();
   $("#navAdmin").hidden = !can("quan_tri");
+  $("#navGv").hidden = !HOSTED; GV.badge();
   const navKey = m ? "bai-giang" : mv ? "video" : view;
   document.querySelectorAll("#sideNav a").forEach(a => a.dataset.v===navKey ? a.setAttribute("aria-current","page") : a.removeAttribute("aria-current"));
   placeChat(view==="hoi-dap");
@@ -5245,7 +5421,7 @@ const STATS = (() => {
 })();
 
 /* ---------- tính các chỉ số ---------- */
-const SEC_NAME = { "trang-chu":"Trang chủ", "bai-giang":"Bài giảng", "bai":"Bài giảng", "cong-thuc":"Tổng hợp công thức", "tai-lieu":"Tài liệu PDF", "video":"Video bài giảng", "xem-video":"Video bài giảng",
+const SEC_NAME = { "trang-chu":"Trang chủ", "bai-giang":"Bài giảng", "bai":"Bài giảng", "cong-thuc":"Tổng hợp công thức", "tai-lieu":"Tài liệu PDF", "tai-lieu-gv":"Tài liệu giáo viên", "video":"Video bài giảng", "xem-video":"Video bài giảng",
   "bai-hat":"Bài hát", "bang-nhap":"Bảng nháp", "may-tinh":"Máy tính cầm tay", "luyen-tap":"Luyện tập", "thi-dua":"Thi đua lớp", "thong-ke":"Thống kê", "hoi-dap":"Hỏi đáp", "danh-gia":"Đánh giá web", "huong-dan":"Hướng dẫn", "quan-tri":"Quản lý tài khoản" };
 function statPoints(done, best){ let p = done.length*10; for(const k in best) p += best[k]*(k.startsWith("b-") ? 10 : 5); return p; }
 const dkey = t => { const d = new Date(t); return d.getFullYear() + "-" + String(d.getMonth()+1).padStart(2,"0") + "-" + String(d.getDate()).padStart(2,"0"); };
@@ -5486,6 +5662,10 @@ const HELP = [
     b:`<ol><li>Vào <b>Luyện tập</b>, chọn luyện theo bài, ôn theo chương hoặc đề tổng hợp.</li><li>Chọn đáp án, trang cho biết ngay đúng hay sai kèm lời giải.</li><li>Làm lại bao nhiêu lần cũng được; lần có nhiều câu đúng nhất được tính vào Bảng thi đua.</li></ol>`, di:["#luyen-tap","Mở Luyện tập"] },
   { id:"thi-dua", g:"Học tập", t:"Bảng thi đua lớp tính điểm thế nào?", kw:"thi dua xep hang diem bang xep hang",
     b:`<ul><li>Mỗi bài đã học (đã bấm Đánh dấu đã học): <b>10 điểm</b>.</li><li>Mỗi câu đúng ở lần làm tốt nhất: <b>10 điểm</b> khi luyện theo bài, <b>5 điểm</b> khi ôn chương hoặc làm đề tổng hợp.</li><li>Chỉ tài khoản học sinh được xếp hạng; khách, giáo viên và quản trị viên không tính.</li></ul>`, di:["#thi-dua","Mở Thi đua lớp"] },
+  { id:"tai-lieu-gv", g:"Học tập", t:"Xem tài liệu thầy cô gửi cho lớp", kw:"tai lieu giao vien gui phieu bai tap file word powerpoint excel tai ve moi",
+    b:`<ol><li>Vào <b>Tài liệu giáo viên</b> ở cột bên trái. Khi có tài liệu mới, mục này hiện một số màu đỏ.</li><li>Bạn chỉ thấy tài liệu gửi cho lớp mình và tài liệu gửi cho tất cả các lớp.</li><li>Bấm <b>Xem</b> để đọc ngay (PDF, ảnh) hoặc <b>Tải về</b> để lưu file Word, PowerPoint, Excel… về máy.</li></ol>`, di:["#tai-lieu-gv","Mở Tài liệu giáo viên"] },
+  { id:"gui-tai-lieu", g:"Tài khoản và góp ý", t:"Gửi tài liệu cho học sinh (giáo viên)", kw:"giao vien gui tai lieu tai file len upload lop phieu bai tap xoa",
+    b:`<ol><li>Tài khoản cần có quyền <b>Giáo viên</b> hoặc <b>Quản lý tài khoản</b> (quản trị viên cấp ở mục Quản lý tài khoản).</li><li>Vào <b>Tài liệu giáo viên</b>, chọn file (PDF, Word, PowerPoint, Excel, ảnh, zip, GeoGebra; tối đa 20 MB), chọn lớp nhận hoặc “Tất cả các lớp”, đặt tên và viết lời nhắn nếu cần.</li><li>Bấm <b>Gửi tài liệu</b> và chờ thanh tiến trình chạy hết. Học sinh lớp đó thấy tài liệu ngay.</li><li>Muốn gỡ tài liệu: bấm <b>Xóa</b> hai lần. Chỉ người gửi hoặc quản trị viên xóa được.</li></ol>`, di:["#tai-lieu-gv","Mở Tài liệu giáo viên"] },
   { id:"thong-ke", g:"Học tập", t:"Xem thống kê học tập của mình", kw:"thong ke bieu do diem cau sai ti le dung thoi gian hoc tien do",
     b:`<ol><li>Vào <b>Thống kê học tập</b> ở cột bên trái (ngay dưới Thi đua lớp).</li><li>Phía trên là các con số chính: bài đã học, điểm thi đua, số lần làm bài, số câu đúng/sai, tỉ lệ đúng, thời gian học và chuỗi ngày học liên tiếp.</li><li>Các biểu đồ cho thấy điểm tăng theo thời gian, kết quả từng lần làm bài, câu đúng/sai theo từng bài và thời gian học mỗi ngày. Di chuột hoặc chạm vào biểu đồ để xem số liệu.</li><li>Mục <b>Câu hay sai nhất</b> có đáp án đúng và nút luyện lại bài đó.</li><li>Giáo viên và quản trị viên chọn tên học sinh ở ô <b>Xem thống kê của</b> để xem số liệu của từng bạn.</li></ol><p class="tip">Thời gian học chỉ được tính khi trang đang mở và bạn có thao tác. Tài khoản khách không có thống kê.</p>`, di:["#thong-ke","Mở Thống kê"] },
   { id:"bang-nhap", g:"Tiện ích", t:"Dùng bảng nháp", kw:"bang nhap ve hinh but thuoc compa thuoc do goc tam giac tay hoan tac luu anh png nhieu bang",
