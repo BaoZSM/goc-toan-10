@@ -1,17 +1,20 @@
-CẬP NHẬT TỔNG HỢP
+BẢN CẬP NHẬT ĐẦY ĐỦ (đã bỏ bản sửa "Tiện ích nổi" mới nhất)
 
-Gồm:
-1. Giáo viên chọn mục để đăng file: Tài liệu giáo viên (mục chung), Tài liệu PDF, hoặc Bài 1 … Bài 9.
-2. Tài khoản khách không còn thấy Bảng thi đua lớp. Trang tải nhẹ hơn (logo, ảnh bìa, máy tính tách thành file riêng).
-3. Giao diện điện thoại mới: thanh mục to ở dưới cùng, nút "Tất cả mục", chữ và nút to hơn.
-4. Ô tìm kiếm chung ở trang chủ (bài học, công thức, luyện tập, video, tài liệu, bài hát, hướng dẫn).
+Gồm tất cả cập nhật trước đó: tài liệu giáo viên (chọn mục đăng), ẩn thi đua với khách,
+trang nhẹ hơn, giao diện điện thoại mới, tìm kiếm chung ở trang chủ, máy tính cầm tay,
+hướng dẫn sử dụng, thống kê học tập, gửi ảnh cho AI, bài hát mới.
 
-Cách cập nhật (GitHub Desktop):
-1. Mở thư mục repo goc-toan-10 trên máy.
-2. Chép đè vào thư mục gốc của repo: index.html, vercel.json, HUONG-DAN-VERCEL.md.
-3. Chép CẢ THƯ MỤC static vào thư mục gốc của repo (thư mục mới, nằm cạnh index.html).
-4. Chép đè 2 file trong api: api/tailieu.js và api/diem.js (các file khác trong api giữ nguyên).
-5. GitHub Desktop: Summary ghi "Cap nhat tong hop", bấm Commit rồi Push origin.
-6. Đợi Vercel cập nhật khoảng 1 phút. Trên điện thoại nếu vẫn thấy giao diện cũ thì tải lại trang (kéo xuống để làm mới).
+CÁCH CẬP NHẬT (GitHub Desktop) - làm đủ cả 4 bước, đây là chỗ hay sót nhất:
+1. Chép đè vào THƯ MỤC GỐC của repo: index.html, vercel.json, HUONG-DAN-VERCEL.md
+2. Chép CẢ THƯ MỤC static vào thư mục gốc (nằm cạnh index.html).
+   Bên trong phải có đủ 3 file:
+     calc.14cb4ce1.js
+     cover-infographic.2f83f31d.jpg
+     logo-ltk.b981e503.webp
+   Thiếu thư mục này thì trang mất logo, mất ảnh bìa và máy tính không mở được.
+3. Chép đè vào thư mục api: tailieu.js và diem.js (các file khác trong api giữ nguyên).
+4. GitHub Desktop: kiểm tra danh sách bên trái có các file trong static/ được thêm,
+   ghi Summary "Cap nhat day du", bấm Commit rồi Push origin.
 
-Lưu ý: KHÔNG thêm file mới nào khác vào thư mục api (đã đủ 12 chức năng, đúng giới hạn gói miễn phí của Vercel).
+Sau khi Vercel báo Ready (~1 phút): mở trang, bấm Ctrl + F5 (máy tính)
+hoặc tải lại trang (điện thoại) để bỏ bản cũ trong bộ nhớ.
