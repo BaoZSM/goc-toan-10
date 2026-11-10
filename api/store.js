@@ -3,7 +3,7 @@
 // GET  /api/store?prefix=chat:      → { keys: [...] }
 // POST /api/store { items:[{k,v,u,del}] } → lưu nhiều mục một lúc (bản mới hơn thắng)
 const T = require("./_tk");
-const KEY_RE = /^(chat-index|board-index|(chat|board):[a-z0-9]{6,24})$/;
+const KEY_RE = /^(stats|chat-index|board-index|(chat|board):[a-z0-9]{6,24})$/;
 const MAX_BYTES = 600 * 1024, MAX_FIELDS = 400;
 module.exports = T.guard(async (req, res, { me }) => {
   if (me.khach) return T.fail(res, 403, "Tài khoản khách chỉ lưu trên máy này");

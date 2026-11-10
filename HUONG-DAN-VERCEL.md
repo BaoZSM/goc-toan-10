@@ -157,7 +157,7 @@ Gói miễn phí của Upstash giới hạn số lệnh mỗi tháng. Một lớ
   }
 ```
    Các khối cách nhau bằng dấu phẩy, cả danh sách nằm trong `[ ]`. Thứ tự trong file là thứ tự hiện trên web.
-3. Muốn lời sáng lên theo nhạc (karaoke): mở trang Bài hát, bấm **⏱ Tạo mốc lời karaoke** dưới bài đó, bấm phím cách mỗi khi bắt đầu một câu. Xong bấm **Sao chép** và dán dòng `"moc": [...]` vào khối của bài (thêm dấu phẩy sau dòng `"loi"`).
+3. Thanh thời gian tự khớp với độ dài thật của file nhạc, không cần ghi thời lượng.
 4. Commit. Trang tự đọc danh sách mới, không cần sửa `index.html`.
 
 Nếu file JSON viết sai (thiếu dấu phẩy, ngoặc kép…), trang Bài hát báo lỗi màu đỏ và tạm dùng danh sách cũ. Có thể dán nội dung file vào jsonlint.com để tìm chỗ sai.
@@ -179,3 +179,31 @@ Nếu file JSON viết sai (thiếu dấu phẩy, ngoặc kép…), trang Bài h
 ```
    Chỉ `file` và `ten` là bắt buộc. Thêm `"noi_bat": true` nếu muốn tài liệu hiện to ở đầu trang.
 3. Commit. Tài liệu hiện trong mục Tài liệu PDF và trong khung Sách giáo khoa của Tiện ích.
+
+
+## Trợ lý AI: gửi ảnh đề bài và hình vẽ
+- Học sinh bấm nút hình ảnh cạnh ô nhập (hoặc dán Ctrl+V, kéo thả) để gửi ảnh đề bài. Ảnh được thu nhỏ còn khoảng 100–400 KB trước khi gửi.
+- Cần mô hình AI đọc được ảnh: Gemini (mặc định gemini-flash-lite-latest) và Claude đều đọc được.
+- Với bài có hình học hoặc hệ trục Oxy, trợ lý gửi kèm hình vẽ trong câu trả lời; học sinh bấm "Lưu hình PNG" để tải về.
+- Mỗi câu hỏi kèm ảnh vẫn tính là một lượt trong giới hạn AI_SO_CAU_MOI_GIO.
+
+## Giáo viên gửi tài liệu cho học sinh
+
+Mục **Tài liệu giáo viên** (ngay dưới Tài liệu PDF) cho thầy cô gửi file cho từng lớp hoặc cả khối.
+
+1. Quản trị viên vào **Quản lý tài khoản**, bấm **Sửa** ở tài khoản của thầy cô và bật quyền **Giáo viên**.
+2. Thầy cô đăng nhập, vào **Tài liệu giáo viên**, chọn **mục đăng**, chọn file, chọn lớp nhận, đặt tên, viết lời nhắn (nếu cần) rồi bấm **Gửi tài liệu**. Mục đăng gồm:
+   - **Tài liệu giáo viên (mục chung)**: hiện trong mục Tài liệu giáo viên.
+   - **Tài liệu PDF**: hiện cuối mục Tài liệu PDF (chỉ nhận file PDF).
+   - **Bài 1 … Bài 9**: hiện ở cuối trang bài giảng đó, ngay dưới phần ví dụ.
+   Ở trang bài giảng và trang Tài liệu PDF, giáo viên còn có nút **+ Thêm tài liệu** để mở khung gửi với mục chọn sẵn.
+3. Học sinh chỉ thấy tài liệu gửi cho lớp mình (theo ô **Lớp** của tài khoản) và tài liệu gửi cho tất cả các lớp. Tài liệu mới hiện số màu đỏ ở menu.
+
+- Nhận: PDF, Word, PowerPoint, Excel, ảnh, txt, zip, GeoGebra. Tối đa **20 MB** một file, tổng kho **150 MB**.
+- File được lưu trong cơ sở dữ liệu Upstash đã tạo ở phần trên, không cần cài thêm gì.
+- Chỉ người gửi hoặc quản trị viên xóa được tài liệu. Xóa tài liệu cũ để giải phóng dung lượng.
+- Trang hiện có 12 chức năng máy chủ (thư mục `api`), đúng bằng giới hạn của gói Vercel miễn phí. Đừng thêm file mới vào thư mục `api`.
+
+## File trong thư mục static
+
+Thư mục `static` chứa logo, ảnh bìa và máy tính cầm tay, tách khỏi `index.html` để trang tải nhanh hơn. Tên file có mã (ví dụ `calc.14cb4ce1.js`), trình duyệt nhớ lâu nên lần sau mở trang gần như không phải tải lại. Khi cập nhật, chép **cả thư mục `static`** cùng `index.html`; file cũ trong `static` có thể xóa.

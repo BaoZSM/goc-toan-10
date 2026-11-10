@@ -858,7 +858,11 @@ html.theme-fade,html.theme-fade *{transition:background-color .45s ease,color .4
   .tile .go{display:none}
   .chat{bottom:calc(140px + env(safe-area-inset-bottom,0px));right:calc(10px + env(safe-area-inset-right,0px));width:calc(100vw - 20px);height:min(560px,calc(100dvh - 220px))}
   .chat input{font-size:16px}
+<<<<<<< HEAD
   .assist{width:58px;height:58px;border-radius:19px}
+=======
+  .assist{display:none!important}
+>>>>>>> c0f5b012ab9565a3d26c2feef189734ce099ced4
   .amenu.sheet{left:12px!important;right:12px;top:auto!important;bottom:calc(80px + env(safe-area-inset-bottom,0px));width:auto}
   /* chữ và nút to hơn, dễ bấm */
   .presets button{padding:9px 14px;font-size:14px}
@@ -2938,7 +2942,11 @@ function route(){
   document.querySelectorAll('[data-v="thi-dua"]').forEach(a => a.hidden = guest);
   const navKey = m ? "bai-giang" : mv ? "video" : view;
   document.querySelectorAll("#sideNav a").forEach(a => a.dataset.v===navKey ? a.setAttribute("aria-current","page") : a.removeAttribute("aria-current"));
+<<<<<<< HEAD
   try{ MOB.close(); MOB.sync(navKey); ASSIST.place(); }catch(e){}
+=======
+  try{ MOB.close(); MOB.sync(navKey); }catch(e){}
+>>>>>>> c0f5b012ab9565a3d26c2feef189734ce099ced4
   placeChat(view==="hoi-dap");
   try{ SGK.sync(+(location.hash.match(/^#(?:bai|luyen-bai)-([1-9])$/)||[])[1] || (mv ? +mv[2] : 0)); ASSIST.close(); }catch(e){}
   if(view==="bang-nhap"){ fab.hidden = true; chat.hidden = true; }
